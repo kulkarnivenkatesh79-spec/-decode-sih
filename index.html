@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ArogyaSetu Intelligence</title>
+  
+  <!-- Bootstrap 5.3 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
+  
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============================================================
+       VIEW 1: SPLIT AUTHENTICATION & PERSONA SWITCHER
+       ============================================================ -->
+  <main id="view-auth" class="app-view active">
+    <div class="split-layout">
+      <!-- Left Split Panel -->
+      <div class="split-left">
+        <div class="network-bg"></div>
+        <div class="split-brand">
+          <i class="bi bi-stars" style="color:var(--c-amb)"></i> ArogyaSetu Intelligence
+        </div>
+        <div>
+          <span class="mono-label" id="lang-hero-tag">● RURAL HEALTH INTELLIGENCE NETWORK</span>
+          <h1 id="lang-hero-title">24,000+ rural lives connected to instant care.</h1>
+          <p class="split-quote" id="lang-hero-quote">
+            "ArogyaSetu Intelligence bridges the critical gap between remote village hamlets, ASHA frontline workers, and verified government healthcare schemes."
+          </p>
+        </div>
+        <div class="telemetry-row">
+          <div class="tel-item">
+            <div class="tel-val">24k+</div>
+            <div class="mono-label">Active Villagers</div>
+          </div>
+          <div class="tel-item">
+            <div class="tel-val">100%</div>
+            <div class="mono-label">Multilingual Voice</div>
+          </div>
+          <div class="tel-item">
+            <div class="tel-val">₹4.2 Cr</div>
+            <div class="mono-label">Schemes Unlocked</div>
+          </div>
+        </div>
+        <div class="split-footer mono-label">
+          National Health Mission Interface • Secure ABHA Node Access
+        </div>
+      </div>
+
+      <!-- Right Split Panel -->
+      <div class="split-right">
+        <h2>Sign in to your health node</h2>
+        <div class="subtext">Enter your ABHA ID, Phone number, or select a demo role below</div>
+
+        <div class="auth-form">
+          <div class="floating-input">
+            <i class="bi bi-person"></i>
+            <input type="text" placeholder="PHONE / ABHA HEALTH ID">
+          </div>
+          <div class="floating-input">
+            <i class="bi bi-lock"></i>
+            <input type="password" placeholder="OTP / ACCESS PIN">
+          </div>
+          <button class="btn-primary-pill" onclick="loginDemo('asha')">Access Health Platform &rarr;</button>
+          
+          <div class="divider mono-label">OR FEDERATED ACCESS</div>
+          
+          <button class="fed-btn fed-abha" onclick="loginDemo('patient')">
+            <i class="bi bi-shield-check text-success"></i> Continue with ABHA ID (Ayushman Bharat)
+          </button>
+          <button class="fed-btn fed-aadhaar" onclick="loginDemo('patient')">
+            <i class="bi bi-fingerprint text-primary"></i> Continue with Aadhaar OTP
+          </button>
+        </div>
+
+        <div class="divider mono-label mt-5">INSTANT DEMO ACCESS</div>
+        <div class="demo-grid">
+          <div class="demo-pill" onclick="loginDemo('patient')">Rural Villager / Patient</div>
+          <div class="demo-pill" onclick="loginDemo('asha')">ASHA Field Worker</div>
+          <div class="demo-pill" onclick="loginDemo('asha')">PHC Medical Officer</div>
+          <div class="demo-pill" onclick="loginDemo('patient')">Maternal / Pregnant Mother</div>
+          <div class="demo-pill" onclick="loginDemo('patient')">Senior Citizen (BPL)</div>
+          <div class="demo-pill" onclick="loginDemo('asha')">Health Administrator</div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <!-- ============================================================
+       APP SHELL: USED FOR INNER VIEWS
+       ============================================================ -->
+  <div class="app-layout" id="app-shell" style="display:none;">
+    
+    <!-- Fixed Left Sidebar -->
+    <aside class="app-sidebar">
+      <div class="nav-brand" onclick="logout()" style="cursor:pointer; padding-bottom: 1.5rem; margin-bottom: 1rem; border-bottom: 1px solid var(--c-border);">
+        <i class="bi bi-stars" style="color:var(--c-amb)"></i> ArogyaSetu Intelligence
+      </div>
+      <ul class="side-menu">
+        <li class="side-item" id="sb-dashboard" data-target="view-dashboard"><i class="bi bi-bar-chart"></i> <span class="sb-label">Dashboard</span></li>
+        <li class="side-item" id="sb-profile" data-target="view-profile"><i class="bi bi-person-vcard"></i> <span class="sb-label">ABHA Profile &amp; Records</span></li>
+        <li class="side-item" id="sb-symptoms" data-target="view-symptoms"><i class="bi bi-robot"></i> <span class="sb-label">AI Symptom Checker</span></li>
+        <li class="side-item" id="sb-schemes" data-target="view-schemes"><i class="bi bi-building-check"></i> <span class="sb-label">Scheme Radar</span></li>
+        <li class="side-item" id="sb-directory" data-target="view-directory"><i class="bi bi-people"></i> <span class="sb-label">Villager Directory</span></li>
+        <li class="side-item" id="sb-centers" data-target="view-centers"><i class="bi bi-hospital"></i> <span class="sb-label">Nearest PHC Centers</span></li>
+        <li class="side-item" id="sb-settings" data-target="view-settings"><i class="bi bi-gear"></i> <span class="sb-label">Settings</span></li>
+      </ul>
+      <div class="sidebar-footer">
+        <i class="bi bi-lightning-charge-fill" style="color:var(--c-amb)"></i>
+        <div>Network Active<br><span style="font-weight:400">Connected to Devnagar Sub-Center</span></div>
+      </div>
+    </aside>
+
+    <!-- Main Viewport -->
+    <div class="app-main">
+      
+      <!-- Top Global Header (Sticky) -->
+      <header class="app-header">
+        <div class="cmd-palette">
+          <span id="lang-search-placeholder"><i class="bi bi-search me-2"></i> Type a symptom, scheme name...</span>
+          <span class="cmd-badge">⌘K</span>
+        </div>
+        <div class="nav-utils">
+          <i class="bi bi-question-circle" title="Help"></i>
+          <i class="bi bi-moon" title="Toggle Theme"></i>
+          <select class="form-select form-select-sm" id="lang-switcher" style="width:auto;border-radius:12px;background:var(--c-input-bg);border-color:var(--c-border)">
+            <option value="en">EN</option><option value="hi">हिन्दी</option><option value="kn">ಕನ್ನಡ</option>
+            <option value="ta">தமிழ்</option><option value="te">తెలుగు</option><option value="bn">বাংলা</option>
+          </select>
+          <i class="bi bi-bell" title="Notifications"></i>
+          <div class="active-persona">
+            <i class="bi bi-person-circle"></i> <span id="top-persona">Demo User</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- Isolated Dynamic Views Container -->
+      <main class="content-stage">
+
+        <!-- ============================================================
+             TAB 1: DASHBOARD (view-dashboard)
+             ============================================================ -->
+        <section id="view-dashboard" class="view-pane d-none">
+          <div class="workspace-bounds">
+            <div class="breadcrumb mono-label">● NODE STATUS: ACTIVE</div>
+            <h2>Field Operations &amp; Epidemiology Dashboard</h2>
+            <p class="text-muted" style="font-family:var(--font-mono);font-size:0.8rem">Real-time rural health telemetry across 12 village hamlets.</p>
+
+            <!-- Metric Ribbon -->
+            <div class="bento-grid grid-4 mb-4">
+              <div class="stat-card">
+                <div class="sc-icon text-primary"><i class="bi bi-people-fill"></i></div>
+                <div class="sc-val">2,480</div>
+                <div class="sc-label">Villagers Screened</div>
+                <div class="sc-badge badge-green"><i class="bi bi-arrow-up"></i> 14% this week</div>
+              </div>
+              <div class="stat-card">
+                <div class="sc-icon text-warning"><i class="bi bi-exclamation-triangle-fill"></i></div>
+                <div class="sc-val">18</div>
+                <div class="sc-label">High-Risk Maternal Alerts</div>
+                <div class="sc-pulse amber"></div>
+              </div>
+              <div class="stat-card">
+                <div class="sc-icon text-success"><i class="bi bi-currency-rupee"></i></div>
+                <div class="sc-val">₹4.28 Lakh</div>
+                <div class="sc-label">DBT Scheme Claims Disbursed</div>
+              </div>
+              <div class="stat-card">
+                <div class="sc-icon text-info"><i class="bi bi-cloud-check-fill"></i></div>
+                <div class="sc-val">99.4%</div>
+                <div class="sc-label">Offline-to-Cloud Sync Status</div>
+              </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="bento-grid grid-4 mb-4">
+              <div class="action-card" onclick="document.getElementById('sb-profile').click()">
+                <i class="bi bi-person-plus-fill" style="color:var(--c-sky-text)"></i>
+                <div class="ac-title">Record Vitals</div>
+                <div class="ac-sub">Update patient ABHA profile</div>
+              </div>
+              <div class="action-card" onclick="document.getElementById('sb-symptoms').click()">
+                <i class="bi bi-mic-fill" style="color:var(--c-amb-text)"></i>
+                <div class="ac-title">Run Voice Triage</div>
+                <div class="ac-sub">Vernacular symptom diagnostic</div>
+              </div>
+              <div class="action-card" onclick="document.getElementById('sb-schemes').click()">
+                <i class="bi bi-building-check" style="color:var(--c-mint-text)"></i>
+                <div class="ac-title">Check Scheme Radar</div>
+                <div class="ac-sub">Eligibility &amp; enrollment</div>
+              </div>
+              <div class="action-card" onclick="openDispatchModal()">
+                <i class="bi bi-ambulance" style="color:#DC2626"></i>
+                <div class="ac-title">Emergency Referral</div>
+                <div class="ac-sub">Instant 108 dispatch</div>
+              </div>
+            </div>
+
+            <!-- Knowledge Graph -->
+            <div class="knowledge-panel">
+              <div class="kp-header">
+                <h4 style="margin:0;font-size:1.1rem"><i class="bi bi-diagram-3-fill me-2" style="color:var(--c-lav-text)"></i> Epidemiology Knowledge Graph</h4>
+                <div class="mono-label">LIVE DATA</div>
+              </div>
+              <canvas id="kgCanvas" class="kg-canvas"></canvas>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================================
+             TAB 2: ABHA PROFILE & VITALS INTAKE (view-profile)
+             ============================================================ -->
+        <section id="view-profile" class="view-pane active">
+          <div class="workspace-bounds patient-workspace">
+            <!-- Left: Form -->
+            <div class="intake-form">
+              <div class="breadcrumb mono-label">● EDITABLE HEALTH NODE</div>
+              <h2>Patient Profile &amp; Vitals Intake</h2>
+              
+              <div class="form-grid">
+                <div>
+                  <label class="intake-label">PATIENT NAME</label>
+                  <input type="text" class="intake-input" id="inp-name" value="Lakshmi Devi" />
+                </div>
+                <div class="d-flex gap-2">
+                  <div style="flex:1">
+                    <label class="intake-label">AGE</label>
+                    <input type="number" class="intake-input" id="inp-age" value="32" />
+                  </div>
+                  <div style="flex:1">
+                    <label class="intake-label">GENDER</label>
+                    <select class="intake-input" id="inp-gender"><option>Female</option><option>Male</option></select>
+                  </div>
+                </div>
+                <div>
+                  <label class="intake-label">VILLAGE / BLOCK</label>
+                  <input type="text" class="intake-input" id="inp-village" value="Devnagar Ward 3" />
+                </div>
+                <div>
+                  <label class="intake-label">ABHA ID</label>
+                  <input type="text" class="intake-input" id="inp-abha" value="91-4820-1928-3012" />
+                </div>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <label class="intake-label">REPORTED SYMPTOMS &amp; SENSATIONS</label>
+                <div class="tags-container" id="symptom-tags">
+                  <span class="tag-interactive">● High Fever <span class="del">✕</span></span>
+                  <span class="tag-interactive">● Chest Tightness <span class="del">✕</span></span>
+                  <span class="tag-interactive">● Joint Pain <span class="del">✕</span></span>
+                  <input type="text" class="tag-input-field" placeholder="Add more symptoms..." id="sym-input">
+                  <button class="voice-btn-sm" id="btn-sym-mic"><i class="bi bi-mic-fill"></i></button>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 1.5rem;">
+                <label class="intake-label">EXISTING CONDITIONS &amp; CATEGORY</label>
+                <div class="tags-container" id="cond-tags">
+                  <span class="tag-interactive">● BPL Card Holder <span class="del">✕</span></span>
+                  <span class="tag-interactive">● Pregnant (2nd Trimester) <span class="del">✕</span></span>
+                  <span class="tag-interactive">● Diabetic <span class="del">✕</span></span>
+                  <input type="text" class="tag-input-field" placeholder="Add condition..." id="cond-input">
+                </div>
+              </div>
+
+              <div>
+                <label class="intake-label">AI DOCTOR CLINICAL SUMMARY</label>
+                <textarea class="intake-input" id="ai-summary" rows="4" style="font-family:var(--font-mono);font-size:0.8rem;background:var(--c-canvas)" readonly>Patient reports sustained high fever, chest tightness, and joint pain. Background of 2nd trimester pregnancy and diabetes. Requires immediate vitals check and ANC evaluation.</textarea>
+              </div>
+            </div>
+
+            <!-- Right: Live Preview Card -->
+            <div>
+              <div class="preview-card" id="live-card">
+                <div class="pc-header">
+                  <div>
+                    <h3 id="card-name">Lakshmi Devi (32 yrs)</h3>
+                    <div class="meta"><span id="card-village">Devnagar Ward 3</span> • ABHA ID: <span id="card-abha">91-4820-1928-3012</span></div>
+                  </div>
+                  <div class="eligibility-ring">100%</div>
+                </div>
+                
+                <div class="ai-note-box">
+                  "Patient eligible for PM-JAY and Janani Suraksha Yojana with high priority ANC checkup required."
+                </div>
+
+                <div class="mono-label" style="margin-bottom:0.75rem">ACTIVE HEALTH LINKS</div>
+                <div class="link-tags" id="card-link-tags">
+                  <span class="tag-pill tag-sky">PM Matru Vandana</span>
+                  <span class="tag-pill tag-mint">Iron Folic Acid Free Kit</span>
+                  <span class="tag-pill tag-amb">Tele-Consult Assigned</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================================
+             TAB 3: AI SYMPTOM CHECKER (view-symptoms)
+             ============================================================ -->
+        <section id="view-symptoms" class="view-pane d-none">
+          <div class="workspace-bounds">
+            <div class="breadcrumb mono-label">● AI MULTILINGUAL TRIAGE ENGINE</div>
+            <h2>Vernacular Voice Symptom Diagnostic</h2>
+            
+            <div class="patient-workspace mt-4" style="grid-template-columns: 1fr 1fr; gap:2rem">
+              <!-- Visual Interaction Deck -->
+              <div class="symptom-deck">
+                <div class="voice-box" id="triage-voice-box">
+                  <canvas id="voice-waves" width="400" height="150"></canvas>
+                  <button class="btn-voice-huge" id="btn-triage-mic"><i class="bi bi-mic-fill"></i></button>
+                  <p class="mt-3 text-muted" id="triage-prompt">"Tap to Speak in Hindi, Kannada, Tamil, or English"</p>
+                </div>
+
+                <!-- Interactive Clickable Body Map -->
+                <div class="body-map-container mt-4">
+                  <h6 class="mono-label mb-3">Or click affected body zones:</h6>
+                  <div class="body-grid">
+                    <div class="b-zone" onclick="addTriageSymptom('Migraine/Headache')"><i class="bi bi-person-bounding-box"></i> Head / Migraine</div>
+                    <div class="b-zone" onclick="addTriageSymptom('Chest Pain')"><i class="bi bi-lungs"></i> Chest / Respiration</div>
+                    <div class="b-zone" onclick="addTriageSymptom('Stomach Ache')"><i class="bi bi-capsule"></i> Abdomen / Gut</div>
+                    <div class="b-zone" onclick="addTriageSymptom('Pelvic Pain')"><i class="bi bi-gender-female"></i> Pelvic / Maternal</div>
+                    <div class="b-zone" onclick="addTriageSymptom('Joint Pain')"><i class="bi bi-activity"></i> Joints / Mobility</div>
+                    <div class="b-zone" onclick="addTriageSymptom('Rash/Itching')"><i class="bi bi-bandaid"></i> Skin / Rash</div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- AI Clinical Risk Assessment Card -->
+              <div>
+                <div class="preview-card risk-card">
+                  <div class="rc-urgency badge-red mb-3">HIGH RISK — IMMEDIATE PHC REFERRAL REQUIRED</div>
+                  
+                  <div class="mono-label mb-2">Detected Conditions</div>
+                  <div class="confidence-meter mb-3">
+                    <div class="d-flex justify-content-between mb-1"><span class="cm-label">Viral Pyrexia / Suspected Dengue</span><span>84%</span></div>
+                    <div class="cm-track"><div class="cm-fill" style="width:84%; background:#DC2626"></div></div>
+                  </div>
+                  <div class="confidence-meter mb-4">
+                    <div class="d-flex justify-content-between mb-1"><span class="cm-label">Upper Respiratory Infection</span><span>12%</span></div>
+                    <div class="cm-track"><div class="cm-fill" style="width:12%; background:var(--c-amb)"></div></div>
+                  </div>
+
+                  <div class="mono-label mb-2">Prescribed Action Checklist</div>
+                  <ul class="action-list">
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i> Check Platelet Count</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i> Hydration Protocol (ORS)</li>
+                    <li><i class="bi bi-check-circle-fill text-success me-2"></i> Assign ASHA Home Visit</li>
+                  </ul>
+
+                  <button class="btn-primary-pill mt-4 w-100 d-flex align-items-center justify-content-center" onclick="playAudioAdvice()">
+                    <i class="bi bi-volume-up-fill me-2 fs-5"></i> Listen to Advice in Local Language
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================================
+             TAB 4: SCHEME RADAR & ABHA GENERATOR (view-schemes)
+             ============================================================ -->
+        <section id="view-schemes" class="view-pane d-none">
+          <div class="workspace-bounds">
+            <div class="breadcrumb mono-label">● GOVERNMENT HEALTH BENEFIT ENGINE</div>
+            <h2>National Health Scheme Radar &amp; ABHA ID Generator</h2>
+            
+            <div class="patient-workspace mt-4" style="grid-template-columns: 1fr 1.5fr; gap:2rem">
+              <!-- Sliders & ABHA Generator -->
+              <div>
+                <div class="form-panel p-4 mb-4">
+                  <h6 class="mono-label mb-3">Eligibility Parameters</h6>
+                  <label class="intake-label d-flex justify-content-between">Annual Household Income <span id="val-inc" class="text-primary fw-bold">₹2,50,000</span></label>
+                  <input type="range" class="form-range mb-4" id="range-inc" min="0" max="500000" step="10000" value="250000">
+
+                  <label class="intake-label d-flex justify-content-between">Family Members <span id="val-fam" class="text-primary fw-bold">4</span></label>
+                  <input type="range" class="form-range mb-4" id="range-fam" min="1" max="10" step="1" value="4">
+
+                  <label class="intake-label">Category</label>
+                  <select class="form-select intake-input" id="sel-cat">
+                    <option value="bpl">BPL / Antyodaya</option>
+                    <option value="pregnant">Pregnant / Lactating Mother</option>
+                    <option value="senior">Senior Citizen</option>
+                    <option value="scst">SC / ST</option>
+                  </select>
+                </div>
+
+                <div class="form-panel p-4 abha-gen-panel">
+                  <h6 class="mono-label mb-2"><i class="bi bi-qr-code text-primary me-1"></i> Digital ABHA Health Card Generator</h6>
+                  <p class="text-muted" style="font-size:0.8rem">Generate a mock Ayushman Bharat Health Account.</p>
+                  
+                  <div class="abha-mock-card mt-3" id="abha-mock-card">
+                    <div class="abha-head"><img src="https://upload.wikimedia.org/wikipedia/commons/5/55/Emblem_of_India.svg" height="24"> Ayushman Bharat</div>
+                    <div class="abha-body">
+                      <div class="abha-photo"><i class="bi bi-person-fill"></i></div>
+                      <div class="abha-details">
+                        <div class="abha-name" id="ab-gen-name">Lakshmi Devi</div>
+                        <div class="abha-num" id="ab-gen-id">91-4820-1928-3012</div>
+                      </div>
+                      <div class="abha-qr"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" height="40"></div>
+                    </div>
+                  </div>
+                  <button class="btn-primary-pill mt-3 w-100" onclick="showToast('ABHA Card PDF downloaded')"><i class="bi bi-download me-2"></i> Download ABHA Card (PDF)</button>
+                </div>
+              </div>
+
+              <!-- Dynamic Scheme Cards -->
+              <div>
+                <h6 class="mono-label mb-3">Matched Schemes</h6>
+                <div class="scheme-grid" id="scheme-results">
+                  <!-- Populated by JS -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================================
+             TAB 5: VILLAGER DIRECTORY (view-directory)
+             ============================================================ -->
+        <section id="view-directory" class="view-pane d-none">
+          <div class="workspace-bounds">
+            <div class="cohort-header">
+              <div class="breadcrumb mono-label">● COMMUNITY FIELD DIRECTORY</div>
+              <h2 class="ch-title" id="lang-dir-title">Registered Villagers &amp; Triage Directory</h2>
+            </div>
+
+            <div class="cohort-toolbar">
+              <div class="tool-left">
+                <div class="floating-input" style="margin:0;padding:0.4rem 1rem;border-radius:12px;flex:1;max-width:300px">
+                  <i class="bi bi-search"></i>
+                  <input type="text" id="dir-search" placeholder="Search Villager by name, condition...">
+                </div>
+                <select class="form-select" id="dir-filter" style="border-radius:12px;background:var(--c-input-bg);border-color:var(--c-border);flex:1;max-width:250px">
+                  <option value="All">All Wards</option>
+                  <option value="Ward 01">Ward 01</option>
+                  <option value="Ward 02">Ward 02</option>
+                  <option value="Ward 03">Ward 03</option>
+                  <option value="Ward 04">Ward 04</option>
+                </select>
+              </div>
+              <div class="tool-right">
+                <div class="view-pill active">Grid View</div>
+              </div>
+            </div>
+
+            <div class="cohort-grid" id="cohort-grid-container">
+              <!-- JS Populates 6 Cards -->
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================================
+             TAB 6: NEAREST PHC CENTERS (view-centers)
+             ============================================================ -->
+        <section id="view-centers" class="view-pane d-none">
+          <div class="workspace-bounds">
+            <div class="breadcrumb mono-label">● FACILITY TELEMETRY &amp; LOCATOR</div>
+            <h2>Nearest Health Centers &amp; Emergency Dispatch</h2>
+            
+            <div class="filter-strip mt-3 mb-4">
+              <span class="view-pill active">All Centers (4)</span>
+              <span class="view-pill">Primary Health Centers (2)</span>
+              <span class="view-pill">Community Hospitals (1)</span>
+              <span class="view-pill">24/7 Sub-Centers (1)</span>
+            </div>
+
+            <div class="phc-grid" id="phc-grid-container">
+              <!-- JS Populates 4 PHC Cards -->
+            </div>
+
+            <!-- 108 Dispatch Panel -->
+            <div class="sos-panel mt-5">
+              <div class="d-flex align-items-center justify-content-between">
+                <div>
+                  <h4 class="mb-1 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i> Emergency 108 Dispatch Panel</h4>
+                  <p class="mb-0 text-muted" style="font-size:0.85rem">Broadcast live GPS coordinates to nearest available ambulance.</p>
+                </div>
+                <button class="btn btn-danger btn-lg px-4" style="border-radius:12px" onclick="dispatchSOS()"><i class="bi bi-geo-alt-fill me-2"></i> Broadcast GPS &amp; Request 108</button>
+              </div>
+              <div class="sos-feed mt-3 p-3 bg-white rounded border d-none" id="sos-feed">
+                <!-- Feed injected -->
+              </div>
+            </div>
+          </div>
+        </section>
+
+
+        <!-- ============================================================
+             TAB 7: SETTINGS & OFFLINE SYNC (view-settings)
+             ============================================================ -->
+        <section id="view-settings" class="view-pane d-none">
+          <div class="workspace-bounds" style="max-width:800px">
+            <div class="breadcrumb mono-label">● SYSTEM PREFERENCES &amp; CACHE</div>
+            <h2>Settings, Localization &amp; Offline Gateway</h2>
+
+            <!-- Lang -->
+            <div class="form-panel p-4 mb-4 mt-4">
+              <h5 class="mb-3">Language &amp; Dialect Configuration</h5>
+              <select class="form-select intake-input" id="set-lang" onchange="document.getElementById('lang-switcher').value=this.value; document.getElementById('lang-switcher').dispatchEvent(new Event('change'))">
+                <option value="en">English</option>
+                <option value="hi">Hindi (हिन्दी)</option>
+                <option value="kn">Kannada (ಕನ್ನಡ)</option>
+                <option value="ta">Tamil (தமிழ்)</option>
+                <option value="te">Telugu (తెలుగు)</option>
+                <option value="bn">Bengali (বাংলা)</option>
+              </select>
+            </div>
+
+            <!-- Voice -->
+            <div class="form-panel p-4 mb-4">
+              <h5 class="mb-3">Voice Narrator Settings</h5>
+              <label class="intake-label d-flex justify-content-between">Speech Speed <span id="val-speed">1.0x</span></label>
+              <input type="range" class="form-range mb-4" id="range-speed" min="0.8" max="1.5" step="0.1" value="1.0" oninput="document.getElementById('val-speed').textContent=this.value+'x'">
+              
+              <label class="intake-label d-flex justify-content-between">Pitch <span id="val-pitch">1.0</span></label>
+              <input type="range" class="form-range mb-4" id="range-pitch" min="0.5" max="2.0" step="0.1" value="1.0" oninput="document.getElementById('val-pitch').textContent=this.value">
+              
+              <button class="btn btn-outline-secondary" style="border-radius:12px" onclick="playAudioAdvice('Test voice synthesis successful.')"><i class="bi bi-volume-up-fill me-2"></i> Test Voice Synthesis</button>
+            </div>
+
+            <!-- Offline Data -->
+            <div class="form-panel p-4 mb-4">
+              <h5 class="mb-3">Offline Data Management</h5>
+              <div class="d-flex justify-content-between mono-label mb-2"><span>Local Storage Cache</span><span>1.4 MB / 50 MB</span></div>
+              <div class="progress mb-4" style="height: 8px; border-radius: 4px;">
+                <div class="progress-bar bg-primary" style="width: 3%"></div>
+              </div>
+              <div class="d-flex gap-3">
+                <button class="btn-primary-pill" onclick="showToast('Cloud sync complete. 1.4 MB pushed.')" style="margin:0"><i class="bi bi-cloud-arrow-up-fill me-2"></i> Force Sync to Cloud</button>
+                <button class="btn btn-outline-danger" style="border-radius:12px" onclick="showToast('Local cache purged.')"><i class="bi bi-trash-fill me-2"></i> Purge Cache</button>
+              </div>
+            </div>
+
+            <!-- SMS -->
+            <div class="form-panel p-4">
+              <div class="form-check form-switch d-flex align-items-center gap-3">
+                <input class="form-check-input" type="checkbox" role="switch" id="sms-switch" checked style="transform: scale(1.5);">
+                <label class="form-check-label ms-2" for="sms-switch" style="font-weight:600">SMS Fallback Gateway<br><span class="text-muted fw-normal" style="font-size:0.85rem">Send offline SMS health summaries when 4G network drops.</span></label>
+              </div>
+            </div>
+            
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       MODALS & TOASTS
+       ============================================================ -->
+  <div class="modal fade" id="clinicalModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div>
+            <h5 class="modal-title" id="modal-title">Clinical Intelligence</h5>
+            <div class="mono-label mt-1" id="modal-subtitle">AI Diagnostic Handoff</div>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <h6 class="mono-label">Vitals History</h6>
+              <ul class="list-group list-group-flush mb-3" style="font-size:0.9rem">
+                <li class="list-group-item px-0 bg-transparent d-flex justify-content-between"><span>Blood Pressure</span> <strong id="modal-bp">120/80</strong></li>
+                <li class="list-group-item px-0 bg-transparent d-flex justify-content-between"><span>Blood Sugar (R)</span> <strong id="modal-sugar">95 mg/dL</strong></li>
+                <li class="list-group-item px-0 bg-transparent d-flex justify-content-between"><span>SpO2</span> <strong id="modal-spo2">98%</strong></li>
+              </ul>
+              <h6 class="mono-label">Known Conditions</h6>
+              <div class="d-flex flex-wrap gap-2" id="modal-tags"></div>
+            </div>
+            <div class="col-md-6">
+              <h6 class="mono-label text-danger">AI Assessment Alert</h6>
+              <div class="p-3 rounded bg-danger bg-opacity-10 border border-danger border-opacity-25" style="font-size:0.9rem;line-height:1.5; color:#991B1B" id="modal-ai-text">
+                Loading AI evaluation...
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer d-flex justify-content-between">
+          <button type="button" class="btn btn-light" data-bs-dismiss="modal" style="border-radius:12px">Close</button>
+          <button type="button" class="btn-primary-pill w-auto px-4 m-0" id="btn-refer-phc">
+            <i class="bi bi-hospital"></i> Dispatch PHC Referral Slip
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="liveToast" class="toast align-items-center text-bg-success border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body" id="toast-msg">Action completed.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
