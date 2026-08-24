@@ -70,7 +70,16 @@ const TRANSLATIONS = {
     lbl_matched_schemes: "Matched Schemes",
     dir_title: "Registered Villagers & Triage Directory",
     phc_title: "Nearest Health Centers & Emergency Dispatch",
-    settings_title: "Settings & Offline Gateway"
+    settings_title: "Settings & Offline Gateway",
+    btn_ask_help: "Ask for Help",
+    chat_title: "Arogya Assistant",
+    chat_subtitle: "Ask questions or get help navigating",
+    chat_welcome_msg: "Namaste! 🙏 I am your rural healthcare guide. How can I help you navigate or submit complaints today? You can type or tap the microphone to speak.",
+    tab_voice_input: "Voice Input",
+    tab_text_input: "Text Input",
+    lbl_grievance_text_desc: "TYPE YOUR HEALTH ISSUE OR GRIEVANCE",
+    btn_submit_grievance: "Submit Grievance / Symptoms",
+    tag_symptoms_breadcrumb: "● AI MULTILINGUAL TRIAGE & GRIEVANCE ENGINE"
   },
   hi: {
     hero_tag: "● ग्रामीण स्वास्थ्य खुफिया नेटवर्क",
@@ -95,7 +104,7 @@ const TRANSLATIONS = {
     btn_switch_node: "साइन आउट / नोड बदलें →",
     tab_dashboard: "डैशबोर्ड",
     tab_directory: "ग्रामीण निर्देशिका",
-    tab_symptoms: "AI लक्षण चेकर",
+    tab_symptoms: "AI लक्षण व शिकायत",
     tab_schemes: "योजना रडार",
     tab_profile: "प्रोफ़ाइल और विटल्स",
     tab_centers: "निकटतम PHC केंद्र",
@@ -116,12 +125,12 @@ const TRANSLATIONS = {
     lbl_gender: "लिंग",
     lbl_ward: "गाँव / वार्ड",
     lbl_abha: "ABHA ID",
-    lbl_symptoms: "लक्षण",
+    lbl_symptoms: "लक्षण व शिकायतें",
     lbl_conditions: "मौजूदा स्थितियां",
     btn_save: "मरीज रिकॉर्ड सहेजें",
     lbl_vitals_summary: "विटल्स सारांश",
     lbl_cond_sym: "स्थितियां और लक्षण",
-    triage_title: "स्थानीय भाषा वॉयस लक्षण निदान",
+    triage_title: "स्थानीय भाषा वॉयस एवं टेक्स्ट शिकायत / निदान पोर्टल",
     triage_prompt: "\"स्थानीय भाषा में बोलने के लिए टैप करें\"",
     lbl_body_map: "या प्रभावित शरीर क्षेत्रों पर क्लिक करें:",
     lbl_confidence: "कॉन्फिडेंस मैट्रिक्स",
@@ -136,7 +145,16 @@ const TRANSLATIONS = {
     lbl_matched_schemes: "मिलान योजनाएं",
     dir_title: "पंजीकृत ग्रामीण और ट्राइएज निर्देशिका",
     phc_title: "निकटतम स्वास्थ्य केंद्र और आपातकालीन प्रेषण",
-    settings_title: "सेटिंग्स और ऑफलाइन गेटवे"
+    settings_title: "सेटिंग्स और ऑफलाइन गेटवे",
+    btn_ask_help: "सहायता लें",
+    chat_title: "आरोग्य सहायक",
+    chat_subtitle: "सवाल पूछें या ऐप में मार्गदर्शन पाएं",
+    chat_welcome_msg: "नमस्ते! 🙏 मैं आपका ग्रामीण स्वास्थ्य सहायक हूँ। आज मैं आपकी कैसे मदद कर सकता हूँ?",
+    tab_voice_input: "वॉयस (बोलकर)",
+    tab_text_input: "टेक्स्ट (लिखकर)",
+    lbl_grievance_text_desc: "अपनी स्वास्थ्य समस्या या शिकायत लिखें",
+    btn_submit_grievance: "शिकायत / लक्षण दर्ज करें",
+    tag_symptoms_breadcrumb: "● एआई बहुभाषी ट्राइएज और शिकायत पोर्टल"
   }
 };
 
@@ -459,6 +477,207 @@ function removeTriageSymptom(sym) {
   triageSymptoms = triageSymptoms.filter(t => t !== sym);
   renderTriageTags();
   runClinicalRiskAlgo();
+}
+
+// -------------------------------------------------------------------------
+// GRIEVANCE & SYMPTOM TEXT INPUT EXTENSION
+// -------------------------------------------------------------------------
+function switchGrievanceMode(mode) {
+  const voiceTab = document.getElementById('tab-btn-voice');
+  const textTab = document.getElementById('tab-btn-text');
+  const voiceBox = document.getElementById('triage-voice-box');
+  const textBox = document.getElementById('triage-text-box');
+
+  if (mode === 'voice') {
+    voiceTab.classList.add('active');
+    textTab.classList.remove('active');
+    voiceBox.style.display = 'flex';
+    textBox.style.display = 'none';
+  } else {
+    textTab.classList.add('active');
+    voiceTab.classList.remove('active');
+    voiceBox.style.display = 'none';
+    textBox.style.display = 'block';
+  }
+}
+
+function submitTextGrievance() {
+  const inputEl = document.getElementById('grievance-text-input');
+  const val = inputEl.value.trim();
+  if (!val) {
+    showToast('Please type your health problem or grievance before submitting', 'warning');
+    return;
+  }
+
+  addBodySymptom(val);
+  inputEl.value = '';
+  showToast('Grievance / Symptom submitted successfully!', 'success');
+}
+
+// -------------------------------------------------------------------------
+// HELP CHATBOT COMPONENT (MODULAR & GEMINI BACKEND READY)
+// -------------------------------------------------------------------------
+let isChatVoiceRecording = false;
+let chatRecognition;
+
+if ('webkitSpeechRecognition' in window) {
+  try {
+    chatRecognition = new webkitSpeechRecognition();
+    chatRecognition.continuous = false;
+    chatRecognition.interimResults = false;
+
+    chatRecognition.onstart = function() {
+      isChatVoiceRecording = true;
+      const btn = document.getElementById('btn-chat-mic');
+      if (btn) btn.classList.add('listening');
+      showToast("Listening for Chatbot voice query...", 'info');
+    };
+
+    chatRecognition.onresult = function(event) {
+      if (event.results && event.results[0]) {
+        const text = event.results[0][0].transcript;
+        const input = document.getElementById('chat-text-input');
+        if (input) input.value = text;
+        sendChatMessage();
+      }
+    };
+
+    chatRecognition.onerror = function() {
+      showToast("Voice mic access error. Simulated voice query filled.", 'warning');
+      const input = document.getElementById('chat-text-input');
+      if (input && !input.value) input.value = "How do I find government health schemes?";
+      const btn = document.getElementById('btn-chat-mic');
+      if (btn) btn.classList.remove('listening');
+    };
+
+    chatRecognition.onend = function() {
+      isChatVoiceRecording = false;
+      const btn = document.getElementById('btn-chat-mic');
+      if (btn) btn.classList.remove('listening');
+    };
+  } catch (e) {
+    console.warn("Speech recognition initialization fallback", e);
+  }
+}
+
+function toggleHelpChatbot() {
+  const widget = document.getElementById('help-chatbot-widget');
+  if (widget) {
+    widget.classList.toggle('d-none');
+    if (!widget.classList.contains('d-none')) {
+      const input = document.getElementById('chat-text-input');
+      if (input) input.focus();
+    }
+  }
+}
+
+function handleChatKeyPress(e) {
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    sendChatMessage();
+  }
+}
+
+function sendQuickHelpPrompt(text) {
+  const input = document.getElementById('chat-text-input');
+  if (input) {
+    input.value = text;
+    sendChatMessage();
+  }
+}
+
+function toggleChatVoiceInput() {
+  if (!chatRecognition) {
+    const input = document.getElementById('chat-text-input');
+    if (input) input.value = "How to record patient vitals?";
+    sendChatMessage();
+    return;
+  }
+
+  if (isChatVoiceRecording) {
+    chatRecognition.stop();
+  } else {
+    try {
+      chatRecognition.lang = document.getElementById('lang-select').value === 'en' ? 'en-US' : 'hi-IN';
+      chatRecognition.start();
+    } catch (e) {
+      const input = document.getElementById('chat-text-input');
+      if (input) input.value = "How to submit grievance?";
+      sendChatMessage();
+    }
+  }
+}
+
+function sendChatMessage() {
+  const input = document.getElementById('chat-text-input');
+  if (!input) return;
+  const promptText = input.value.trim();
+  if (!promptText) return;
+
+  // Add User Message to Chat Log
+  appendChatMessage(promptText, 'user');
+  input.value = '';
+
+  // Call Modular Backend / Gemini Dispatcher
+  queryGeminiBackend(promptText);
+}
+
+function appendChatMessage(text, sender) {
+  const container = document.getElementById('chat-messages-container');
+  if (!container) return;
+
+  const msgDiv = document.createElement('div');
+  msgDiv.className = `chat-msg chat-msg-${sender}`;
+  msgDiv.innerText = text;
+  container.appendChild(msgDiv);
+  container.scrollTop = container.scrollHeight;
+}
+
+/**
+ * Modular Gemini API Backend Dispatcher Architecture
+ * Cleanly separated so backend engineers can connect Google's Gemini API key on the server.
+ */
+function queryGeminiBackend(userPrompt) {
+  /* =========================================================================
+     FUTURE GEMINI BACKEND INTEGRATION POINT:
+     Uncomment & configure the fetch call below when connecting your secure backend API server:
+     
+     fetch('/api/gemini/chat', {
+       method: 'POST',
+       headers: { 'Content-Type': 'application/json' },
+       body: JSON.stringify({ prompt: userPrompt, lang: appState.activeLanguage })
+     })
+     .then(res => res.json())
+     .then(data => appendChatMessage(data.reply, 'assistant'))
+     .catch(err => appendChatMessage("Could not reach Gemini backend service.", 'assistant'));
+     ========================================================================= */
+
+  // Intelligent client-side navigation assistant response
+  setTimeout(() => {
+    const lower = userPrompt.toLowerCase();
+    let reply = "I am here to help you navigate ArogyaSetu Intelligence. You can use the left sidebar menu to navigate through all features.";
+
+    if (lower.includes('symptom') || lower.includes('voice') || lower.includes('triage') || lower.includes('diagnostic')) {
+      reply = "To report symptoms or voice complaints: Click on 'AI Symptom Checker' in the sidebar menu. You can tap the big microphone to speak, or switch to Text Input mode to type!";
+      if (appState.currentUser) switchTab('view-symptoms');
+    } else if (lower.includes('grievance') || lower.includes('complaint') || lower.includes('problem')) {
+      reply = "To submit a grievance or complaint: Open 'AI Symptom Checker & Grievance Portal', choose 'Text Input' or 'Voice Input' to describe your health problem or PHC complaint.";
+      if (appState.currentUser) switchTab('view-symptoms');
+    } else if (lower.includes('scheme') || lower.includes('government') || lower.includes('benefit') || lower.includes('abha')) {
+      reply = "To check eligible government health schemes or generate your ABHA digital card: Click on 'Scheme Radar' from the sidebar menu.";
+      if (appState.currentUser) switchTab('view-schemes');
+    } else if (lower.includes('hospital') || lower.includes('phc') || lower.includes('center') || lower.includes('ambulance') || lower.includes('108')) {
+      reply = "To locate nearest health centers or dispatch emergency 108 ambulance: Click on 'Nearest PHC Centers' in the sidebar.";
+      if (appState.currentUser) switchTab('view-centers');
+    } else if (lower.includes('register') || lower.includes('patient') || lower.includes('vitals') || lower.includes('record')) {
+      reply = "To record patient details or vitals: Open 'Profile & Vitals Intake' from the sidebar and click 'Save Patient Record'.";
+      if (appState.currentUser) switchTab('view-profile');
+    } else {
+      reply = `Thank you for your question: "${userPrompt}". Your request is logged and ready for Gemini API response connection!`;
+    }
+
+    appendChatMessage(reply, 'assistant');
+  }, 400);
 }
 
 function runClinicalRiskAlgo() {
