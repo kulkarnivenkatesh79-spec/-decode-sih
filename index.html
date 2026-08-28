@@ -2,76 +2,291 @@
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="ArogyaSetu Intelligence - Clinical rural health intelligence, emergency triage, and government scheme gateway for frontline health workers.">
   <title>ArogyaSetu Intelligence</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
   <!-- ============================================================
-       VIEW 1: SPLIT AUTHENTICATION
+       EMBEDDED OFFLINE SVG SPRITE SYSTEM
        ============================================================ -->
-  <main id="view-auth" class="app-view active">
+  <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+    <defs>
+      <!-- Stars / Sparkles -->
+      <g id="icon-stars">
+        <path d="M7.5 1.5l1.3 3.7 3.7 1.3-3.7 1.3-1.3 3.7-1.3-3.7-3.7-1.3 3.7-1.3 1.3-3.7zm5.5 8l.7 1.8 1.8.7-1.8.7-.7 1.8-.7-1.8-1.8-.7 1.8-.7.7-1.8z" fill="currentColor"/>
+      </g>
+      <!-- Person -->
+      <g id="icon-person">
+        <path d="M8 8a3 3 0 100-6 3 3 0 000 6zm0 1.5c-3 0-6 1.5-6 4v1h12v-1c0-2.5-3-4-6-4z" fill="currentColor"/>
+      </g>
+      <!-- Lock -->
+      <g id="icon-lock">
+        <path d="M5 6V4a3 3 0 016 0v2h1a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h1zm2-2a1 1 0 012 0v2H7V4zm1 6a1.5 1.5 0 100 3 1.5 1.5 0 000-3z" fill="currentColor"/>
+      </g>
+      <!-- Shield Check -->
+      <g id="icon-shield-check">
+        <path d="M8 1.5l5.5 2v5c0 3.5-2.5 6.5-5.5 7.5-3-1-5.5-4-5.5-7.5v-5L8 1.5zm2.8 4.7L7 10 5.2 8.2l-.9.9L7 11.8l4.7-4.7-.9-.9z" fill="currentColor"/>
+      </g>
+      <!-- Search -->
+      <g id="icon-search">
+        <path d="M11.7 10.3l3.8 3.8-1.4 1.4-3.8-3.8a5.5 5.5 0 111.4-1.4zM6.5 10a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" fill="currentColor"/>
+      </g>
+      <!-- Moon -->
+      <g id="icon-moon">
+        <path d="M6 1a7 7 0 107 7 5.5 5.5 0 01-7-7z" fill="currentColor"/>
+      </g>
+      <!-- Sun -->
+      <g id="icon-sun">
+        <path d="M8 4a4 4 0 100 8 4 4 0 000-8zM8 1v2M8 13v2M1 8h2M13 8h2M3 3l1.5 1.5M11.5 11.5L13 13M3 13l1.5-1.5M11.5 4.5L13 3" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      </g>
+      <!-- Person Circle -->
+      <g id="icon-person-circle">
+        <path d="M8 0a8 8 0 100 16A8 8 0 008 0zm0 3a2.5 2.5 0 110 5 2.5 2.5 0 010-5zm0 11.2c-2.3 0-4.3-1.1-5.5-2.8.1-1.8 3.7-2.8 5.5-2.8s5.4 1 5.5 2.8c-1.2 1.7-3.2 2.8-5.5 2.8z" fill="currentColor"/>
+      </g>
+      <!-- Arrow Switch -->
+      <g id="icon-arrow-switch">
+        <path d="M1 4.5l3-3v2h8v2H4v2l-3-3zm14 7l-3 3v-2H4v-2h8v-2l3 3z" fill="currentColor"/>
+      </g>
+      <!-- Bar Chart -->
+      <g id="icon-bar-chart">
+        <path d="M2 13h12v1.5H2V13zm1-3.5h2.5v3H3v-3zm3.5-3.5H9v6.5H6.5V6zm3.5-4H13v10.5h-3V2z" fill="currentColor"/>
+      </g>
+      <!-- People -->
+      <g id="icon-people">
+        <path d="M5.5 6a2.5 2.5 0 100-5 2.5 2.5 0 000 5zm5 1a2 2 0 100-4 2 2 0 000 4zm-5 1.5c-2.5 0-5 1.3-5 3.5v1h10v-1c0-2.2-2.5-3.5-5-3.5zm5 1c.8.5 1.5 1.2 1.8 2.1.2.6.2 1.1.2 1.4h3v-1c0-1.8-2.2-2.9-5-2.5z" fill="currentColor"/>
+      </g>
+      <!-- Robot / AI Intelligence -->
+      <g id="icon-robot">
+        <path d="M8 1a1 1 0 011 1v1h2a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h2V2a1 1 0 011-1zm-3 5a1 1 0 100 2 1 1 0 000-2zm6 0a1 1 0 100 2 1 1 0 000-2zm-5 4.5h4v1H6v-1z" fill="currentColor"/>
+      </g>
+      <!-- Building Check / Schemes -->
+      <g id="icon-building-check">
+        <path d="M1 14.5h14v1.5H1v-1.5zM2 3l6-2 6 2v10.5H2V3zm4 3.5H4V8h2V6.5zm3 0H7V8h2V6.5zm3 0h-2V8h2V6.5zM6 9.5H4v1.5h2V9.5zm3 0H7v1.5h2V9.5zm3 0h-2v1.5h2V9.5z" fill="currentColor"/>
+      </g>
+      <!-- Person VCard -->
+      <g id="icon-person-vcard">
+        <path d="M1 3a2 2 0 012-2h10a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V3zm3 3a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm-1.5 4c0 1.2 1.2 2 2.5 2s2.5-.8 2.5-2v-.5h-5V10zm6.5-5.5h4v1.2H9V4.5zm0 2.5h4v1.2H9V7zm0 2.5h3v1.2H9V9.5z" fill="currentColor"/>
+      </g>
+      <!-- Hospital -->
+      <g id="icon-hospital">
+        <path d="M2 2a1 1 0 011-1h10a1 1 0 011 1v12h1v1.5H1V14h1V2zm5 2v2H5v2h2v2h2V8h2V6H9V4H7z" fill="currentColor"/>
+      </g>
+      <!-- Settings -->
+      <g id="icon-gear">
+        <path d="M6.5 1.5l.6 1.4a5 5 0 011.8.8l1.4-.6 1.4 1.4-.6 1.4c.3.6.6 1.2.8 1.8l1.4.6v2l-1.4.6a5 5 0 01-.8 1.8l.6 1.4-1.4 1.4-1.4-.6a5 5 0 01-1.8.8l-.6 1.4h-2l-.6-1.4a5 5 0 01-1.8-.8l-1.4.6-1.4-1.4.6-1.4a5 5 0 01-.8-1.8l-1.4-.6v-2l1.4-.6a5 5 0 01.8-1.8l-.6-1.4 1.4-1.4 1.4.6a5 5 0 011.8-.8l.6-1.4h2zM8 5.5a2.5 2.5 0 100 5 2.5 2.5 0 000-5z" fill="currentColor"/>
+      </g>
+      <!-- Alert / Exclamation Triangle -->
+      <g id="icon-alert">
+        <path d="M7.1 1.6a1 1 0 011.8 0l6.5 11.5a1 1 0 01-.9 1.5H1.5a1 1 0 01-.9-1.5L7.1 1.6zM8 5.5a.8.8 0 00-.8.8v3.4a.8.8 0 001.6 0V6.3a.8.8 0 00-.8-.8zm0 6.5a.9.9 0 100-1.8.9.9 0 000 1.8z" fill="currentColor"/>
+      </g>
+      <!-- Rupee Currency -->
+      <g id="icon-rupee">
+        <path d="M4 2h8v1.8H9.3c.5.5.8 1.1.8 1.8H12v1.8h-2c-.3 1.5-1.5 2.6-3.2 2.8L11 14.5H8.3L4.5 10.3v-1h2.2c1.2 0 2-.8 2.2-1.9H4V5.6h4.5c-.2-.6-.8-1-1.8-1H4V2z" fill="currentColor"/>
+      </g>
+      <!-- Cloud Check -->
+      <g id="icon-cloud-check">
+        <path d="M12.5 6a4 4 0 00-7.8-1A3.5 3.5 0 001.5 8.5 3.5 3.5 0 005 12h7.5a3.5 3.5 0 000-7h-.01zM10.8 7.3L7.2 10.9 5.2 8.9l.9-.9 1.1 1.1 2.7-2.7.9.9z" fill="currentColor"/>
+      </g>
+      <!-- Person Plus -->
+      <g id="icon-person-plus">
+        <path d="M6 7a3 3 0 100-6 3 3 0 000 6zm0 1.5c-3 0-6 1.5-6 4v1h9.5a4 4 0 01-.5-1.5c0-1.4.6-2.6 1.6-3.5H6zm7-.5v2h-2v1.5h2v2h1.5v-2h2V10h-2V8H13z" fill="currentColor"/>
+      </g>
+      <!-- Mic -->
+      <g id="icon-mic">
+        <path d="M8 1a2.5 2.5 0 00-2.5 2.5v4a2.5 2.5 0 005 0v-4A2.5 2.5 0 008 1zm4 6.5a4 4 0 01-8 0H2.5a5.5 5.5 0 005 5.4V14.5H5.5V16h5v-1.5H8.5v-1.6a5.5 5.5 0 005-5.4H12z" fill="currentColor"/>
+      </g>
+      <!-- Truck / Emergency Dispatch -->
+      <g id="icon-truck">
+        <path d="M1 3a1 1 0 011-1h8a1 1 0 011 1v2h2.5l2.5 3v4a1 1 0 01-1 1h-.5a2 2 0 01-4 0h-3a2 2 0 01-4 0H2a1 1 0 01-1-1V3zm11 3v2h2.2l-1.7-2H12zM4.5 13a1 1 0 100-2 1 1 0 000 2zm7 0a1 1 0 100-2 1 1 0 000 2zM6 4.5H4.5v1.2H6V7h1.2V5.7h1.5V4.5H7.2V3.2H6v1.3z" fill="currentColor"/>
+      </g>
+      <!-- Volume Up -->
+      <g id="icon-volume">
+        <path d="M7 3.5L3.5 6.5H1v3h2.5L7 12.5V3.5zm2.8 1.4a5 5 0 010 6.2l1.1 1.1a6.5 6.5 0 000-8.4l-1.1 1.1zm1.8-1.8a7.5 7.5 0 010 9.8l1.1 1.1a9 9 0 000-12l-1.1 1.1z" fill="currentColor"/>
+      </g>
+      <!-- Download -->
+      <g id="icon-download">
+        <path d="M8 1a.8.8 0 01.8.8v6.9l2.4-2.4 1.1 1.1L8 11.7 3.7 7.4l1.1-1.1 2.4 2.4V1.8A.8.8 0 018 1zM2 12.5h12v1.8H2v-1.8z" fill="currentColor"/>
+      </g>
+      <!-- QR Code -->
+      <g id="icon-qr">
+        <path d="M1 1h6v6H1V1zm1.5 1.5v3h3v-3h-3zM9 1h6v6H9V1zm1.5 1.5v3h3v-3h-3zM1 9h6v6H1V9zm1.5 1.5v3h3v-3h-3zM9 9h2v2H9V9zm4 0h2v2h-2V9zm-4 4h2v2H9v-2zm2-2h2v2h-2v-2zm2 2h2v2h-2v-2z" fill="currentColor"/>
+      </g>
+      <!-- Cloud Upload -->
+      <g id="icon-cloud-upload">
+        <path d="M12.5 6a4 4 0 00-7.8-1A3.5 3.5 0 001.5 8.5 3.5 3.5 0 005 12h7.5a3.5 3.5 0 000-7h-.01zM8 4.8l2.6 2.6-.9.9-1.1-1.1v3.3H7.4V7.2L6.3 8.3l-.9-.9L8 4.8z" fill="currentColor"/>
+      </g>
+      <!-- Trash -->
+      <g id="icon-trash">
+        <path d="M3 3h10v1.5H3V3zm1.5 3h7v7.5a1 1 0 01-1 1h-5a1 1 0 01-1-1V6zm2-4h3v1h-3V2z" fill="currentColor"/>
+      </g>
+      <!-- Close X -->
+      <g id="icon-close">
+        <path d="M2.5 2.5l11 11m-11 0l11-11" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      </g>
+      <!-- Geo Pin -->
+      <g id="icon-geo">
+        <path d="M8 1a4.5 4.5 0 00-4.5 4.5c0 3.2 4.5 9.5 4.5 9.5s4.5-6.3 4.5-9.5A4.5 4.5 0 008 1zm0 6a1.8 1.8 0 110-3.6 1.8 1.8 0 010 3.6z" fill="currentColor"/>
+      </g>
+      <!-- Chevrons -->
+      <g id="icon-chevron-left">
+        <path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </g>
+      <g id="icon-chevron-right">
+        <path d="M6 3l5 5-5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+      </g>
+      <!-- More 3-Dots -->
+      <g id="icon-more">
+        <path d="M3 8a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm5 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0zm5 0a1.5 1.5 0 113 0 1.5 1.5 0 01-3 0z" fill="currentColor"/>
+      </g>
+      <!-- Phone Call -->
+      <g id="icon-phone">
+        <path d="M3.6 1.2c.4-.4 1-.4 1.4 0l2 2c.4.4.4 1 0 1.4L5.8 5.8c.8 1.7 2.2 3.1 3.9 3.9l1.2-1.2c.4-.4 1-.4 1.4 0l2 2c.4.4.4 1 0 1.4l-1.5 1.5c-.8.8-2 .9-3 .3-3.2-1.8-5.8-4.4-7.6-7.6-.6-1-.5-2.2.3-3L3.6 1.2z" fill="currentColor"/>
+      </g>
+      <!-- Copy -->
+      <g id="icon-copy">
+        <path d="M4 2h7a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V4a2 2 0 012-2zm0 1.5a.5.5 0 00-.5.5v7a.5.5 0 00.5.5h7a.5.5 0 00.5-.5V4a.5.5 0 00-.5-.5H4zM6 14.5h6a1.5 1.5 0 001.5-1.5V6H15v7a3 3 0 01-3 3H6v-1.5z" fill="currentColor"/>
+      </g>
+    </defs>
+  </svg>
+
+  <!-- ============================================================
+       STICKY OFFLINE DEMO SIMULATION BANNER
+       ============================================================ -->
+  <div class="offline-demo-banner d-none" id="offline-demo-banner" role="alert">
+    <svg class="icon me-2" aria-hidden="true"><use href="#icon-alert"></use></svg>
+    <span data-i18n="offline_banner_text"><strong>DEMO SIMULATION: OFFLINE MODE ACTIVE</strong> — Network dropped. All records queued locally in Indexed/LocalStorage.</span>
+    <button class="btn-sm ms-auto" type="button" data-action="restore-online" data-i18n="btn_restore_online">Restore Online</button>
+  </div>
+
+  <!-- ============================================================
+       VIEW 1: SPLIT AUTHENTICATION & PERSONA LAUNCHER
+       ============================================================ -->
+  <main id="view-auth" class="app-view active" role="main">
     <div class="split-layout">
+      <!-- Left Impact Panel -->
       <div class="split-left">
-        <div class="network-bg"></div>
+        <div class="network-bg" aria-hidden="true"></div>
         <div class="split-brand">
-          <i class="bi bi-stars" style="color:var(--c-amb)"></i> ArogyaSetu Intelligence
+          <svg class="icon text-warning" aria-hidden="true"><use href="#icon-stars"></use></svg> ArogyaSetu Intelligence
         </div>
         <div>
-          <span class="mono-label" data-i18n="hero_tag">● RURAL HEALTH INTELLIGENCE NETWORK</span>
-          <h1 data-i18n="hero_title">24,000+ rural lives connected to instant care.</h1>
+          <span class="mono-label" data-i18n="hero_tag">● FRONTLINE RURAL HEALTH NETWORK</span>
+          <h1 data-i18n="hero_title">Eliminating critical triage &amp; maternal care delays.</h1>
           <p class="split-quote" data-i18n="hero_quote">
-            "ArogyaSetu Intelligence bridges the critical gap between remote village hamlets, ASHA frontline workers, and verified government healthcare schemes."
+            "Bridging the critical 48-hour gap between remote village hamlets, frontline ASHA workers, and verified government healthcare schemes with 100% offline edge intelligence."
           </p>
         </div>
+        
+        <!-- Live Counting Impact Telemetry Strip -->
         <div class="telemetry-row">
           <div class="tel-item">
-            <div class="tel-val">24k+</div>
-            <div class="mono-label" data-i18n="stat_villagers">Active Villagers</div>
+            <div class="tel-val" id="impact-screened" data-count="24800">24,800+</div>
+            <div class="mono-label" data-i18n="stat_villagers">Villagers Screened</div>
           </div>
           <div class="tel-item">
-            <div class="tel-val">100%</div>
-            <div class="mono-label" data-i18n="stat_voice">Multilingual Voice</div>
+            <div class="tel-val" id="impact-wards" data-count="12">12</div>
+            <div class="mono-label" data-i18n="stat_wards">Wards Connected</div>
           </div>
           <div class="tel-item">
-            <div class="tel-val">₹4.2 Cr</div>
-            <div class="mono-label" data-i18n="stat_schemes">Schemes Unlocked</div>
+            <div class="tel-val" id="impact-dbt">₹4.28 Cr</div>
+            <div class="mono-label" data-i18n="stat_schemes">DBT Benefits Enabled</div>
           </div>
         </div>
         <div class="split-footer mono-label" data-i18n="footer_auth">
-          National Health Mission Interface • Secure ABHA Node Access
+          National Health Mission Interface • Verified ABHA Health Node Access
         </div>
       </div>
+
+      <!-- Right Login & Instant Persona Deck -->
       <div class="split-right">
-        <h2 data-i18n="auth_title">Sign in to your health node</h2>
-        <div class="subtext" data-i18n="auth_subtext">Enter your ABHA ID, Phone number, or select a demo role below</div>
-        <div class="auth-form">
-          <div class="floating-input">
-            <i class="bi bi-person"></i>
-            <input type="text" placeholder="PHONE / ABHA HEALTH ID" id="inp-auth-user">
-          </div>
-          <div class="floating-input">
-            <i class="bi bi-lock"></i>
-            <input type="password" placeholder="OTP / ACCESS PIN" id="inp-auth-pass">
-          </div>
-          <button class="btn-primary-pill" onclick="initRole('asha')" data-i18n="btn_access">Access Health Platform &rarr;</button>
-          
-          <div class="divider mono-label" data-i18n="lbl_or_fed">OR FEDERATED ACCESS</div>
-          
-          <button class="fed-btn fed-abha" onclick="initRole('patient')">
-            <i class="bi bi-shield-check text-success"></i> <span data-i18n="btn_abha">Continue with ABHA ID</span>
+        <h2 data-i18n="auth_title">Access your clinical health node</h2>
+        <div class="subtext" data-i18n="auth_subtext">One-click role launch or enter verified credentials with instant OTP</div>
+        
+        <!-- Large Interactive Demo Persona Cards -->
+        <div class="mono-label mb-2" data-i18n="lbl_demo">⚡ ONE-CLICK DEMO ACCESS (SELECT ROLE)</div>
+        <div class="demo-cards-grid mb-4">
+          <button class="persona-card" type="button" data-action="init-role" data-role="asha">
+            <div class="persona-card-icon" style="background:var(--c-amb-bg); color:var(--c-amb-text);">
+              <svg class="icon" aria-hidden="true"><use href="#icon-people"></use></svg>
+            </div>
+            <div class="persona-card-info">
+              <div class="persona-card-title" data-i18n="role_asha_title">ASHA Field Worker</div>
+              <div class="persona-card-desc" data-i18n="role_asha_desc">Screen villagers, manage ANC cohorts &amp; sync field records</div>
+            </div>
+            <div class="persona-launch-badge" aria-hidden="true">&rarr;</div>
+          </button>
+
+          <button class="persona-card" type="button" data-action="init-role" data-role="doctor">
+            <div class="persona-card-icon" style="background:var(--c-red-bg); color:var(--c-red-text);">
+              <svg class="icon" aria-hidden="true"><use href="#icon-hospital"></use></svg>
+            </div>
+            <div class="persona-card-info">
+              <div class="persona-card-title" data-i18n="role_doc_title">PHC Medical Officer</div>
+              <div class="persona-card-desc" data-i18n="role_doc_desc">Review high-risk triage alerts &amp; authorize 108 emergency dispatch</div>
+            </div>
+            <div class="persona-launch-badge" aria-hidden="true">&rarr;</div>
+          </button>
+
+          <button class="persona-card" type="button" data-action="init-role" data-role="patient">
+            <div class="persona-card-icon" style="background:var(--c-sky-bg); color:var(--c-sky-text);">
+              <svg class="icon" aria-hidden="true"><use href="#icon-robot"></use></svg>
+            </div>
+            <div class="persona-card-info">
+              <div class="persona-card-title" data-i18n="role_patient_title">Rural Villager / Patient</div>
+              <div class="persona-card-desc" data-i18n="role_patient_desc">Check symptoms via vernacular voice &amp; discover eligible schemes</div>
+            </div>
+            <div class="persona-launch-badge" aria-hidden="true">&rarr;</div>
+          </button>
+
+          <button class="persona-card" type="button" data-action="init-role" data-role="maternal">
+            <div class="persona-card-icon" style="background:var(--c-mint-bg); color:var(--c-mint-text);">
+              <svg class="icon" aria-hidden="true"><use href="#icon-building-check"></use></svg>
+            </div>
+            <div class="persona-card-info">
+              <div class="persona-card-title" data-i18n="role_maternal_title">Maternal Mother (ANC)</div>
+              <div class="persona-card-desc" data-i18n="role_maternal_desc">Access maternity benefits (JSY/PMMVY) &amp; digital ABHA passport</div>
+            </div>
+            <div class="persona-launch-badge" aria-hidden="true">&rarr;</div>
           </button>
         </div>
-        <div class="divider mono-label mt-5" data-i18n="lbl_demo">INSTANT DEMO ACCESS</div>
-        <div class="demo-grid">
-          <div class="demo-pill" onclick="initRole('patient')" data-i18n="role_patient">Rural Villager / Patient</div>
-          <div class="demo-pill" onclick="initRole('asha')" data-i18n="role_asha">ASHA Field Worker</div>
-          <div class="demo-pill" onclick="initRole('doctor')" data-i18n="role_doctor">PHC Medical Officer</div>
-          <div class="demo-pill" onclick="initRole('maternal')" data-i18n="role_maternal">Maternal Mother (ANC)</div>
+
+        <div class="divider mono-label" data-i18n="lbl_or_fed">OR SECURE CREDENTIAL LOGIN</div>
+
+        <!-- Functional 6-Digit Mock OTP Verification (P0.3) -->
+        <div class="auth-form" id="auth-otp-form">
+          <div class="mb-3 text-start">
+            <label class="intake-label mb-1" for="inp-auth-user" data-i18n="lbl_phone_abha">Phone Number or ABHA Health ID</label>
+            <div class="floating-input">
+              <svg class="icon" aria-hidden="true"><use href="#icon-person"></use></svg>
+              <input type="text" placeholder="e.g. 9876543210 or 14-digit ABHA" id="inp-auth-user" aria-label="Phone or ABHA Health ID" value="9876543210">
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <div class="d-flex justify-content-between align-items-center mb-1">
+              <label class="intake-label mb-0" for="otp-digit-0" data-i18n="lbl_enter_otp">ENTER 6-DIGIT VERIFICATION CODE</label>
+              <button type="button" id="btn-request-otp" class="btn-link text-primary fw-bold p-0 border-0 bg-transparent" data-action="request-otp" style="font-size:0.75rem; text-decoration:none;">Request OTP</button>
+              <span id="otp-timer" class="text-muted fw-bold d-none" style="font-size:0.75rem;">Resend in 0:30</span>
+            </div>
+            <div class="otp-inputs-row" id="otp-container" aria-describedby="otp-error-msg">
+              <input type="text" maxlength="1" class="otp-digit" id="otp-digit-0" data-index="0" inputmode="numeric" autocomplete="one-time-code" aria-label="Digit 1">
+              <input type="text" maxlength="1" class="otp-digit" data-index="1" inputmode="numeric" aria-label="Digit 2">
+              <input type="text" maxlength="1" class="otp-digit" data-index="2" inputmode="numeric" aria-label="Digit 3">
+              <input type="text" maxlength="1" class="otp-digit" data-index="3" inputmode="numeric" aria-label="Digit 4">
+              <input type="text" maxlength="1" class="otp-digit" data-index="4" inputmode="numeric" aria-label="Digit 5">
+              <input type="text" maxlength="1" class="otp-digit" data-index="5" inputmode="numeric" aria-label="Digit 6">
+            </div>
+            <div class="text-danger mt-1 fw-semibold d-none" id="otp-error-msg" style="font-size:0.8rem" role="alert">Invalid Code. Enter demo code: 123456</div>
+          </div>
+
+          <button class="btn-primary-pill w-100" id="btn-otp-verify" data-action="verify-otp" type="button">
+            <span data-i18n="btn_verify_otp">Verify &amp; Enter Health Platform</span> &rarr;
+          </button>
         </div>
+
       </div>
     </div>
   </main>
@@ -81,408 +296,880 @@
        ============================================================ -->
   <div class="app-layout" id="app-shell" style="display:none;">
     
+    <!-- Mobile Expandable Search Bar Overlay -->
+    <div class="mobile-search-overlay" id="mobile-search-overlay">
+      <div class="mobile-search-bar">
+        <label for="mobile-search-input" class="visually-hidden">Search symptoms, schemes, ABHA</label>
+        <svg class="icon text-muted" aria-hidden="true"><use href="#icon-search"></use></svg>
+        <input type="text" id="mobile-search-input" placeholder="Search symptoms, schemes, ABHA..." aria-label="Mobile search input">
+        <button class="btn-icon" data-action="close-mobile-search" type="button" aria-label="Close search">
+          <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+      </div>
+    </div>
+
     <!-- Flush Top Navbar -->
-    <header class="app-header">
+    <header class="app-header" role="banner">
       <div class="header-left">
-        <div class="nav-brand" onclick="logout()" title="Return to Home">
-          <i class="bi bi-stars" style="color:var(--c-amb)"></i> <span data-i18n="brand">ArogyaSetu Intelligence</span>
-        </div>
-        <div class="cmd-palette">
-          <span id="lang-search-placeholder" data-i18n="search_placeholder"><i class="bi bi-search me-2"></i> Search symptoms, schemes, ABHA...</span>
-          <span class="cmd-badge">⌘K</span>
+        <button type="button" class="nav-brand border-0 bg-transparent" data-action="logout" title="Return to Home">
+          <svg class="icon text-warning" aria-hidden="true"><use href="#icon-stars"></use></svg>
+          <span data-i18n="brand">ArogyaSetu Intelligence</span>
+        </button>
+        
+        <!-- Desktop Search with / shortcut -->
+        <div class="cmd-palette" role="search" data-action="focus-search" title="Press / or ⌘K to search" tabindex="0">
+          <label for="desktop-search-input" class="visually-hidden">Search symptoms, schemes, ABHA</label>
+          <span id="lang-search-placeholder" data-i18n="search_placeholder">
+            <svg class="icon me-2" aria-hidden="true"><use href="#icon-search"></use></svg> Search symptoms, schemes, ABHA...
+          </span>
+          <input type="text" id="desktop-search-input" class="cmd-input-hidden" placeholder="Search symptoms, schemes..." aria-label="Desktop Search">
+          <span class="cmd-badge" aria-hidden="true">/</span>
         </div>
       </div>
 
       <div class="nav-utils">
-        <button class="btn-icon" id="theme-toggle" onclick="toggleTheme()" title="Toggle Dark/Light Mode">
-          <i class="bi bi-moon-stars-fill" id="theme-icon"></i>
+        <!-- Mobile search toggle button -->
+        <button class="btn-icon mobile-search-btn" id="mobile-search-btn" data-action="open-mobile-search" type="button" aria-label="Open Search">
+          <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
         </button>
-        <select class="lang-select" id="lang-select" onchange="setLanguage(this.value)">
+
+        <!-- Offline Sync Indicator with aria-live -->
+        <div class="sync-indicator-chip" id="sync-chip" title="100% Offline Database Local Sync" aria-live="polite">
+          <span class="sync-dot" aria-hidden="true"></span>
+          <span class="sync-label" id="sync-status-label">Offline Ready</span>
+        </div>
+
+        <button class="btn-icon" id="theme-toggle" data-action="toggle-theme" type="button" title="Toggle Dark/Light Mode" aria-label="Toggle Theme">
+          <svg class="icon" id="theme-icon" aria-hidden="true"><use href="#icon-moon"></use></svg>
+        </button>
+
+        <label for="lang-select" class="visually-hidden">Select Language</label>
+        <select class="lang-select" id="lang-select" aria-label="Select Language">
           <option value="en">🌐 English</option>
           <option value="hi">हिन्दी</option>
           <option value="kn">ಕನ್ನಡ</option>
           <option value="ta">தமிழ்</option>
         </select>
+
         <div class="profile-chip-container">
-          <div class="active-persona" id="user-chip" onclick="toggleProfileDropdown()">
-            <i class="bi bi-person-circle text-primary"></i> <span id="top-persona">[ 👤 User ]</span>
-          </div>
-          <div class="profile-dropdown" id="profile-dropdown">
+          <button type="button" class="active-persona border-0 bg-transparent" id="user-chip" data-action="toggle-profile-dropdown" aria-haspopup="true" aria-expanded="false">
+            <svg class="icon text-primary" aria-hidden="true"><use href="#icon-person-circle"></use></svg>
+            <span id="top-persona">[ 👤 User ]</span>
+          </button>
+          <div class="profile-dropdown" id="profile-dropdown" role="menu">
             <div class="badge-mono-pill mb-1" id="dropdown-role-badge">ACTIVE NODE: UNKNOWN</div>
-            <div class="dropdown-item-custom" onclick="logout()">
-              <i class="bi bi-arrow-left-right"></i> <span data-i18n="btn_switch_node">Sign Out / Switch Node &rarr;</span>
-            </div>
+            <button type="button" class="dropdown-item-custom border-0 bg-transparent w-100 text-start" data-action="logout" role="menuitem">
+              <svg class="icon" aria-hidden="true"><use href="#icon-arrow-switch"></use></svg>
+              <span data-i18n="btn_switch_node">Sign Out / Switch Node &rarr;</span>
+            </button>
           </div>
         </div>
       </div>
     </header>
 
     <div class="app-body">
-      <!-- Fixed Left Sidebar (Collapsible) -->
-      <aside class="app-sidebar" id="app-sidebar">
+      <!-- Fixed Left Sidebar (Collapsible on Desktop) -->
+      <aside class="app-sidebar" id="app-sidebar" aria-label="Sidebar Navigation">
         <ul class="side-menu" id="side-menu">
-          <li class="side-item" id="sb-dashboard" data-target="view-dashboard" title="Dashboard">
-            <i class="bi bi-bar-chart"></i> <span class="sb-label" data-i18n="tab_dashboard">Dashboard</span>
+          <li class="side-item" id="sb-dashboard" data-target="view-dashboard" data-route="#/dashboard" title="Dashboard" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-bar-chart"></use></svg>
+            <span class="sb-label" data-i18n="tab_dashboard">Dashboard</span>
           </li>
-          <li class="side-item" id="sb-directory" data-target="view-directory" title="Villager Directory">
-            <i class="bi bi-people"></i> <span class="sb-label" data-i18n="tab_directory">Villager Directory</span>
+          <li class="side-item" id="sb-directory" data-target="view-directory" data-route="#/directory" title="Villager Directory" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-people"></use></svg>
+            <span class="sb-label" data-i18n="tab_directory">Villager Directory</span>
           </li>
-          <li class="side-item" id="sb-symptoms" data-target="view-symptoms" title="AI Symptom Checker">
-            <i class="bi bi-robot"></i> <span class="sb-label" data-i18n="tab_symptoms">AI Symptom Checker</span>
+          <li class="side-item" id="sb-symptoms" data-target="view-symptoms" data-route="#/symptoms" title="AI Symptom Checker" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-robot"></use></svg>
+            <span class="sb-label" data-i18n="tab_symptoms">AI Symptom Checker</span>
           </li>
-          <li class="side-item" id="sb-schemes" data-target="view-schemes" title="Scheme Radar">
-            <i class="bi bi-building-check"></i> <span class="sb-label" data-i18n="tab_schemes">Scheme Radar</span>
+          <li class="side-item" id="sb-schemes" data-target="view-schemes" data-route="#/schemes" title="Scheme Radar" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-building-check"></use></svg>
+            <span class="sb-label" data-i18n="tab_schemes">Scheme Radar</span>
           </li>
-          <li class="side-item" id="sb-profile" data-target="view-profile" title="Profile & Vitals Intake">
-            <i class="bi bi-person-vcard"></i> <span class="sb-label" data-i18n="tab_profile">Profile &amp; Vitals Intake</span>
+          <li class="side-item" id="sb-profile" data-target="view-profile" data-route="#/profile" title="Profile & Vitals Intake" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-person-vcard"></use></svg>
+            <span class="sb-label" data-i18n="tab_profile">Profile &amp; Vitals Intake</span>
           </li>
-          <li class="side-item" id="sb-centers" data-target="view-centers" title="Nearest PHC Centers">
-            <i class="bi bi-hospital"></i> <span class="sb-label" data-i18n="tab_centers">Nearest PHC Centers</span>
+          <li class="side-item" id="sb-centers" data-target="view-centers" data-route="#/centers" title="Nearest PHC Centers" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-hospital"></use></svg>
+            <span class="sb-label" data-i18n="tab_centers">Nearest PHC Centers</span>
           </li>
-          <li class="side-item" id="sb-settings" data-target="view-settings" title="Settings">
-            <i class="bi bi-gear"></i> <span class="sb-label" data-i18n="tab_settings">Settings</span>
+          <li class="side-item" id="sb-settings" data-target="view-settings" data-route="#/settings" title="Settings" tabindex="0" role="button">
+            <svg class="icon" aria-hidden="true"><use href="#icon-gear"></use></svg>
+            <span class="sb-label" data-i18n="tab_settings">Settings</span>
           </li>
         </ul>
         <div class="sidebar-footer">
-          <button class="btn-collapse" id="sidebar-toggle" onclick="toggleSidebar()" title="Collapse Sidebar">
-            <i class="bi"></i>
+          <button class="btn-collapse" id="sidebar-toggle" data-action="toggle-sidebar" type="button" title="Collapse Sidebar" aria-label="Toggle Sidebar">
+            <svg class="icon" id="sidebar-toggle-icon" aria-hidden="true"><use href="#icon-chevron-left"></use></svg>
           </button>
         </div>
       </aside>
 
-      <!-- Main Viewport (Isolated Router) -->
-      <main class="app-main">
+      <!-- Main Viewport (Isolated Scrollable Router Stage) -->
+      <main class="app-main" id="app-main-viewport" role="main">
         <div class="content-stage" id="workspace-content">
 
-          <!-- DASHBOARD (#view-dashboard) -->
-          <section id="view-dashboard" class="view-pane d-none">
+          <!-- ============================================================
+               3.2 DASHBOARD (#view-dashboard) — RESTRUCTURED AROUND URGENCY
+               ============================================================ -->
+          <section id="view-dashboard" class="view-pane d-none" aria-labelledby="dash-heading">
             <div class="workspace-bounds">
-              <div class="breadcrumb mono-label">● NODE STATUS: ACTIVE</div>
-              <h2 data-i18n="dash_title">Field Operations &amp; Epidemiology Dashboard</h2>
-              
-              <!-- Metric Ribbon -->
-              <div class="bento-grid grid-4 mb-4 mt-4">
-                <div class="metric-card">
-                  <div class="mc-top">
-                    <div class="mc-icon text-primary" style="background:var(--c-sky-bg);"><i class="bi bi-people-fill"></i></div>
-                    <div class="mc-trend tag-mint">+14% this week</div>
+              <div class="breadcrumb mono-label" id="dash-node-badge">● NODE STATUS: ACTIVE</div>
+              <h1 id="dash-heading" data-i18n="dash_title">Field Operations &amp; Epidemiology Dashboard</h1>
+
+              <!-- ROW 1 (HERO): CLINICAL ACTION QUEUE ("NEEDS ACTION NOW") -->
+              <div class="action-queue-hero mt-4 mb-4" id="action-queue-section">
+                <div class="aq-header">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge-pulsing-alert">
+                      <span class="dot-ping"></span>
+                      <svg class="icon" aria-hidden="true"><use href="#icon-alert"></use></svg>
+                    </span>
+                    <h2 class="mb-0 fw-bold fs-5">Critical Action Queue</h2>
+                    <span class="badge-mono-pill ms-2" id="aq-open-count">3 Open Alerts</span>
                   </div>
-                  <div class="mc-val">2,480</div>
-                  <div class="mc-label" data-i18n="sc_screened">VILLAGERS SCREENED</div>
+                  <span class="mono-label text-muted" style="font-size:0.75rem">Auto-Triage Evaluated</span>
                 </div>
-                <div class="metric-card">
-                  <div class="mc-top">
-                    <div class="mc-icon text-danger" style="background:var(--c-red-bg);"><i class="bi bi-exclamation-triangle-fill"></i></div>
-                    <div class="mc-trend tag-red">Needs Action</div>
-                  </div>
-                  <div class="mc-val">18</div>
-                  <div class="mc-label" data-i18n="sc_alerts">HIGH-RISK MATERNAL ALERTS</div>
-                </div>
-                <div class="metric-card">
-                  <div class="mc-top">
-                    <div class="mc-icon text-success" style="background:var(--c-mint-bg);"><i class="bi bi-currency-rupee"></i></div>
-                    <div class="mc-trend tag-mint">+₹1.2L recently</div>
-                  </div>
-                  <div class="mc-val">₹4.28L</div>
-                  <div class="mc-label" data-i18n="sc_claims">DBT DISBURSED</div>
-                </div>
-                <div class="metric-card">
-                  <div class="mc-top">
-                    <div class="mc-icon text-info" style="background:var(--c-sky-bg);"><i class="bi bi-cloud-check-fill"></i></div>
-                    <div class="mc-trend tag-mint">Healthy</div>
-                  </div>
-                  <div class="mc-val">99.4%</div>
-                  <div class="mc-label" data-i18n="sc_sync">OFFLINE CLOUD SYNC</div>
+                <div class="aq-list" id="action-queue-list">
+                  <!-- Dynamically populated critical triage cases -->
                 </div>
               </div>
 
-              <!-- Quick Action Deck -->
-              <div class="bento-grid grid-4 mb-4">
-                <div class="quick-action-card" onclick="switchTab('view-profile')">
-                  <div class="qa-icon" style="background:var(--c-sky-bg); color:var(--c-sky-text)"><i class="bi bi-person-plus-fill"></i></div>
-                  <div class="qa-title" data-i18n="ac_record">Record Vitals</div>
-                  <div class="qa-sub">Manual Patient Entry</div>
+              <!-- ROW 2: COMPACT METRIC STRIP WITH 20-POINT SVG SPARKLINES -->
+              <div class="bento-grid grid-4 mb-4" id="metric-sparklines-row">
+                <div class="compact-metric-card">
+                  <div class="cm-header">
+                    <span class="cm-label" data-i18n="stat_screened_cap">VILLAGERS SCREENED</span>
+                    <span class="tag-mint text-success fw-bold" style="font-size:0.7rem">+14% ↑</span>
+                  </div>
+                  <div class="cm-body">
+                    <div class="cm-num" id="stat-screened-num">2,480</div>
+                    <!-- Inline SVG Sparkline -->
+                    <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M0,24 Q15,22 30,18 T60,12 T85,8 T100,4" fill="none" stroke="var(--c-mint)" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
                 </div>
-                <div class="quick-action-card" onclick="switchTab('view-symptoms')">
-                  <div class="qa-icon" style="background:var(--c-amb-bg); color:#B45309;"><i class="bi bi-mic-fill"></i></div>
+
+                <div class="compact-metric-card alert-tint">
+                  <div class="cm-header">
+                    <span class="cm-label text-danger" data-i18n="stat_alerts_cap">HIGH-RISK ALERTS</span>
+                    <span class="tag-red text-danger fw-bold" style="font-size:0.7rem">Active ⚠️</span>
+                  </div>
+                  <div class="cm-body">
+                    <div class="cm-num text-danger" id="stat-alerts-num">18</div>
+                    <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M0,8 Q20,15 40,10 T70,22 T90,14 T100,28" fill="none" stroke="var(--c-red)" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="compact-metric-card">
+                  <div class="cm-header">
+                    <span class="cm-label" data-i18n="stat_dbt_cap">DBT DISBURSED</span>
+                    <span class="tag-mint text-success fw-bold" style="font-size:0.7rem">+₹1.2L</span>
+                  </div>
+                  <div class="cm-body">
+                    <div class="cm-num" id="stat-dbt-num">₹4.28L</div>
+                    <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M0,20 Q25,18 50,12 T75,6 T100,2" fill="none" stroke="var(--c-mint)" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+
+                <div class="compact-metric-card">
+                  <div class="cm-header">
+                    <span class="cm-label" data-i18n="stat_sync_cap">OFFLINE SYNC HEALTH</span>
+                    <span class="tag-mint text-success fw-bold" style="font-size:0.7rem">100%</span>
+                  </div>
+                  <div class="cm-body">
+                    <div class="cm-num" id="stat-sync-num">99.4%</div>
+                    <svg class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none" aria-hidden="true">
+                      <path d="M0,15 Q30,12 60,14 T90,5 T100,5" fill="none" stroke="var(--c-sky)" stroke-width="2.5" stroke-linecap="round"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+
+              <!-- ROW 3: HAND-AUTHORED SVG WARD CHOROPLETH DENSITY MAP -->
+              <div class="canvas-card mb-4" id="ward-choropleth-card">
+                <div class="d-flex justify-content-between align-items-center mb-3 flex-wrap gap-2">
+                  <div>
+                    <h2 class="mb-1 fw-bold fs-5">Devnagar Ward Epidemiological Map</h2>
+                    <div class="mono-label text-muted" style="font-size:0.75rem">Hover ward for telemetry • Click ward to filter Directory</div>
+                  </div>
+                  <!-- Interactive Layer Toggles -->
+                  <div class="map-layer-toggles">
+                    <button class="layer-pill active" type="button" data-action="set-map-layer" data-layer="all">All Layers</button>
+                    <button class="layer-pill" type="button" data-action="set-map-layer" data-layer="critical">Critical Alerts Only</button>
+                    <button class="layer-pill" type="button" data-action="set-map-layer" data-layer="maternal">Maternal Cohorts</button>
+                  </div>
+                </div>
+
+                <!-- SVG Ward Geometry Map -->
+                <div class="ward-map-wrapper">
+                  <svg id="ward-vector-map" viewBox="0 0 800 340" aria-label="Interactive Ward Map of Devnagar">
+                    <!-- Hand-authored Ward Polygons -->
+                    <g id="map-wards-layer">
+                      <polygon class="ward-poly" id="ward-poly-01" points="40,40 220,30 240,160 50,150" data-ward="Ward 01" data-pop="480" data-alerts="4" data-risk="Attention" role="button" tabindex="0" aria-label="Ward 01 North, 480 screened, 4 alerts"/>
+                      <polygon class="ward-poly" id="ward-poly-02" points="230,30 460,20 480,150 250,160" data-ward="Ward 02" data-pop="620" data-alerts="2" data-risk="Stable" role="button" tabindex="0" aria-label="Ward 02 Center, 620 screened, 2 alerts"/>
+                      <polygon class="ward-poly" id="ward-poly-03" points="470,20 740,35 760,160 490,150" data-ward="Ward 03" data-pop="510" data-alerts="8" data-risk="Critical" role="button" tabindex="0" aria-label="Ward 03 East, 510 screened, 8 alerts"/>
+                      <polygon class="ward-poly" id="ward-poly-04" points="50,160 250,170 230,300 40,310" data-ward="Ward 04" data-pop="390" data-alerts="5" data-risk="Critical" role="button" tabindex="0" aria-label="Ward 04 South West, 390 screened, 5 alerts"/>
+                      <polygon class="ward-poly" id="ward-poly-05" points="260,170 500,160 480,310 240,300" data-ward="Ward 05" data-pop="440" data-alerts="1" data-risk="Stable" role="button" tabindex="0" aria-label="Ward 05 South, 440 screened, 1 alert"/>
+                      <polygon class="ward-poly" id="ward-poly-06" points="510,160 760,170 740,310 490,310" data-ward="Ward 06" data-pop="540" data-alerts="3" data-risk="Attention" role="button" tabindex="0" aria-label="Ward 06 East South, 540 screened, 3 alerts"/>
+                    </g>
+                    <!-- Ward Label Overlay -->
+                    <g id="map-labels-layer" pointer-events="none">
+                      <text x="135" y="95" class="ward-txt">Ward 01 (North)</text>
+                      <text x="355" y="85" class="ward-txt">Ward 02 (Center)</text>
+                      <text x="615" y="85" class="ward-txt alert-text">Ward 03 (East)</text>
+                      <text x="145" y="235" class="ward-txt alert-text">Ward 04 (South-W)</text>
+                      <text x="370" y="235" class="ward-txt">Ward 05 (South)</text>
+                      <text x="615" y="235" class="ward-txt">Ward 06 (East-S)</text>
+                    </g>
+                    <!-- Individual Case Marker Dots -->
+                    <g id="map-markers-layer"></g>
+                  </svg>
+
+                  <!-- Dynamic Hover Tooltip -->
+                  <div class="ward-tooltip" id="ward-map-tooltip"></div>
+                </div>
+
+                <!-- Visually Hidden Fallback Table for A11y Screen Readers -->
+                <table class="visually-hidden">
+                  <caption>Devnagar Ward Epidemiological Health Metrics</caption>
+                  <thead><tr><th>Ward</th><th>Population Screened</th><th>Active Alerts</th><th>Risk Status</th></tr></thead>
+                  <tbody>
+                    <tr><td>Ward 01</td><td>480</td><td>4</td><td>Attention Required</td></tr>
+                    <tr><td>Ward 02</td><td>620</td><td>2</td><td>Stable</td></tr>
+                    <tr><td>Ward 03</td><td>510</td><td>8</td><td>Critical Maternal Alerts</td></tr>
+                    <tr><td>Ward 04</td><td>390</td><td>5</td><td>Critical Fever Cluster</td></tr>
+                    <tr><td>Ward 05</td><td>440</td><td>1</td><td>Stable</td></tr>
+                    <tr><td>Ward 06</td><td>540</td><td>3</td><td>Attention Required</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <!-- ROW 4: 4 FUNCTIONAL QUICK ACTIONS -->
+              <div class="bento-grid grid-4 mb-4">
+                <button type="button" class="quick-action-card border-0 text-start w-100" data-action="navigate" data-route="#/profile">
+                  <div class="qa-icon" style="background:var(--c-sky-bg); color:var(--c-sky-text);">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-person-plus"></use></svg>
+                  </div>
+                  <div class="qa-title" data-i18n="ac_record">Record Vitals</div>
+                  <div class="qa-sub">Manual Patient Intake</div>
+                </button>
+                <button type="button" class="quick-action-card border-0 text-start w-100" data-action="navigate" data-route="#/symptoms">
+                  <div class="qa-icon" style="background:var(--c-amb-bg); color:var(--c-amb-text);">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-mic"></use></svg>
+                  </div>
                   <div class="qa-title" data-i18n="ac_triage">Run Voice Triage</div>
                   <div class="qa-sub">AI Speech Diagnostic</div>
-                </div>
-                <div class="quick-action-card" onclick="switchTab('view-schemes')">
-                  <div class="qa-icon" style="background:var(--c-mint-bg); color:var(--c-mint-text);"><i class="bi bi-building-check"></i></div>
+                </button>
+                <button type="button" class="quick-action-card border-0 text-start w-100" data-action="navigate" data-route="#/schemes">
+                  <div class="qa-icon" style="background:var(--c-mint-bg); color:var(--c-mint-text);">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-building-check"></use></svg>
+                  </div>
                   <div class="qa-title" data-i18n="ac_radar">Scheme Radar</div>
                   <div class="qa-sub">Match Gov Benefits</div>
-                </div>
-                <div class="quick-action-card" onclick="switchTab('view-centers')">
-                  <div class="qa-icon" style="background:var(--c-red-bg); color:var(--c-red-text);"><i class="bi bi-truck"></i></div>
+                </button>
+                <button type="button" class="quick-action-card border-0 text-start w-100" data-action="navigate" data-route="#/centers">
+                  <div class="qa-icon" style="background:var(--c-red-bg); color:var(--c-red-text);">
+                    <svg class="icon" aria-hidden="true"><use href="#icon-truck"></use></svg>
+                  </div>
                   <div class="qa-title" data-i18n="ac_dispatch">Emergency 108 PHC</div>
                   <div class="qa-sub">Direct 108 Dispatch</div>
-                </div>
-              </div>
-
-              <!-- Network Canvas Card -->
-              <div class="canvas-card mt-4">
-                <div class="d-flex justify-content-between align-items-center mb-3">
-                  <h5 class="mb-0 fw-bold" data-i18n="lbl_network">Live Telemetry: Devnagar Ward Cluster Map</h5>
-                  <div class="mono-label d-flex gap-3">
-                    <span class="d-flex align-items-center gap-1"><span class="dot" style="background:#0EA5E9;width:8px;height:8px;"></span> Maternal Cluster</span>
-                    <span class="d-flex align-items-center gap-1"><span class="dot" style="background:#F59E0B;width:8px;height:8px;"></span> Hypertension</span>
-                    <span class="d-flex align-items-center gap-1"><span class="dot" style="background:#10B981;width:8px;height:8px;"></span> Stable</span>
-                  </div>
-                </div>
-                <canvas id="cluster-canvas"></canvas>
+                </button>
               </div>
             </div>
           </section>
 
-          <!-- PROFILE INTAKE (#view-profile) -->
-          <section id="view-profile" class="view-pane d-none">
+          <!-- ============================================================
+               3.3 VILLAGER DIRECTORY (#view-directory)
+               ============================================================ -->
+          <section id="view-directory" class="view-pane d-none" aria-labelledby="dir-heading">
+            <div class="workspace-bounds">
+              <div class="breadcrumb mono-label">● COMMUNITY FIELD DIRECTORY</div>
+              <h1 id="dir-heading" data-i18n="dir_title">Registered Villagers &amp; Triage Directory</h1>
+
+              <!-- STICKY MULTI-FILTER TOOLBAR -->
+              <div class="directory-sticky-bar mt-4">
+                <div class="filter-row-top">
+                  <div class="floating-input mb-0 flex-1">
+                    <label for="dir-search" class="visually-hidden">Search by Name, ABHA ID, Phone or Symptom</label>
+                    <svg class="icon" aria-hidden="true"><use href="#icon-search"></use></svg>
+                    <input type="text" id="dir-search" placeholder="Search by Name, ABHA ID, Phone or Symptom..." aria-label="Search Villagers">
+                  </div>
+                  <div class="d-flex gap-2 align-items-center">
+                    <label class="unsynced-toggle-label" for="chk-unsynced-only" title="Show only locally queued unsynced records">
+                      <input type="checkbox" id="chk-unsynced-only">
+                      <span class="custom-chk" aria-hidden="true"></span> Unsynced Only
+                    </label>
+                    <label for="dir-sort" class="visually-hidden">Sort Directory</label>
+                    <select class="form-select w-auto" id="dir-sort" aria-label="Sort Order">
+                      <option value="risk">Sort: Risk Severity</option>
+                      <option value="visit">Sort: Last Visit</option>
+                      <option value="name">Sort: Name (A-Z)</option>
+                    </select>
+                    <!-- Row Density Switcher -->
+                    <button class="btn-icon" id="btn-density-toggle" data-action="toggle-density" type="button" title="Toggle Compact/Comfortable Density" aria-label="Toggle Density">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-more"></use></svg>
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Quick Filter Chips with Labelled Divider (P0.6) -->
+                <div class="filter-chips-strip mt-2">
+                  <div class="chip-group" id="ward-filter-chips" role="toolbar" aria-label="Ward Filter Chips">
+                    <button type="button" class="filter-chip active" data-action="filter-ward" data-ward="All">All Wards</button>
+                    <button type="button" class="filter-chip" data-action="filter-ward" data-ward="Ward 01">Ward 01</button>
+                    <button type="button" class="filter-chip" data-action="filter-ward" data-ward="Ward 02">Ward 02</button>
+                    <button type="button" class="filter-chip" data-action="filter-ward" data-ward="Ward 03">Ward 03</button>
+                    <button type="button" class="filter-chip" data-action="filter-ward" data-ward="Ward 04">Ward 04</button>
+                  </div>
+                  <div class="chip-divider-labelled" aria-hidden="true">
+                    <span>RISK:</span>
+                  </div>
+                  <div class="chip-group" id="risk-filter-chips" role="toolbar" aria-label="Risk Filter Chips">
+                    <button type="button" class="filter-chip chip-risk active" data-action="filter-risk" data-risk="All">All Risks</button>
+                    <button type="button" class="filter-chip chip-critical" data-action="filter-risk" data-risk="Critical">Critical</button>
+                    <button type="button" class="filter-chip chip-attention" data-action="filter-risk" data-risk="Attention">Attention</button>
+                    <button type="button" class="filter-chip chip-stable" data-action="filter-risk" data-risk="Stable">Stable</button>
+                  </div>
+                </div>
+
+                <!-- Removable Active Filters Summary (P0.6) -->
+                <div class="active-filters-summary mt-2" id="active-filters-summary"></div>
+              </div>
+
+              <!-- Result Count & Clear Filters Inline (P0.5) -->
+              <div class="d-flex justify-content-between align-items-center mt-3 mb-2" id="dir-status-line">
+                <span class="text-muted" style="font-size:0.85rem;" id="dir-count-text">Showing 6 of 6 villagers</span>
+                <button type="button" class="btn-link text-primary fw-semibold p-0 border-0 bg-transparent d-none" id="btn-clear-filters-inline" data-action="clear-filters" style="font-size:0.85rem; text-decoration:none;">Clear filters</button>
+              </div>
+
+              <!-- BULK ACTION STRIP (Shown when items are checked) -->
+              <div class="bulk-actions-bar d-none" id="bulk-actions-bar" role="toolbar" aria-label="Bulk Actions">
+                <div class="d-flex align-items-center gap-2">
+                  <label for="chk-select-all" class="visually-hidden">Select All Villagers</label>
+                  <input type="checkbox" id="chk-select-all">
+                  <span class="fw-bold" id="bulk-selected-count">0 Villagers Selected</span>
+                </div>
+                <div class="d-flex gap-2">
+                  <button class="btn-primary-pill" type="button" data-action="bulk-sync">
+                    <svg class="icon me-1" aria-hidden="true"><use href="#icon-cloud-upload"></use></svg> Queue for Cloud Sync
+                  </button>
+                  <button class="btn-outline-danger" type="button" data-action="bulk-referral">
+                    <svg class="icon me-1" aria-hidden="true"><use href="#icon-truck"></use></svg> Flag for PHC Review
+                  </button>
+                </div>
+              </div>
+              
+              <!-- 3-Column Bento Grid Structure with Skeleton Support -->
+              <div class="cohort-grid mt-4" id="cohort-grid-container" aria-live="polite"></div>
+            </div>
+          </section>
+
+          <!-- ============================================================
+               3.4 AI VOICE & SVG BODY MAP TRIAGE (#view-symptoms) — SIGNATURE
+               ============================================================ -->
+          <section id="view-symptoms" class="view-pane d-none" aria-labelledby="triage-heading">
+            <div class="workspace-bounds">
+              <div class="breadcrumb mono-label">● MULTILINGUAL CLINICAL TRIAGE ENGINE</div>
+              <h1 id="triage-heading" data-i18n="triage_title">Vernacular Voice &amp; Body-Zone Diagnostic</h1>
+
+              <div class="triage-master-layout mt-4">
+                <!-- Left Deck: Microphone Waveform + SVG Anatomical Map -->
+                <div class="triage-interactive-deck">
+                  
+                  <!-- Real AnalyserNode Web Audio Waveform Card -->
+                  <div class="voice-box" id="triage-voice-box">
+                    <canvas id="voice-waves" height="90" aria-label="Real-time Audio Waveform"></canvas>
+                    
+                    <div class="d-flex align-items-center gap-3">
+                      <button class="btn-voice-huge" id="btn-triage-mic" type="button" aria-label="Activate Microphone Triage">
+                        <svg class="icon" aria-hidden="true"><use href="#icon-mic"></use></svg>
+                      </button>
+                      <button class="btn-voice-stop d-none" id="btn-triage-stop" data-action="stop-speech" type="button" aria-label="Stop Voice Recording">
+                        <span class="stop-square"></span>
+                      </button>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mt-3">
+                      <span class="timer-badge d-none" id="voice-timer">00:00</span>
+                      <p class="text-muted fw-semibold mb-0" id="triage-prompt" data-i18n="triage_prompt">"Tap to Speak in Vernacular (Hindi, Kannada, Tamil, English)"</p>
+                    </div>
+
+                    <!-- Live Interim Transcript Appearing Word-by-Word -->
+                    <div class="live-transcript-box mt-3 d-none" id="live-transcript-box" aria-live="polite">
+                      <span class="text-muted font-mono" style="font-size:0.75rem">INTERIM SPEECH CAPTURE:</span>
+                      <div class="transcript-text" id="live-transcript-text">Listening...</div>
+                    </div>
+                  </div>
+
+                  <!-- Interactive SVG Human Body Map Card -->
+                  <div class="body-map-card mt-4">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                      <div>
+                        <h2 class="mono-label mb-1 fs-6">INTERACTIVE ANATOMICAL BODY MAP</h2>
+                        <div class="text-muted" style="font-size:0.8rem">Click or tab to affected regions to expand vernacular symptoms</div>
+                      </div>
+                      <!-- Front / Back Anatomical Toggle -->
+                      <div class="body-flip-controls" role="group" aria-label="Body Map Orientation">
+                        <button class="body-flip-btn active" id="btn-body-front" type="button" data-action="body-orientation" data-orientation="front">Anterior (Front)</button>
+                        <button class="body-flip-btn" id="btn-body-back" type="button" data-action="body-orientation" data-orientation="back">Posterior (Back)</button>
+                      </div>
+                    </div>
+
+                    <!-- Precision SVG Body Figure -->
+                    <div class="body-svg-container">
+                      <svg id="svg-human-body" viewBox="0 0 240 380" aria-label="Human Body Region Map">
+                        <!-- Head / Migraine Zone -->
+                        <path class="body-zone-path" id="zone-head" data-zone="Head" d="M120,20 C100,20 90,40 90,60 C90,80 105,95 120,95 C135,95 150,80 150,60 C150,40 140,20 120,20 Z" role="button" tabindex="0" aria-label="Head and Migraine Zone"/>
+                        <!-- Throat Zone -->
+                        <path class="body-zone-path" id="zone-throat" data-zone="Throat" d="M108,95 L132,95 L130,115 L110,115 Z" role="button" tabindex="0" aria-label="Throat Zone"/>
+                        <!-- Chest / Respiratory Zone -->
+                        <path class="body-zone-path" id="zone-chest" data-zone="Chest" d="M80,115 L160,115 L150,175 L90,175 Z" role="button" tabindex="0" aria-label="Chest and Respiration Zone"/>
+                        <!-- Abdomen / Gut Zone -->
+                        <path class="body-zone-path" id="zone-abdomen" data-zone="Abdomen" d="M90,175 L150,175 L145,230 L95,230 Z" role="button" tabindex="0" aria-label="Abdomen and Gut Zone"/>
+                        <!-- Pelvic / Maternal Zone -->
+                        <path class="body-zone-path" id="zone-pelvic" data-zone="Pelvic" d="M95,230 L145,230 L135,270 L105,270 Z" role="button" tabindex="0" aria-label="Pelvic and Maternal Zone"/>
+                        <!-- Upper Limbs (Arms) -->
+                        <path class="body-zone-path" id="zone-arms" data-zone="Joints" d="M78,120 L50,210 L65,215 L88,140 Z M162,120 L190,210 L175,215 L152,140 Z" role="button" tabindex="0" aria-label="Arms and Upper Joints"/>
+                        <!-- Lower Limbs (Legs) -->
+                        <path class="body-zone-path" id="zone-legs" data-zone="Joints" d="M102,270 L90,360 L110,360 L118,270 Z M138,270 L150,360 L130,360 L122,270 Z" role="button" tabindex="0" aria-label="Legs and Mobility"/>
+                      </svg>
+
+                      <!-- Contextual Body Zone Symptom Picker Expansion -->
+                      <div class="zone-symptom-picker" id="zone-symptom-picker">
+                        <div class="mono-label mb-2" id="active-zone-label">SELECTED REGION: HEAD</div>
+                        <div class="symptom-chips-matrix mb-3" id="zone-symptom-chips"></div>
+                        
+                        <!-- Severity & Duration Selector -->
+                        <div class="d-flex gap-2 align-items-center">
+                          <label for="sel-sym-severity" class="visually-hidden">Severity</label>
+                          <select class="form-select form-select-sm" id="sel-sym-severity" style="font-size:0.8rem">
+                            <option value="Mild">Severity: Mild</option>
+                            <option value="Moderate" selected>Severity: Moderate</option>
+                            <option value="Severe">Severity: Severe Acute</option>
+                          </select>
+                          <label for="sel-sym-duration" class="visually-hidden">Duration</label>
+                          <select class="form-select form-select-sm" id="sel-sym-duration" style="font-size:0.8rem">
+                            <option value="1 day">Duration: Today</option>
+                            <option value="2-3 days" selected>Duration: 2-3 Days</option>
+                            <option value="1+ week">Duration: &gt; 1 Week</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Deck: Active Symptoms & Explainable Clinical Assessment -->
+                <div class="triage-assessment-deck">
+                  <div class="intake-form">
+                    <label class="intake-label" for="triage-sym-input" data-i18n="lbl_symptoms">CURRENT ACTIVE SYMPTOMS</label>
+                    <div class="tags-container mb-3" id="triage-symptoms-tags">
+                      <input type="text" class="tag-input-field" placeholder="Add manual symptoms..." id="triage-sym-input" aria-label="Add triage symptom">
+                    </div>
+
+                    <!-- Explainable Clinical Result Container with aria-live -->
+                    <div id="risk-result" style="display:none;" aria-live="polite">
+                      <div class="rc-urgency tag-red mb-3 p-3 rounded text-center fw-bold" id="risk-banner"></div>
+                      
+                      <!-- Clinical Explainability Driver Breakdown -->
+                      <div class="explainability-box p-3 rounded mb-3">
+                        <div class="mono-label mb-2 text-danger">⚠️ PRIMARY CLINICAL DECISION DRIVERS</div>
+                        <ul class="explainability-list" id="explainability-factors">
+                          <!-- Injected clinical rules -->
+                        </ul>
+                      </div>
+
+                      <div class="mono-label mb-2" data-i18n="lbl_confidence">Syndromic Risk Matrix</div>
+                      <div id="confidence-meters"></div>
+
+                      <!-- Mandatory Clinical Hackathon Safety Disclaimer -->
+                      <div class="safety-disclaimer-box mt-3 p-2 rounded text-center">
+                        <svg class="icon text-warning me-1" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+                        <span style="font-size:0.75rem" data-i18n="lbl_safety_disclaimer">
+                          <strong>Clinical Advisory:</strong> This is a triage recommendation guide, not a final medical diagnosis. For emergency stabilization, immediately call 108.
+                        </span>
+                      </div>
+                      
+                      <div class="d-flex gap-2 mt-4">
+                        <button class="btn-outline-secondary flex-1" type="button" data-action="play-advice">
+                          <svg class="icon me-1" aria-hidden="true"><use href="#icon-volume"></use></svg> Listen Advice
+                        </button>
+                        <button class="btn-primary-pill flex-1" type="button" data-action="save-triage">
+                          <svg class="icon me-1" aria-hidden="true"><use href="#icon-shield-check"></use></svg> Save to Patient
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ============================================================
+               3.5 SCHEME RADAR & ABHA CREDENTIAL (#view-schemes)
+               ============================================================ -->
+          <section id="view-schemes" class="view-pane d-none" aria-labelledby="scheme-heading">
+            <div class="workspace-bounds">
+              <div class="breadcrumb mono-label">● GOVERNMENT HEALTH BENEFIT ENGINE</div>
+              <h1 id="scheme-heading" data-i18n="scheme_title">National Scheme Radar &amp; ABHA Credential</h1>
+
+              <div class="patient-workspace mt-4">
+                <!-- Left Column: Reactive Eligibility Parameters & 3D Flipping ABHA Card -->
+                <div>
+                  <div class="form-panel p-4 mb-4">
+                    <h2 class="mono-label mb-3 fs-6" data-i18n="lbl_eligibility">Eligibility Parameters</h2>
+                    
+                    <label class="intake-label d-flex justify-content-between" for="range-inc">
+                      <span data-i18n="lbl_income">Annual Household Income</span>
+                      <span id="val-inc" class="text-primary fw-bold">₹2,50,000</span>
+                    </label>
+                    <input type="range" class="form-range mb-4" id="range-inc" min="0" max="600000" step="25000" value="250000">
+
+                    <label class="intake-label d-flex justify-content-between" for="range-fam">
+                      <span data-i18n="lbl_family">Family Members Count</span>
+                      <span id="val-fam" class="text-primary fw-bold">4 Members</span>
+                    </label>
+                    <input type="range" class="form-range mb-4" id="range-fam" min="1" max="10" step="1" value="4">
+
+                    <div class="row g-2 mb-2">
+                      <div class="col-md-6">
+                        <label class="intake-label" for="sel-cat" data-i18n="lbl_category">Beneficiary Category</label>
+                        <select class="form-select intake-input" id="sel-cat">
+                          <option value="General">General Category</option>
+                          <option value="BPL" selected>BPL / Antyodaya</option>
+                          <option value="Pregnant">Pregnant (ANC Mother)</option>
+                          <option value="Senior">Senior Citizen (70+)</option>
+                        </select>
+                      </div>
+                      <div class="col-md-6">
+                        <label class="intake-label" for="sel-state">Domicile State</label>
+                        <select class="form-select intake-input" id="sel-state">
+                          <option value="KA" selected>Karnataka</option>
+                          <option value="MH">Maharashtra</option>
+                          <option value="TN">Tamil Nadu</option>
+                          <option value="UP">Uttar Pradesh</option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- 3D Flipping ABHA Health Credential Card -->
+                  <div class="form-panel p-4 abha-credential-panel">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                      <h2 class="mono-label mb-0 fs-6" data-i18n="lbl_digital_abha">Digital ABHA Health Credential</h2>
+                      <span class="mono-label" style="font-size:0.65rem; color:var(--c-mint-text)">● VERIFIED NHA NODE</span>
+                    </div>
+
+                    <!-- Flip Card Wrapper -->
+                    <button type="button" class="abha-flip-container border-0 bg-transparent p-0 text-start w-100" id="abha-flip-box" data-action="flip-abha" title="Click to flip front/back" aria-label="Toggle front and back of ABHA credential card">
+                      <div class="abha-flip-inner" id="abha-card-inner">
+                        <!-- Front Face -->
+                        <div class="abha-face abha-front">
+                          <div class="guilloche-overlay" aria-hidden="true"></div>
+                          <div class="abha-card-top">
+                            <div class="d-flex align-items-center gap-2">
+                              <svg class="icon text-success" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+                              <span class="abha-org-title">National Health Authority</span>
+                            </div>
+                            <span class="abha-chip">Ayushman Bharat</span>
+                          </div>
+                          <div class="abha-card-main">
+                            <div class="abha-avatar-box">
+                              <svg class="icon xxl" aria-hidden="true"><use href="#icon-person"></use></svg>
+                            </div>
+                            <div class="abha-details">
+                              <div class="abha-holder-name" id="ab-gen-name">Lakshmi Devi</div>
+                              <div class="abha-formatted-id" id="ab-gen-id">91-4820-1928-3012</div>
+                              <div class="abha-meta-row">
+                                <span>DOB: 1992</span> • <span>Gender: F</span> • <span>State: KA</span>
+                              </div>
+                            </div>
+                            <!-- Dynamic Canvas QR code -->
+                            <canvas id="abha-qr-canvas" width="60" height="60" class="abha-qr-img" aria-label="ABHA QR"></canvas>
+                          </div>
+                        </div>
+
+                        <!-- Back Face -->
+                        <div class="abha-face abha-back">
+                          <div class="guilloche-overlay" aria-hidden="true"></div>
+                          <div class="abha-card-top">
+                            <span class="abha-org-title">Emergency Medical Profile</span>
+                            <span class="badge-mono-pill">ABHA # 91-4820-1928-3012</span>
+                          </div>
+                          <div class="abha-back-details">
+                            <div><strong>Blood Group:</strong> O+ Positive</div>
+                            <div><strong>Primary PHC:</strong> Devnagar Sub-Center (1.2 km)</div>
+                            <div><strong>Emergency Contact:</strong> +91 98765 43210 (Spouse)</div>
+                            <div class="mt-2 text-muted" style="font-size:0.65rem">This credential is cryptographically tied to the Ayushman Bharat Digital Mission (ABDM).</div>
+                          </div>
+                        </div>
+                      </div>
+                    </button>
+
+                    <!-- ABHA Actions -->
+                    <canvas id="abha-export-canvas" style="display:none;" aria-label="ABHA Card Export Canvas"></canvas>
+                    <div class="d-flex gap-2 mt-3">
+                      <button class="btn-outline-secondary flex-1" type="button" data-action="copy-abha">
+                        <svg class="icon me-1" aria-hidden="true"><use href="#icon-copy"></use></svg> Copy ID
+                      </button>
+                      <button class="btn-primary-pill flex-1" type="button" data-action="download-abha">
+                        <svg class="icon me-1" aria-hidden="true"><use href="#icon-download"></use></svg> Download PNG
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Right Column: Matched Government Scheme Cards -->
+                <div>
+                  <h2 class="mono-label mb-3 fs-6" data-i18n="lbl_matched_schemes">Evaluated Health Schemes</h2>
+                  <div class="scheme-grid" id="scheme-results" aria-live="polite"></div>
+                </div>
+              </div>
+
+            </div>
+          </section>
+
+          <!-- ============================================================
+               3.6 VITALS INTAKE / PROFILE (#view-profile)
+               ============================================================ -->
+          <section id="view-profile" class="view-pane d-none" aria-labelledby="prof-heading">
             <div class="workspace-bounds patient-workspace">
-              <!-- Left Form Grid -->
+              <!-- Left: Intake Form with Instant Validation -->
               <div class="intake-form">
-                <div class="breadcrumb mono-label">● EDITABLE HEALTH NODE</div>
-                <h2 data-i18n="prof_title">Patient Profile &amp; Vitals Intake</h2>
+                <div class="d-flex justify-content-between align-items-center mb-2">
+                  <div class="breadcrumb mono-label mb-0">● EDITABLE CLINICAL NODE</div>
+                  <span class="draft-status-pill" id="draft-save-indicator" aria-live="polite">Draft saved 2s ago</span>
+                </div>
+                <h1 id="prof-heading" data-i18n="prof_title">Patient Profile &amp; Vitals Intake</h1>
                 
                 <div class="form-grid">
                   <div>
-                    <label class="intake-label" data-i18n="lbl_name">PATIENT NAME</label>
-                    <input type="text" class="intake-input bind-input" data-bind="name" id="inp-name" placeholder="E.g. Lakshmi Devi" />
+                    <label class="intake-label" for="inp-name" data-i18n="lbl_name">PATIENT NAME *</label>
+                    <input type="text" class="intake-input bind-input" data-bind="name" id="inp-name" placeholder="E.g. Lakshmi Devi" required />
                   </div>
                   <div class="d-flex gap-2">
                     <div style="flex:1">
-                      <label class="intake-label" data-i18n="lbl_age">AGE</label>
-                      <input type="number" class="intake-input bind-input" data-bind="age" id="inp-age" placeholder="Age" />
+                      <label class="intake-label" for="inp-age" data-i18n="lbl_age">AGE</label>
+                      <input type="number" class="intake-input bind-input" data-bind="age" id="inp-age" placeholder="Age" inputmode="numeric" />
                     </div>
                     <div style="flex:1">
-                      <label class="intake-label" data-i18n="lbl_gender">GENDER</label>
-                      <select class="intake-input bind-input" data-bind="gender" id="inp-gender"><option>Female</option><option>Male</option></select>
+                      <label class="intake-label" for="inp-gender" data-i18n="lbl_gender">GENDER</label>
+                      <select class="intake-input bind-input" data-bind="gender" id="inp-gender">
+                        <option>Female</option>
+                        <option>Male</option>
+                      </select>
                     </div>
                   </div>
                   <div>
-                    <label class="intake-label" data-i18n="lbl_ward">VILLAGE / WARD</label>
+                    <label class="intake-label" for="inp-village" data-i18n="lbl_ward">VILLAGE / WARD</label>
                     <input type="text" class="intake-input bind-input" data-bind="village" id="inp-village" placeholder="Ward 01" />
                   </div>
                   <div>
-                    <label class="intake-label" data-i18n="lbl_abha">ABHA ID</label>
-                    <input type="text" class="intake-input bind-input" data-bind="abha" id="inp-abha" placeholder="91-XXXX-XXXX-XXXX" />
+                    <label class="intake-label" for="inp-abha" data-i18n="lbl_abha">ABHA ID (14-DIGIT)</label>
+                    <input type="text" class="intake-input bind-input font-mono" data-bind="abha" id="inp-abha" placeholder="91-XXXX-XXXX-XXXX" />
                   </div>
+
+                  <!-- Linked Blood Pressure Inputs with Instant Range Validation -->
                   <div>
-                    <label class="intake-label">BLOOD PRESSURE (Sys/Dia)</label>
-                    <input type="text" class="intake-input bind-input" data-bind="bp" id="inp-bp" placeholder="120/80" />
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <label class="intake-label mb-0" for="inp-bp-sys">BLOOD PRESSURE (SYS / DIA)</label>
+                      <span class="vitals-range-badge badge-normal" id="bp-range-badge">Normal</span>
+                    </div>
+                    <div class="d-flex gap-2 align-items-center">
+                      <label for="inp-bp-sys" class="visually-hidden">Systolic Blood Pressure</label>
+                      <input type="number" class="intake-input bind-input font-mono text-center" id="inp-bp-sys" placeholder="120" inputmode="numeric">
+                      <span class="fw-bold text-muted" aria-hidden="true">/</span>
+                      <label for="inp-bp-dia" class="visually-hidden">Diastolic Blood Pressure</label>
+                      <input type="number" class="intake-input bind-input font-mono text-center" id="inp-bp-dia" placeholder="80" inputmode="numeric">
+                    </div>
                   </div>
+
+                  <!-- SpO2 Oxygenation with Live Tint Badge -->
                   <div>
-                    <label class="intake-label">SpO2 (%)</label>
-                    <input type="number" class="intake-input bind-input" data-bind="spo2" id="inp-spo2" placeholder="98" />
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                      <label class="intake-label mb-0" for="inp-spo2">SpO2 OXYGENATION (%)</label>
+                      <span class="vitals-range-badge badge-normal" id="spo2-range-badge">Normal (98%)</span>
+                    </div>
+                    <input type="number" class="intake-input bind-input font-mono" data-bind="spo2" id="inp-spo2" placeholder="98" inputmode="numeric" />
                   </div>
                 </div>
 
-                <div style="margin-bottom: 1.5rem;">
-                  <label class="intake-label" data-i18n="lbl_symptoms">REPORTED SYMPTOMS</label>
+                <div class="mb-3">
+                  <label class="intake-label" for="profile-sym-input" data-i18n="lbl_symptoms">REPORTED SYMPTOMS</label>
                   <div class="tags-container" id="profile-symptoms-tags">
-                    <input type="text" class="tag-input-field" placeholder="Type and press Enter or Comma..." id="profile-sym-input">
+                    <input type="text" class="tag-input-field" placeholder="Type and press Enter or Comma..." id="profile-sym-input" aria-label="Add symptom tag">
                   </div>
                 </div>
 
-                <div style="margin-bottom: 2rem;">
-                  <label class="intake-label" data-i18n="lbl_conditions">EXISTING CONDITIONS</label>
+                <div class="mb-4">
+                  <label class="intake-label" for="profile-cond-input" data-i18n="lbl_conditions">CHRONIC / MATERNAL CONDITIONS</label>
                   <div class="tags-container" id="profile-cond-tags">
-                    <input type="text" class="tag-input-field" placeholder="Add condition..." id="profile-cond-input">
+                    <input type="text" class="tag-input-field" placeholder="Add condition..." id="profile-cond-input" aria-label="Add condition tag">
                   </div>
                 </div>
 
-                <button class="btn-primary-pill w-100 justify-content-center" onclick="savePatientNode()" data-i18n="btn_save">Save Patient Record</button>
+                <button class="btn-primary-pill w-100 justify-content-center" type="button" data-action="save-patient" data-i18n="btn_save">Save Patient Record</button>
               </div>
 
-              <!-- Right Sticky Passport preview -->
+              <!-- Right: Sticky Live Health Passport Preview -->
               <div>
                 <div class="preview-card" id="live-card">
                   <div class="pc-header">
                     <div>
-                      <h3 id="card-name">--</h3>
-                      <div class="meta"><span id="card-village">--</span> • ABHA ID: <span id="card-abha">--</span></div>
+                      <h2 id="card-name" class="fs-4 mb-0">--</h2>
+                      <div class="meta"><span id="card-village">--</span> • ABHA: <span id="card-abha">--</span></div>
                     </div>
-                    <div class="eligibility-ring" id="card-health-score">100%</div>
+                    <!-- Animated Health Score SVG Ring -->
+                    <div class="score-ring-wrapper" aria-label="Health Score Ring">
+                      <svg class="score-ring-svg" viewBox="0 0 60 60" aria-hidden="true">
+                        <circle class="score-ring-bg" cx="30" cy="30" r="24"/>
+                        <circle class="score-ring-fill" id="score-ring-circle" cx="30" cy="30" r="24"/>
+                      </svg>
+                      <span class="score-ring-text" id="card-health-score">100%</span>
+                    </div>
+                  </div>
+
+                  <!-- Explainable Score Breakdown -->
+                  <div class="score-explanation-line mb-3" id="score-explanation-text">
+                    All vitals baseline optimal. Regular routine checkup interval.
                   </div>
                   
                   <div class="mono-label mb-2" data-i18n="lbl_vitals_summary">Vitals Summary</div>
-                  <!-- Vitals Strip injected via JS dynamically but layout structure preserved -->
                   <div class="vitals-strip mb-3" id="card-vitals"></div>
 
-                  <div class="mono-label mb-2" data-i18n="lbl_cond_sym">Conditions & Symptoms</div>
+                  <div class="mono-label mb-2" data-i18n="lbl_cond_sym">Conditions &amp; Symptoms</div>
                   <div class="link-tags" id="card-link-tags"></div>
                 </div>
               </div>
             </div>
           </section>
 
-          <!-- VILLAGER DIRECTORY (#view-directory) -->
-          <section id="view-directory" class="view-pane d-none">
+          <!-- ============================================================
+               3.7 NEAREST PHC & VERIFIED 108 DISPATCH (#view-centers)
+               ============================================================ -->
+          <section id="view-centers" class="view-pane d-none" aria-labelledby="phc-heading">
             <div class="workspace-bounds">
-              <div class="breadcrumb mono-label">● COMMUNITY FIELD DIRECTORY</div>
-              <h2 data-i18n="dir_title">Registered Villagers &amp; Triage Directory</h2>
-              
-              <div class="cohort-toolbar mt-4">
-                <div class="tool-left">
-                  <div class="floating-input mb-0" style="border-radius:12px;flex:1;max-width:300px">
-                    <i class="bi bi-search"></i>
-                    <input type="text" id="dir-search" placeholder="Search Villager by name, condition..." style="padding:0.6rem 1rem 0.6rem 2.5rem; margin-bottom:0;">
-                  </div>
-                  <select class="form-select" id="dir-filter" style="border-radius:12px;max-width:200px">
-                    <option value="All">All Wards</option>
-                    <option value="Ward 01">Ward 01</option>
-                    <option value="Ward 02">Ward 02</option>
-                    <option value="Ward 03">Ward 03</option>
-                    <option value="Ward 04">Ward 04</option>
-                  </select>
-                  <select class="form-select" id="risk-filter" style="border-radius:12px;max-width:200px">
-                    <option value="All">All Risk Levels</option>
-                    <option value="Critical">Critical Risk</option>
-                    <option value="Attention">Attention Required</option>
-                    <option value="Stable">Stable</option>
-                  </select>
-                </div>
+              <div class="breadcrumb mono-label">● FACILITY TELEMETRY &amp; EMERGENCY DISPATCH</div>
+              <h1 id="phc-heading" data-i18n="phc_title">Nearest Health Centers &amp; Verified 108 SOS Dispatch</h1>
+
+              <!-- Filter Bar -->
+              <div class="d-flex gap-2 mt-4 mb-3 flex-wrap" role="toolbar" aria-label="Facility Filters">
+                <button class="layer-pill active" type="button" data-action="filter-centers" data-filter="all">All Centers</button>
+                <button class="layer-pill" type="button" data-action="filter-centers" data-filter="beds">Has Available Beds</button>
+                <button class="layer-pill" type="button" data-action="filter-centers" data-filter="ambulance">Ambulance On-Site</button>
               </div>
-              
-              <!-- 3-Column Bento Grid Structure output via app.js -->
-              <div class="cohort-grid" id="cohort-grid-container"></div>
-            </div>
-          </section>
 
-          <!-- AI SYMPTOM CHECKER, SCHEME RADAR, CENTERS, SETTINGS (Retaining identical structure) -->
-          <section id="view-symptoms" class="view-pane d-none">
-            <div class="workspace-bounds">
-              <div class="breadcrumb mono-label">● AI MULTILINGUAL TRIAGE ENGINE</div>
-              <h2 data-i18n="triage_title">Vernacular Voice Symptom Diagnostic</h2>
-              
-              <div class="patient-workspace mt-4" style="grid-template-columns: 1fr 1fr; gap:2rem">
-                <div class="symptom-deck">
-                  <div class="voice-box" id="triage-voice-box">
-                    <canvas id="voice-waves"></canvas>
-                    <button class="btn-voice-huge" id="btn-triage-mic"><i class="bi bi-mic-fill"></i></button>
-                    <p class="mt-3 text-muted fw-semibold" id="triage-prompt" data-i18n="triage_prompt">"Tap to Speak in Local Language"</p>
-                  </div>
-                  <div class="body-map-container mt-4">
-                    <h6 class="mono-label mb-3" data-i18n="lbl_body_map">Or click affected body zones:</h6>
-                    <div class="body-grid">
-                      <div class="b-zone" onclick="addBodySymptom('Headache')">Head / Migraine</div>
-                      <div class="b-zone" onclick="addBodySymptom('Chest Pain')">Chest / Respiration</div>
-                      <div class="b-zone" onclick="addBodySymptom('Stomach Ache')">Abdomen / Gut</div>
-                      <div class="b-zone" onclick="addBodySymptom('Pelvic Pain')">Pelvic / Maternal</div>
-                      <div class="b-zone" onclick="addBodySymptom('Joint Pain')">Joints / Mobility</div>
-                      <div class="b-zone" onclick="addBodySymptom('Rash')">Skin / Rash</div>
-                    </div>
-                  </div>
-                </div>
-                
-                <div class="intake-form" style="padding:2rem;">
-                  <label class="intake-label" data-i18n="lbl_symptoms">REPORTED SYMPTOMS</label>
-                  <div class="tags-container mb-4" id="triage-symptoms-tags">
-                    <input type="text" class="tag-input-field" placeholder="Add symptoms manually..." id="triage-sym-input">
-                  </div>
+              <!-- PHC Facility Cards Grid with Skeleton Support -->
+              <div class="phc-grid" id="phc-grid-container" aria-live="polite"></div>
 
-                  <div id="risk-result" style="display:none;">
-                    <div class="rc-urgency badge-red mb-3 p-3 rounded text-center fw-bold" id="risk-banner"></div>
-                    <div class="mono-label mb-2" data-i18n="lbl_confidence">Confidence Matrix</div>
-                    <div id="confidence-meters"></div>
-                    
-                    <button class="btn-primary-pill mt-4 w-100 d-flex justify-content-center" onclick="playAudioAdvice()">
-                      <i class="bi bi-volume-up-fill me-2 fs-5"></i> <span data-i18n="btn_listen">Listen to Advice</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="view-schemes" class="view-pane d-none">
-            <div class="workspace-bounds">
-              <div class="breadcrumb mono-label">● GOVERNMENT HEALTH BENEFIT ENGINE</div>
-              <h2 data-i18n="scheme_title">National Scheme Radar &amp; ABHA ID Generator</h2>
-              <div class="patient-workspace mt-4" style="grid-template-columns: 1fr 1.5fr;">
-                <div>
-                  <div class="form-panel p-4 mb-4">
-                    <h6 class="mono-label mb-3" data-i18n="lbl_eligibility">Eligibility Parameters</h6>
-                    <label class="intake-label d-flex justify-content-between"><span data-i18n="lbl_income">Annual Income</span> <span id="val-inc" class="text-primary fw-bold">₹2,50,000</span></label>
-                    <input type="range" class="form-range mb-4" id="range-inc" min="0" max="500000" step="10000" value="250000">
-
-                    <label class="intake-label d-flex justify-content-between"><span data-i18n="lbl_family">Family Members</span> <span id="val-fam" class="text-primary fw-bold">4</span></label>
-                    <input type="range" class="form-range mb-4" id="range-fam" min="1" max="10" step="1" value="4">
-
-                    <label class="intake-label" data-i18n="lbl_category">Category</label>
-                    <select class="form-select intake-input mb-3" id="sel-cat">
-                      <option value="General">General</option>
-                      <option value="BPL">BPL / Antyodaya</option>
-                      <option value="Pregnant">Pregnant (ANC)</option>
-                      <option value="Senior">Senior Citizen (70+)</option>
-                    </select>
-                  </div>
-                  <div class="form-panel p-4 abha-gen-panel">
-                    <h6 class="mono-label mb-2" data-i18n="lbl_digital_abha">Digital ABHA Health Card</h6>
-                    <div class="abha-mock-card mt-3" id="abha-mock-card">
-                      <div class="abha-head"><i class="bi bi-shield-check text-success fs-5"></i> Ayushman Bharat</div>
-                      <div class="abha-body">
-                        <div class="abha-photo"><i class="bi bi-person-fill"></i></div>
-                        <div class="abha-details">
-                          <div class="abha-name" id="ab-gen-name">Loading...</div>
-                          <div class="abha-num" id="ab-gen-id">91-XXXX-XXXX-XXXX</div>
-                        </div>
-                        <div class="abha-qr"><i class="bi bi-qr-code fs-1 text-muted"></i></div>
-                      </div>
-                    </div>
-                    <canvas id="abha-canvas" style="display:none;"></canvas>
-                    <button class="btn-primary-pill mt-3 w-100" onclick="downloadABHACard()"><i class="bi bi-download me-2"></i> <span data-i18n="btn_dl_abha">Download ABHA PNG</span></button>
-                  </div>
-                </div>
-                <div>
-                  <h6 class="mono-label mb-3" data-i18n="lbl_matched_schemes">Matched Schemes</h6>
-                  <div class="scheme-grid" id="scheme-results"></div>
-                </div>
-              </div>
-            </div>
-          </section>
-
-          <section id="view-centers" class="view-pane d-none">
-            <div class="workspace-bounds">
-              <div class="breadcrumb mono-label">● FACILITY TELEMETRY &amp; LOCATOR</div>
-              <h2 data-i18n="phc_title">Nearest Health Centers &amp; Emergency Dispatch</h2>
-              <div class="phc-grid mt-4" id="phc-grid-container"></div>
-              <div class="form-panel mt-5 p-4" style="border:1px solid #FCA5A5; background:rgba(220,38,38,0.05);">
-                <div class="d-flex align-items-center justify-content-between">
+              <!-- Verified Two-Step 108 Emergency SOS Dispatch Panel -->
+              <div class="form-panel mt-5 p-4 sos-verified-panel">
+                <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
                   <div>
-                    <h4 class="mb-1 text-danger"><i class="bi bi-exclamation-triangle-fill me-2"></i> Emergency 108 Dispatch Panel</h4>
-                    <p class="mb-0 text-danger opacity-75" style="font-size:0.85rem">Broadcast live GPS coordinates to nearest available ambulance.</p>
-                    <p class="mono-label mt-2 mb-0" id="gps-coords">LOCATING...</p>
+                    <h2 class="mb-1 text-danger d-flex align-items-center gap-2 fs-5">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-alert"></use></svg> Direct 108 Emergency Dispatch Gateway
+                    </h2>
+                    <p class="mb-0 text-danger opacity-75" style="font-size:0.88rem">Broadcast verified patient GPS location &amp; clinical severity slip to closest active ambulance.</p>
+                    <p class="mono-label mt-2 mb-0" id="gps-coords">GPS SATELLITE: LOCATING...</p>
                   </div>
-                  <button class="btn btn-danger btn-lg px-4" style="border-radius:12px; font-weight:700;" onclick="dispatchSOS()"><i class="bi bi-geo-alt-fill me-2"></i> Broadcast SOS</button>
+
+                  <!-- Two-Step Confirmation Slide / Button -->
+                  <div class="sos-action-box" id="sos-confirm-box">
+                    <button class="btn-danger" id="btn-init-sos" type="button" data-action="stage-sos">
+                      <svg class="icon me-2" aria-hidden="true"><use href="#icon-geo"></use></svg> Initiate 108 SOS Dispatch
+                    </button>
+                    <div class="sos-confirm-step d-none" id="sos-confirm-step">
+                      <span class="text-danger fw-bold me-2" style="font-size:0.85rem">CONFIRM DISPATCH?</span>
+                      <button class="btn-danger" type="button" data-action="dispatch-sos">YES, DISPATCH NOW</button>
+                      <button class="btn-outline-secondary" type="button" data-action="cancel-sos">Cancel</button>
+                    </div>
+                  </div>
                 </div>
-                <div class="mt-3 p-3 rounded border border-danger d-none" id="sos-feed" style="background:var(--c-surface)">
-                  <strong class="text-danger">DISPATCH INITIATED:</strong> Ambulance assigned from Devnagar PHC. ETA: 12 minutes.
+
+                <!-- Live Active Dispatch Card with Reference & Elapsed Timer -->
+                <div class="mt-3 p-3 rounded border border-danger d-none" id="sos-feed" style="background:var(--c-surface)" aria-live="assertive">
+                  <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-2">
+                    <strong class="text-danger">● EMERGENCY DISPATCH BROADCASTED: Ref #SOS-KA-9418</strong>
+                    <span class="badge-mono-pill" id="sos-timer">Elapsed: 00:18</span>
+                  </div>
+                  <p class="mb-0 text-muted" style="font-size:0.85rem">
+                    Ambulance Unit <strong>#KA-04-G-4012</strong> assigned from Devnagar PHC. Driver contact: <strong>+91 94481 01080</strong>. ETA: 12 minutes.
+                  </p>
                 </div>
               </div>
             </div>
           </section>
 
-          <section id="view-settings" class="view-pane d-none">
-            <div class="workspace-bounds" style="max-width:800px">
-              <div class="breadcrumb mono-label">● SYSTEM PREFERENCES &amp; CACHE</div>
-              <h2 data-i18n="settings_title">Settings &amp; Offline Gateway</h2>
+          <!-- ============================================================
+               3.8 SETTINGS & OFFLINE RESILIENCE (#view-settings)
+               ============================================================ -->
+          <section id="view-settings" class="view-pane d-none" aria-labelledby="settings-heading">
+            <div class="workspace-bounds" style="max-width:860px">
+              <div class="breadcrumb mono-label">● SYSTEM CONFIGURATION &amp; OFFLINE GATEWAY</div>
+              <h1 id="settings-heading" data-i18n="settings_title">Settings &amp; Offline Gateway</h1>
+
+              <!-- Group 1: Voice Synthesis & Language -->
               <div class="form-panel p-4 mb-4 mt-4">
-                <h5 class="mb-3">Voice Narrator Settings</h5>
-                <label class="intake-label d-flex justify-content-between">Speech Speed <span id="val-speed">1.0x</span></label>
+                <h2 class="mb-3 fw-bold fs-5">1. Vernacular Speech Synthesis</h2>
+                <label class="intake-label d-flex justify-content-between" for="range-speed">
+                  Speech Rate <span id="val-speed">1.0x</span>
+                </label>
                 <input type="range" class="form-range mb-4" id="range-speed" min="0.5" max="2.0" step="0.1" value="1.0">
-                <label class="intake-label d-flex justify-content-between">Pitch <span id="val-pitch">1.0</span></label>
+
+                <label class="intake-label d-flex justify-content-between" for="range-pitch">
+                  Speech Pitch <span id="val-pitch">1.0</span>
+                </label>
                 <input type="range" class="form-range mb-4" id="range-pitch" min="0.5" max="2.0" step="0.1" value="1.0">
-                <button class="btn btn-outline-secondary" style="border-radius:12px" onclick="playAudioAdvice('Test voice synthesis successful.')"><i class="bi bi-volume-up-fill me-2"></i> Test Voice Synthesis</button>
+
+                <button class="btn-outline-secondary" type="button" data-action="test-speech">
+                  <svg class="icon me-2" aria-hidden="true"><use href="#icon-volume"></use></svg> Test Speech Synthesizer
+                </button>
               </div>
+
+              <!-- Group 2: Offline Resilience & Demo Simulator -->
               <div class="form-panel p-4 mb-4">
-                <h5 class="mb-3">Offline Data Management</h5>
-                <div class="d-flex justify-content-between mono-label mb-2"><span>Local Storage Cache</span><span id="storage-usage">Calculating...</span></div>
-                <div class="progress mb-4" style="height: 8px; border-radius: 4px; background:var(--c-input-bg);">
-                  <div class="progress-bar bg-primary" id="storage-bar" style="width: 5%"></div>
+                <h2 class="mb-3 fw-bold fs-5">2. Offline Gateway &amp; Judge Demo Simulation</h2>
+                <p class="text-muted" style="font-size:0.85rem">Demonstrate true offline resilience on stage without disabling venue WiFi.</p>
+                
+                <div class="d-flex justify-content-between align-items-center p-3 rounded mb-4" style="background:var(--c-input-bg); border:1px solid var(--c-border);">
+                  <div>
+                    <strong>Simulate Network Drop (Offline Mode)</strong>
+                    <div class="text-muted" style="font-size:0.75rem">Drops sync status, displays offline indicator, queues mutations locally</div>
+                  </div>
+                  <label class="toggle-switch" for="chk-simulate-offline">
+                    <span class="visually-hidden">Simulate Network Drop</span>
+                    <input type="checkbox" id="chk-simulate-offline">
+                    <span class="toggle-slider" aria-hidden="true"></span>
+                  </label>
                 </div>
-                <div class="d-flex gap-3">
-                  <button class="btn-primary-pill" onclick="forceSyncCloud()" style="margin:0"><i class="bi bi-cloud-arrow-up-fill me-2"></i> Force Sync to Cloud</button>
-                  <button class="btn btn-outline-danger" style="border-radius:12px" onclick="resetState()"><i class="bi bi-trash-fill me-2"></i> Reset &amp; Re-seed Sample Data</button>
+
+                <div class="d-flex justify-content-between mono-label mb-2">
+                  <span>Local Indexed/LocalStorage Cache</span>
+                  <span id="storage-usage">Calculating...</span>
+                </div>
+                <div class="progress mb-4">
+                  <div class="progress-bar bg-primary" id="storage-bar" style="width: 5%" role="progressbar" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+
+                <div class="d-flex gap-3 flex-wrap">
+                  <button class="btn-primary-pill" type="button" data-action="force-sync">
+                    <svg class="icon me-2" aria-hidden="true"><use href="#icon-cloud-upload"></use></svg> Sync Local Records Now
+                  </button>
+                  <button class="btn-outline-secondary" type="button" data-action="export-json">
+                    <svg class="icon me-2" aria-hidden="true"><use href="#icon-download"></use></svg> Export Data Backup (JSON)
+                  </button>
+                  <button class="btn-outline-danger" type="button" data-action="reset-state">
+                    <svg class="icon me-2" aria-hidden="true"><use href="#icon-trash"></use></svg> Clear &amp; Re-seed Sample Data
+                  </button>
                 </div>
               </div>
             </div>
@@ -491,59 +1178,96 @@
         </div>
       </main>
     </div>
+
+    <!-- ============================================================
+         PERSISTENT BOTTOM PRIMARY ACTION DOCK
+         ============================================================ -->
+    <div class="primary-action-dock" id="primary-action-dock">
+      <button class="btn-floating-action" id="btn-primary-action" type="button" data-action="role-primary-action">
+        <svg class="icon me-2" id="primary-action-icon" aria-hidden="true"><use href="#icon-person-plus"></use></svg>
+        <span id="primary-action-text">Record Vitals</span>
+      </button>
+    </div>
+
+    <!-- ============================================================
+         MOBILE THUMB-ZONE BOTTOM NAVIGATION
+         ============================================================ -->
+    <nav class="mobile-bottom-nav" id="mobile-bottom-nav" aria-label="Mobile Navigation">
+      <div class="bottom-nav-items" id="bottom-nav-items">
+        <!-- Injected dynamically per persona -->
+      </div>
+    </nav>
+
   </div>
 
-  <!-- CLINICAL MODAL -->
-  <div class="modal fade" id="clinicalModal" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+  <!-- ============================================================
+       MOBILE "MORE" SERVICES BOTTOM SHEET DRAWER
+       ============================================================ -->
+  <div class="more-sheet" id="moreSheet" role="dialog" aria-modal="true" aria-labelledby="more-sheet-title">
+    <div class="more-sheet-backdrop" data-action="close-more-sheet" tabindex="-1"></div>
+    <div class="more-sheet-content">
+      <div class="more-sheet-handle" data-action="close-more-sheet" role="button" tabindex="0" aria-label="Close sheet"></div>
+      <div class="more-sheet-header">
+        <h2 id="more-sheet-title" class="fw-bold mb-0 fs-5">Health Node Services &amp; Actions</h2>
+        <button class="btn-close border-0 bg-transparent" type="button" data-action="close-more-sheet" aria-label="Close">
+          <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+        </button>
+      </div>
+      <div class="more-sheet-grid" id="more-sheet-items"></div>
+    </div>
+  </div>
+
+  <!-- ============================================================
+       PURE VANILLA CLINICAL MODAL
+       ============================================================ -->
+  <div class="modal" id="clinicalModal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
           <div>
-            <h5 class="modal-title" id="modal-title" style="font-family:var(--font-head);font-weight:700;">Clinical Intelligence</h5>
+            <h2 class="modal-title fs-5 mb-0" id="modal-title">Clinical Intelligence</h2>
             <div class="mono-label mt-1" id="modal-subtitle">AI Diagnostic Handoff</div>
           </div>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <button type="button" class="btn-close border-0 bg-transparent" data-action="close-modal" data-modal="clinicalModal" aria-label="Close">
+            <svg class="icon" aria-hidden="true"><use href="#icon-close"></use></svg>
+          </button>
         </div>
         <div class="modal-body">
           <div class="row g-4">
             <div class="col-md-6">
-              <h6 class="mono-label">Vitals History</h6>
+              <h3 class="mono-label mb-2 fs-6">Vitals History</h3>
               <div class="vitals-strip mb-3">
-                <div class="v-block"><span class="v-lbl">BP (mmHg)</span><span class="v-val" id="modal-bp"></span></div>
-                <div class="v-block"><span class="v-lbl">SpO2 (%)</span><span class="v-val" id="modal-spo2"></span></div>
+                <div class="v-block"><span class="v-lbl">BP (mmHg)</span><span class="v-val" id="modal-bp">--</span></div>
+                <div class="v-block"><span class="v-lbl">SpO2 (%)</span><span class="v-val" id="modal-spo2">--</span></div>
               </div>
-              <h6 class="mono-label">Symptoms & Conditions</h6>
+              <h3 class="mono-label mb-2 fs-6">Symptoms &amp; Conditions</h3>
               <div class="d-flex flex-wrap gap-2" id="modal-tags"></div>
             </div>
             <div class="col-md-6">
-              <h6 class="mono-label text-danger">AI Assessment Note</h6>
-              <div class="p-3 rounded border border-danger text-danger" style="font-size:0.9rem;line-height:1.5; font-weight:500; background:rgba(220,38,38,0.1);" id="modal-ai-text">
+              <h3 class="mono-label text-danger mb-2 fs-6">AI Assessment Note</h3>
+              <div class="p-3 rounded border border-danger text-danger" style="font-size:0.9rem;line-height:1.5; font-weight:500; background:var(--c-red-bg);" id="modal-ai-text">
                 Review required.
               </div>
             </div>
           </div>
         </div>
-        <div class="modal-footer d-flex justify-content-between">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal" style="border-radius:12px">Close</button>
-          <button type="button" class="btn-primary-pill w-auto px-4 m-0" onclick="generateReferral()">
-            <i class="bi bi-truck"></i> Dispatch 108 Emergency
+        <div class="modal-footer">
+          <button type="button" class="btn-outline-secondary" data-action="close-modal" data-modal="clinicalModal">Close</button>
+          <button type="button" class="btn-primary-pill" data-action="modal-referral">
+            <svg class="icon" aria-hidden="true"><use href="#icon-truck"></use></svg> Dispatch 108 Emergency
           </button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- TOAST -->
-  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
-    <div id="liveToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
-      <div class="d-flex">
-        <div class="toast-body fw-bold" id="toast-msg">Action completed.</div>
-        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
-      </div>
-    </div>
+  <!-- ============================================================
+       STACKED TOAST SYSTEM (Phase 4)
+       ============================================================ -->
+  <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="false">
+    <!-- Toast items are dynamically created and stacked here -->
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
