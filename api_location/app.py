@@ -610,6 +610,15 @@ def _check_auth():
             return jsonify({"error": "unauthorized"}), 401
 
 
+@app.route("/", methods=["GET", "HEAD"])
+def health():
+    return {
+        "status": "ok",
+        "service": "Arogya Facility API"
+    }, 200
+
+
+
 @app.route("/api/facility", methods=["GET"])
 def facility_lookup():
     deadline = time.monotonic() + TOTAL_BUDGET_S
