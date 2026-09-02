@@ -148,7 +148,11 @@ def classify_type(name: str) -> str:
         if re.search(pattern, n, re.IGNORECASE):
             return code
     if "hospital" in n:
-        return "DH"
+        return "HOSPITAL"   # generic -- NOT an official District Hospital (DH) designation
+    if "clinic" in n or "doctor" in n:
+        return "CLINIC"
+    if "pharmacy" in n or "chemist" in n:
+        return "PHARMACY"
     return "OTHER"
 
 
@@ -461,7 +465,7 @@ def overpass_search(lat, lng, radius_km, timeout: float):
                     "facility_id": f"osm_{el['type']}_{el['id']}",
                     "name": name,
                     "type": classify_type(name),
-                    "is_government": is_gov if is_gov is not None else False,
+                    "is_government": is_gov,  # can be None -- unknown is not the same as private
                     "classification_confidence": confidence,
                     "verified": False,
                     "phone": tags.get("phone") or tags.get("contact:phone"),
@@ -517,7 +521,7 @@ def google_places_search(lat, lng, radius_km, timeout: float):
             out.append({
                 "name": name,
                 "type": classify_type(name),
-                "is_government": is_gov if is_gov is not None else False,
+                "is_government": is_gov,  # can be None -- unknown is not the same as private
                 "classification_confidence": confidence,
                 "verified": False,
                 "phone": None,  # requires a separate Place Details call (billed extra)
@@ -608,15 +612,6 @@ def _check_auth():
     if SERVICE_API_KEY:
         if request.headers.get("X-API-Key") != SERVICE_API_KEY:
             return jsonify({"error": "unauthorized"}), 401
-
-
-@app.route("/", methods=["GET", "HEAD"])
-def health():
-    return {
-        "status": "ok",
-        "service": "Arogya Facility API"
-    }, 200
-
 
 
 @app.route("/api/facility", methods=["GET"])
@@ -731,6 +726,13 @@ def facility_lookup():
         "facilities": results,
         "warnings": warnings,
     })
+
+@app.route("/", methods=["GET", "HEAD"])
+def health():
+    return {
+        "status": "ok",
+        "service": "Arogya Facility API"
+    }, 200
 
 
 @app.errorhandler(Exception)
