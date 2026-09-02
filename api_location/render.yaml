@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: arogya-facility-api
+    runtime: python
+    plan: starter          # always-on, no cold starts. Change to "free" only for
+                            # non-critical testing -- spins down after 15 min idle.
+    buildCommand: "pip install -r requirements.txt"
+    startCommand: "gunicorn app:app --bind 0.0.0.0:$PORT --timeout 30"
+    envVars:
+      - key: MONGO_URI
+        sync: false        # set manually in dashboard -- don't commit secrets here
+      - key: GOOGLE_MAPS_API_KEY
+        sync: false
+      - key: SERVICE_API_KEY
+        sync: false
