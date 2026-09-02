@@ -1070,6 +1070,58 @@
 
               <!-- PHC Facility Cards Grid with Skeleton Support -->
               <div class="phc-grid" id="phc-grid-container" aria-live="polite"></div>
+          <!-- AI SYMPTOM CHECKER & GRIEVANCE PORTAL -->
+          <section id="view-symptoms" class="view-pane d-none">
+            <div class="workspace-bounds">
+              <div class="breadcrumb mono-label" data-i18n="tag_symptoms_breadcrumb">● AI MULTILINGUAL TRIAGE &amp; GRIEVANCE ENGINE</div>
+              <h2 data-i18n="triage_title">Vernacular Voice &amp; Text Diagnostic / Grievance Portal</h2>
+              
+              <div class="patient-workspace mt-4" style="grid-template-columns: 1fr 1fr; gap:2rem">
+                <div class="symptom-deck">
+                  <!-- Mode Switcher: Choose Voice or Text Input -->
+                  <div class="grievance-mode-switch">
+                    <button class="grievance-tab-btn active" id="tab-btn-voice" onclick="switchGrievanceMode('voice')">
+                      <i class="bi bi-mic-fill text-warning"></i> <span data-i18n="tab_voice_input">Voice Input</span>
+                    </button>
+                    <button class="grievance-tab-btn" id="tab-btn-text" onclick="switchGrievanceMode('text')">
+                      <i class="bi bi-pencil-square text-primary"></i> <span data-i18n="tab_text_input">Text Input</span>
+                    </button>
+                  </div>
+
+                  <!-- Voice Box Input Container -->
+                  <div class="voice-box" id="triage-voice-box">
+                    <canvas id="voice-waves"></canvas>
+                    <button class="btn-voice-huge" id="btn-triage-mic" title="Tap to Speak"><i class="bi bi-mic-fill"></i></button>
+                    <p class="mt-3 text-muted fw-semibold" id="triage-prompt" data-i18n="triage_prompt">"Tap to Speak in Local Language"</p>
+                  </div>
+
+                  <!-- Text Grievance Input Container -->
+                  <div class="grievance-text-card" id="triage-text-box" style="display:none;">
+                    <label class="intake-label mb-2" data-i18n="lbl_grievance_text_desc">TYPE YOUR HEALTH ISSUE OR GRIEVANCE</label>
+                    <textarea class="grievance-textarea mb-3" id="grievance-text-input" placeholder="Describe your health problem, symptoms, or complaint in detail (e.g., severe fever for 2 days, chest tightness, or delay in PHC service)..."></textarea>
+                    <button class="btn-primary-pill w-100 justify-content-center" id="btn-submit-grievance-text" onclick="submitTextGrievance()">
+                      <i class="bi bi-send-fill me-2"></i> <span data-i18n="btn_submit_grievance">Submit Grievance / Symptoms</span>
+                    </button>
+                  </div>
+
+                  <div class="body-map-container mt-4">
+                    <h6 class="mono-label mb-3" data-i18n="lbl_body_map">Or click affected body zones:</h6>
+                    <div class="body-grid">
+                      <div class="b-zone" onclick="addBodySymptom('Headache')">Head / Migraine</div>
+                      <div class="b-zone" onclick="addBodySymptom('Chest Pain')">Chest / Respiration</div>
+                      <div class="b-zone" onclick="addBodySymptom('Stomach Ache')">Abdomen / Gut</div>
+                      <div class="b-zone" onclick="addBodySymptom('Pelvic Pain')">Pelvic / Maternal</div>
+                      <div class="b-zone" onclick="addBodySymptom('Joint Pain')">Joints / Mobility</div>
+                      <div class="b-zone" onclick="addBodySymptom('Rash')">Skin / Rash</div>
+                    </div>
+                  </div>
+                </div>
+                
+                <div class="intake-form" style="padding:2rem;">
+                  <label class="intake-label" data-i18n="lbl_symptoms">REPORTED SYMPTOMS &amp; GRIEVANCES</label>
+                  <div class="tags-container mb-4" id="triage-symptoms-tags">
+                    <input type="text" class="tag-input-field" placeholder="Add symptoms manually..." id="triage-sym-input">
+                  </div>
 
               <!-- Verified Two-Step 108 Emergency SOS Dispatch Panel -->
               <div class="form-panel mt-5 p-4 sos-verified-panel">
@@ -1266,6 +1318,60 @@
        ============================================================ -->
   <div class="toast-stack" id="toast-stack" aria-live="polite" aria-atomic="false">
     <!-- Toast items are dynamically created and stacked here -->
+  <!-- HELP CHATBOT FLOATING TRIGGER (RED OUTLINED) -->
+  <button class="btn-help-floating" id="btn-help-chatbot" onclick="toggleHelpChatbot()" title="Ask for Help">
+    <span class="help-badge-pulse"></span>
+    <i class="bi bi-question-circle-fill"></i>
+    <span data-i18n="btn_ask_help">Ask for Help</span>
+  </button>
+
+  <!-- HELP CHATBOT DRAWER COMPONENT (MODULAR GEMINI READY) -->
+  <div class="help-chatbot-container d-none" id="help-chatbot-widget">
+    <div class="chat-header">
+      <div>
+        <div class="chat-header-title">
+          <i class="bi bi-robot text-danger"></i>
+          <span data-i18n="chat_title">Arogya Assistant</span>
+          <span class="badge bg-danger-subtle text-danger border border-danger-subtle ms-1" style="font-size:0.65rem">Gemini Ready</span>
+        </div>
+        <div class="chat-header-subtitle" data-i18n="chat_subtitle">Ask questions or get help navigating</div>
+      </div>
+      <button type="button" class="btn-close" onclick="toggleHelpChatbot()" aria-label="Close"></button>
+    </div>
+
+    <div class="chat-body" id="chat-messages-container">
+      <div class="chat-msg chat-msg-assistant" data-i18n="chat_welcome_msg">
+        Namaste! 🙏 I am your rural healthcare guide. How can I help you navigate or submit complaints today? You can type or tap the microphone to speak.
+      </div>
+      <div class="chat-quick-prompts">
+        <div class="chat-quick-pill" onclick="sendQuickHelpPrompt('How to check symptoms?')">🩺 Check Symptoms</div>
+        <div class="chat-quick-pill" onclick="sendQuickHelpPrompt('How to submit grievance?')">📝 Submit Grievance</div>
+        <div class="chat-quick-pill" onclick="sendQuickHelpPrompt('Find government schemes')">🏛️ Gov Schemes</div>
+        <div class="chat-quick-pill" onclick="sendQuickHelpPrompt('Nearest hospital or PHC')">🏥 Find PHC</div>
+      </div>
+    </div>
+
+    <div class="chat-footer">
+      <div class="chat-input-row">
+        <button class="btn-chat-mic" id="btn-chat-mic" title="Voice Input" onclick="toggleChatVoiceInput()">
+          <i class="bi bi-mic-fill"></i>
+        </button>
+        <input type="text" id="chat-text-input" placeholder="Type a message or question..." onkeypress="handleChatKeyPress(event)">
+        <button class="btn-chat-send" onclick="sendChatMessage()" title="Send Message">
+          <i class="bi bi-send-fill"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3" style="z-index: 1100">
+    <div id="liveToast" class="toast align-items-center border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body fw-bold" id="toast-msg">Action completed.</div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
   </div>
 
   <script src="app.js"></script>
