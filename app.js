@@ -24,9 +24,9 @@
   const DASHBOARD_API_BASE =
     (typeof window !== 'undefined' && window.ESCALATION_API_BASE != null)
       ? window.ESCALATION_API_BASE
-      : 'PASTE_RENDER_URL_HERE'; // e.g. https://arogya-dashboard-api.onrender.com
-  const DASHBOARD_API_AUTH_HEADER_NAME = 'PASTE_HEADER_NAME_HERE';
-  const DASHBOARD_API_AUTH_HEADER_VALUE = 'PASTE_HEADER_VALUE_HERE';
+      : 'https://decode-sih-jmnh.onrender.com'; // e.g. https://arogya-dashboard-api.onrender.com
+  const DASHBOARD_API_AUTH_HEADER_NAME = 'xyzabc123';
+  const DASHBOARD_API_AUTH_HEADER_VALUE = 'xyzabc123';
 
   const ROUTE_MAP = {
     '#/auth': 'view-auth',
