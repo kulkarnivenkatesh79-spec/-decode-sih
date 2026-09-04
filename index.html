@@ -433,7 +433,30 @@
                   <span class="mono-label text-muted" style="font-size:0.75rem">Auto-Triage Evaluated</span>
                 </div>
                 <div class="aq-list" id="action-queue-list">
-                  <!-- Dynamically populated critical triage cases -->
+                  <!-- Dynamically populated live escalation cases (server/ backend) -->
+                </div>
+              </div>
+
+              <!-- ROW 1b: FIELD RESPONDERS (doctor persona only) — live from the
+                   Arogya escalation backend, same poll cadence as the queue. -->
+              <div class="responders-panel mb-4 d-none" id="field-responders-section">
+                <div class="aq-header">
+                  <div class="d-flex align-items-center gap-2">
+                    <span class="badge-pulsing-alert" style="background:var(--c-mint-bg); color:var(--c-mint);">
+                      <svg class="icon" aria-hidden="true"><use href="#icon-people"></use></svg>
+                    </span>
+                    <h2 class="mb-0 fw-bold fs-5">Field Responders</h2>
+                    <span class="badge-mono-pill ms-2" id="fr-count">0 On Roster</span>
+                  </div>
+                  <div class="responder-identity">
+                    <label for="responder-identity-select" class="mono-label text-muted" style="font-size:0.7rem">ACTING AS</label>
+                    <select id="responder-identity-select" class="responder-identity-select" aria-label="Select which responder you are">
+                      <option value="">— select responder —</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="bento-grid grid-3" id="field-responders-list">
+                  <!-- Dynamically populated responder roster -->
                 </div>
               </div>
 
@@ -1374,6 +1397,9 @@
     </div>
   </div>
 
+  <!-- Base URL of the Arogya escalation backend (server/). Same-origin ('') when
+       the dashboard is served by that backend; point at the host:port otherwise. -->
+  <script>window.ESCALATION_API_BASE = 'http://localhost:3000';</script>
   <script src="app.js"></script>
 </body>
 </html>

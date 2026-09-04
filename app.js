@@ -7,161 +7,6 @@
 
 (function (window, document) {
   'use strict';
-// -------------------------------------------------------------------------
-// 1. I18N TRANSLATION ENGINE
-// -------------------------------------------------------------------------
-const TRANSLATIONS = {
-  en: {
-    hero_tag: "● RURAL HEALTH INTELLIGENCE NETWORK",
-    hero_title: "24,000+ rural lives connected to instant care.",
-    hero_quote: "\"ArogyaSetu Intelligence bridges the critical gap between remote village hamlets, ASHA frontline workers, and verified government healthcare schemes.\"",
-    stat_villagers: "Active Villagers",
-    stat_voice: "Multilingual Voice",
-    stat_schemes: "Schemes Unlocked",
-    footer_auth: "National Health Mission Interface • Secure ABHA Node Access",
-    auth_title: "Sign in to your health node",
-    auth_subtext: "Enter your ABHA ID, Phone number, or select a demo role below",
-    btn_access: "Access Health Platform →",
-    lbl_or_fed: "OR FEDERATED ACCESS",
-    btn_abha: "Continue with ABHA ID",
-    lbl_demo: "INSTANT DEMO ACCESS",
-    role_patient: "Rural Villager / Patient",
-    role_asha: "ASHA Field Worker",
-    role_doctor: "PHC Medical Officer",
-    role_maternal: "Maternal Mother (ANC)",
-    brand: "ArogyaSetu Intelligence",
-    search_placeholder: " Search symptoms, schemes, ABHA...",
-    btn_switch_node: "Sign Out / Switch Node →",
-    tab_dashboard: "Dashboard",
-    tab_directory: "Villager Directory",
-    tab_symptoms: "AI Symptom Checker",
-    tab_schemes: "Scheme Radar",
-    tab_profile: "Profile & Vitals Intake",
-    tab_centers: "Nearest PHC Centers",
-    tab_settings: "Settings",
-    dash_title: "Field Operations & Epidemiology Dashboard",
-    sc_screened: "VILLAGERS SCREENED",
-    sc_alerts: "HIGH-RISK MATERNAL ALERTS",
-    sc_claims: "DBT DISBURSED",
-    sc_sync: "OFFLINE CLOUD SYNC",
-    ac_record: "Record Vitals",
-    ac_triage: "Run Voice Triage",
-    ac_radar: "Scheme Radar",
-    ac_dispatch: "Emergency 108 PHC",
-    lbl_network: "Live Telemetry: Devnagar Ward Cluster Map",
-    prof_title: "Patient Profile & Vitals Intake",
-    lbl_name: "PATIENT NAME",
-    lbl_age: "AGE",
-    lbl_gender: "GENDER",
-    lbl_ward: "VILLAGE / WARD",
-    lbl_abha: "ABHA ID",
-    lbl_symptoms: "REPORTED SYMPTOMS",
-    lbl_conditions: "EXISTING CONDITIONS",
-    btn_save: "Save Patient Record",
-    lbl_vitals_summary: "Vitals Summary",
-    lbl_cond_sym: "Conditions & Symptoms",
-    triage_title: "Vernacular Voice Symptom Diagnostic",
-    triage_prompt: "\"Tap to Speak in Local Language\"",
-    lbl_body_map: "Or click affected body zones:",
-    lbl_confidence: "Confidence Matrix",
-    btn_listen: "Listen to Advice",
-    scheme_title: "National Scheme Radar & ABHA ID Generator",
-    lbl_eligibility: "Eligibility Parameters",
-    lbl_income: "Annual Income",
-    lbl_family: "Family Members",
-    lbl_category: "Category",
-    lbl_digital_abha: "Digital ABHA Health Card",
-    btn_dl_abha: "Download ABHA PNG",
-    lbl_matched_schemes: "Matched Schemes",
-    dir_title: "Registered Villagers & Triage Directory",
-    phc_title: "Nearest Health Centers & Emergency Dispatch",
-    settings_title: "Settings & Offline Gateway",
-    btn_ask_help: "Ask for Help",
-    chat_title: "Arogya Assistant",
-    chat_subtitle: "Ask questions or get help navigating",
-    chat_welcome_msg: "Namaste! 🙏 I am your rural healthcare guide. How can I help you navigate or submit complaints today? You can type or tap the microphone to speak.",
-    tab_voice_input: "Voice Input",
-    tab_text_input: "Text Input",
-    lbl_grievance_text_desc: "TYPE YOUR HEALTH ISSUE OR GRIEVANCE",
-    btn_submit_grievance: "Submit Grievance / Symptoms",
-    tag_symptoms_breadcrumb: "● AI MULTILINGUAL TRIAGE & GRIEVANCE ENGINE"
-  },
-  hi: {
-    hero_tag: "● ग्रामीण स्वास्थ्य खुफिया नेटवर्क",
-    hero_title: "24,000+ ग्रामीण जीवन तत्काल देखभाल से जुड़े।",
-    hero_quote: "\"आरोग्यसेतु इंटेलिजेंस दूरदराज के गांवों, आशा कार्यकर्ताओं और सरकारी स्वास्थ्य योजनाओं के बीच की खाई को पाटता है।\"",
-    stat_villagers: "सक्रिय ग्रामीण",
-    stat_voice: "बहुभाषी आवाज़",
-    stat_schemes: "योजनाएं अनलॉक्ड",
-    footer_auth: "राष्ट्रीय स्वास्थ्य मिशन इंटरफ़ेस • सुरक्षित ABHA नोड",
-    auth_title: "अपने हेल्थ नोड में साइन इन करें",
-    auth_subtext: "अपना ABHA ID या डेमो भूमिका चुनें",
-    btn_access: "प्लेटफ़ॉर्म एक्सेस करें →",
-    lbl_or_fed: "या फेडेरेटेड एक्सेस",
-    btn_abha: "ABHA ID के साथ जारी रखें",
-    lbl_demo: "त्वरित डेमो एक्सेस",
-    role_patient: "ग्रामीण / मरीज",
-    role_asha: "आशा कार्यकर्ता",
-    role_doctor: "PHC चिकित्सा अधिकारी",
-    role_maternal: "गर्भवती माता (ANC)",
-    brand: "आरोग्यसेतु इंटेलिजेंस",
-    search_placeholder: " लक्षण, योजनाएं, ABHA खोजें...",
-    btn_switch_node: "साइन आउट / नोड बदलें →",
-    tab_dashboard: "डैशबोर्ड",
-    tab_directory: "ग्रामीण निर्देशिका",
-    tab_symptoms: "AI लक्षण व शिकायत",
-    tab_schemes: "योजना रडार",
-    tab_profile: "प्रोफ़ाइल और विटल्स",
-    tab_centers: "निकटतम PHC केंद्र",
-    tab_settings: "सेटिंग्स",
-    dash_title: "क्षेत्र संचालन और महामारी विज्ञान डैशबोर्ड",
-    sc_screened: "स्क्रीन किए गए ग्रामीण",
-    sc_alerts: "उच्च-जोखिम अलर्ट",
-    sc_claims: "DBT क्लेम वितरित",
-    sc_sync: "क्लाउड सिंक स्थिति",
-    ac_record: "विटल्स दर्ज करें",
-    ac_triage: "वॉयस ट्राइएज चलाएं",
-    ac_radar: "योजना रडार",
-    ac_dispatch: "आपातकालीन रेफरल",
-    lbl_network: "लाइव टेलीमेट्री: देवनगर क्लस्टर मैप",
-    prof_title: "मरीज प्रोफ़ाइल और विटल्स इंटेक",
-    lbl_name: "मरीज का नाम",
-    lbl_age: "आयु",
-    lbl_gender: "लिंग",
-    lbl_ward: "गाँव / वार्ड",
-    lbl_abha: "ABHA ID",
-    lbl_symptoms: "लक्षण व शिकायतें",
-    lbl_conditions: "मौजूदा स्थितियां",
-    btn_save: "मरीज रिकॉर्ड सहेजें",
-    lbl_vitals_summary: "विटल्स सारांश",
-    lbl_cond_sym: "स्थितियां और लक्षण",
-    triage_title: "स्थानीय भाषा वॉयस एवं टेक्स्ट शिकायत / निदान पोर्टल",
-    triage_prompt: "\"स्थानीय भाषा में बोलने के लिए टैप करें\"",
-    lbl_body_map: "या प्रभावित शरीर क्षेत्रों पर क्लिक करें:",
-    lbl_confidence: "कॉन्फिडेंस मैट्रिक्स",
-    btn_listen: "सलाह सुनें",
-    scheme_title: "राष्ट्रीय योजना रडार और ABHA जनरेटर",
-    lbl_eligibility: "पात्रता पैरामीटर",
-    lbl_income: "वार्षिक आय",
-    lbl_family: "परिवार के सदस्य",
-    lbl_category: "श्रेणी",
-    lbl_digital_abha: "डिजिटल ABHA हेल्थ कार्ड",
-    btn_dl_abha: "ABHA PNG डाउनलोड करें",
-    lbl_matched_schemes: "मिलान योजनाएं",
-    dir_title: "पंजीकृत ग्रामीण और ट्राइएज निर्देशिका",
-    phc_title: "निकटतम स्वास्थ्य केंद्र और आपातकालीन प्रेषण",
-    settings_title: "सेटिंग्स और ऑफलाइन गेटवे",
-    btn_ask_help: "सहायता लें",
-    chat_title: "आरोग्य सहायक",
-    chat_subtitle: "सवाल पूछें या ऐप में मार्गदर्शन पाएं",
-    chat_welcome_msg: "नमस्ते! 🙏 मैं आपका ग्रामीण स्वास्थ्य सहायक हूँ। आज मैं आपकी कैसे मदद कर सकता हूँ?",
-    tab_voice_input: "वॉयस (बोलकर)",
-    tab_text_input: "टेक्स्ट (लिखकर)",
-    lbl_grievance_text_desc: "अपनी स्वास्थ्य समस्या या शिकायत लिखें",
-    btn_submit_grievance: "शिकायत / लक्षण दर्ज करें",
-    tag_symptoms_breadcrumb: "● एआई बहुभाषी ट्राइएज और शिकायत पोर्टल"
-  }
-};
 
   /* =======================================================================
      1. CONFIG & CONSTANTS
@@ -789,7 +634,10 @@ const TRANSLATIONS = {
     triageSymptoms: [],
     profileSymptoms: [],
     profileConditions: [],
-    lastFocusedTrigger: null
+    lastFocusedTrigger: null,
+    responderAdminId: (function () {
+      try { return localStorage.getItem('asi.v1.responderAdminId') || null; } catch (e) { return null; }
+    })()
   };
 
   function loadPersistedState() {
@@ -1184,33 +1032,13 @@ const TRANSLATIONS = {
     }
   }
 
-  // 3.2 Dashboard Renderer
+  // 3.2 Dashboard Renderer — Critical Action Queue is now backed by live
+  // escalation data from the Arogya backend (see Escalation module below).
   function renderDashboardQueue() {
-    const container = document.getElementById('action-queue-list');
-    const countBadge = document.getElementById('aq-open-count');
-    if (!container) return;
+    Escalation.syncDashboardVisibility();
+    Escalation.renderFromCache();
+  }
 
-    const criticals = state.patients.filter(p => p.risk === 'Critical' || p.risk === 'Attention');
-    if (countBadge) countBadge.textContent = `${criticals.length} Open Alerts`;
-
-    if (criticals.length === 0) {
-      renderEmptyState(container, 'empty_queue_title', 'empty_queue_msg');
-      return;
-    }
-
-    const frag = document.createDocumentFragment();
-    criticals.forEach(p => {
-      const item = document.createElement('div');
-      item.className = 'aq-item';
-      item.innerHTML = `
-        <div>
-          <div class="d-flex align-items-center gap-2">
-            <span class="aq-patient-name">${escapeHTML(p.name)}</span>
-            <span class="badge-mono-pill">${escapeHTML(p.ward)}</span>
-            <span class="aq-meta">Flagged ${escapeHTML(formatRelativeTimeString(p.lastVisit || '10m ago'))}</span>
-          </div>
-          <div class="aq-clinical-reason mt-1">
-            ⚠️ ${p.risk === 'Critical' ? 'CRITICAL RISK' : 'ATTENTION'}: BP ${escapeHTML(p.bp || '120/80')}, SpO2 ${escapeHTML(p.spo2 || 98)}% • ${escapeHTML((p.symptoms || []).join(', ') || (p.conditions || []).join(', '))}
 function removeTriageSymptom(sym) {
   triageSymptoms = triageSymptoms.filter(t => t !== sym);
   renderTriageTags();
@@ -1397,19 +1225,14 @@ function queryGeminiBackend(userPrompt) {
 
     if (lower.includes('symptom') || lower.includes('voice') || lower.includes('triage') || lower.includes('diagnostic')) {
       reply = "To report symptoms or voice complaints: Click on 'AI Symptom Checker' in the sidebar menu. You can tap the big microphone to speak, or switch to Text Input mode to type!";
-      if (appState.currentUser) switchTab('view-symptoms');
     } else if (lower.includes('grievance') || lower.includes('complaint') || lower.includes('problem')) {
       reply = "To submit a grievance or complaint: Open 'AI Symptom Checker & Grievance Portal', choose 'Text Input' or 'Voice Input' to describe your health problem or PHC complaint.";
-      if (appState.currentUser) switchTab('view-symptoms');
     } else if (lower.includes('scheme') || lower.includes('government') || lower.includes('benefit') || lower.includes('abha')) {
       reply = "To check eligible government health schemes or generate your ABHA digital card: Click on 'Scheme Radar' from the sidebar menu.";
-      if (appState.currentUser) switchTab('view-schemes');
     } else if (lower.includes('hospital') || lower.includes('phc') || lower.includes('center') || lower.includes('ambulance') || lower.includes('108')) {
       reply = "To locate nearest health centers or dispatch emergency 108 ambulance: Click on 'Nearest PHC Centers' in the sidebar.";
-      if (appState.currentUser) switchTab('view-centers');
     } else if (lower.includes('register') || lower.includes('patient') || lower.includes('vitals') || lower.includes('record')) {
       reply = "To record patient details or vitals: Open 'Profile & Vitals Intake' from the sidebar and click 'Save Patient Record'.";
-      if (appState.currentUser) switchTab('view-profile');
     } else {
       reply = `Thank you for your question: "${userPrompt}". Your request is logged and ready for Gemini API response connection!`;
     }
@@ -1476,194 +1299,6 @@ function playAudioAdvice(customTxt) {
   synthesis.speak(utter);
 }
 
-// -------------------------------------------------------------------------
-// 7. SCHEME RADAR & ABHA
-// -------------------------------------------------------------------------
-document.getElementById('range-inc').addEventListener('input', function() { document.getElementById('val-inc').innerText = `₹${parseInt(this.value).toLocaleString('en-IN')}`; calcSchemes(); });
-document.getElementById('range-fam').addEventListener('input', function() { document.getElementById('val-fam').innerText = this.value; calcSchemes(); });
-document.getElementById('sel-cat').addEventListener('change', calcSchemes);
-
-function calcSchemes() {
-  const inc = parseInt(document.getElementById('range-inc').value);
-  const cat = document.getElementById('sel-cat').value;
-  const results = document.getElementById('scheme-results');
-  results.innerHTML = '';
-  
-  appState.schemes.forEach(s => {
-    let eligible = false;
-    if (s.name.includes("PM-JAY") && (cat === 'BPL' || inc <= 250000)) eligible = true;
-    if (s.name.includes("Suraksha") && cat === 'Pregnant') eligible = true;
-    if (s.name.includes("Vandana Yojana") && cat === 'Pregnant') eligible = true;
-    if (s.name.includes("Vay Vandana") && cat === 'Senior') eligible = true;
-    
-    if(eligible) {
-      results.innerHTML += `<div class="scheme-card"><div class="d-flex justify-content-between align-items-start"><div class="sc-title">${s.name}</div><span class="tag-pill ${s.type}">ELIGIBLE</span></div><div class="sc-desc">${s.desc}</div></div>`;
-    }
-  });
-  
-  if(results.innerHTML === '') results.innerHTML = `<p class="text-muted text-center mt-3">No matching schemes.</p>`;
-  renderABHACard();
-}
-
-function renderABHACard() {
-  const name = document.getElementById('inp-name').value || (appState.currentUser ? appState.currentUser.name : "Citizen Name");
-  let abha = document.getElementById('inp-abha').value || (appState.currentUser && appState.currentUser.data.abha ? appState.currentUser.data.abha : "91-" + Math.floor(1000+Math.random()*9000) + "-" + Math.floor(1000+Math.random()*9000) + "-" + Math.floor(1000+Math.random()*9000));
-  document.getElementById('ab-gen-name').innerText = name;
-  document.getElementById('ab-gen-id').innerText = abha;
-}
-
-function downloadABHACard() {
-  const cvs = document.getElementById('abha-canvas');
-  cvs.width = 600; cvs.height = 300;
-  const ctx = cvs.getContext('2d');
-  ctx.fillStyle = '#FFFFFF'; ctx.fillRect(0,0,600,300);
-  ctx.fillStyle = '#0F172A'; ctx.font = 'bold 24px sans-serif'; ctx.fillText("Ayushman Bharat Health Account", 30, 40);
-  ctx.beginPath(); ctx.moveTo(30, 60); ctx.lineTo(570, 60); ctx.strokeStyle = '#E2E8F0'; ctx.lineWidth = 2; ctx.stroke();
-  ctx.font = 'bold 28px sans-serif'; ctx.fillText(document.getElementById('ab-gen-name').innerText, 150, 140);
-  ctx.font = '22px monospace'; ctx.fillStyle = '#334155'; ctx.fillText(document.getElementById('ab-gen-id').innerText, 150, 180);
-  ctx.fillStyle = '#E2E8F0'; ctx.fillRect(30, 90, 100, 120);
-  
-  const link = document.createElement('a');
-  link.download = `ABHA_Card.png`;
-  link.href = cvs.toDataURL('image/png');
-  link.click();
-  showToast('ABHA Card Downloaded');
-}
-
-// -------------------------------------------------------------------------
-// 8. ABHA PROFILE (TWO-WAY BINDING)
-// -------------------------------------------------------------------------
-const profileSyms = [];
-const profileConds = [];
-
-document.querySelectorAll('.bind-input').forEach(input => {
-  input.addEventListener('input', updatePreviewCard);
-});
-
-function updatePreviewCard() {
-  const name = document.getElementById('inp-name').value || '--';
-  const age = document.getElementById('inp-age').value || '--';
-  document.getElementById('card-name').innerText = name;
-  document.getElementById('card-village').innerText = document.getElementById('inp-village').value || '--';
-  document.getElementById('card-abha').innerText = document.getElementById('inp-abha').value || '--';
-
-  let vitalsHTML = '';
-  const bp = document.getElementById('inp-bp').value;
-  const spo2 = document.getElementById('inp-spo2').value;
-  vitalsHTML += `<div class="v-block"><span class="v-lbl">BP (mmHg)</span><span class="v-val">${bp || '--'}</span></div>`;
-  vitalsHTML += `<div class="v-block"><span class="v-lbl">SpO2 (%)</span><span class="v-val">${spo2 || '--'}</span></div>`;
-  document.getElementById('card-vitals').innerHTML = vitalsHTML;
-  
-  let html = profileSyms.map(t => `<span class="tag-pill tag-red">${t}</span>`).join('');
-  html += profileConds.map(t => `<span class="tag-pill tag-sky">${t}</span>`).join('');
-  document.getElementById('card-link-tags').innerHTML = html;
-  
-  let score = 100;
-  if(spo2 && spo2 < 95) score -= 20;
-  if(profileSyms.length > 0) score -= (profileSyms.length * 5);
-  const ring = document.getElementById('card-health-score');
-  ring.innerText = score + '%';
-  ring.style.borderColor = score > 80 ? 'var(--c-mint)' : (score > 60 ? 'var(--c-amb)' : '#DC2626');
-  ring.style.color = score > 80 ? 'var(--c-mint-text)' : (score > 60 ? '#B45309' : '#991B1B');
-}
-
-document.getElementById('profile-sym-input').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); if(this.value.trim() !== '') { profileSyms.push(this.value.trim()); renderProfileInputTags('profile-symptoms-tags', profileSyms, 'sym'); this.value = ''; updatePreviewCard(); } }
-});
-document.getElementById('profile-cond-input').addEventListener('keypress', function(e) {
-  if (e.key === 'Enter' || e.key === ',') { e.preventDefault(); if(this.value.trim() !== '') { profileConds.push(this.value.trim()); renderProfileInputTags('profile-cond-tags', profileConds, 'cond'); this.value = ''; updatePreviewCard(); } }
-});
-
-function renderProfileInputTags(containerId, arr, type) {
-  const container = document.getElementById(containerId);
-  const input = container.querySelector('input');
-  container.innerHTML = arr.map(t => `<span class="tag-interactive">● ${t} <span class="del" onclick="removeProfileTag('${t}', '${type}')">✕</span></span>`).join('');
-  container.appendChild(input);
-}
-function removeProfileTag(tag, type) {
-  if(type==='sym') { profileSyms.splice(profileSyms.indexOf(tag), 1); renderProfileInputTags('profile-symptoms-tags', profileSyms, 'sym'); } 
-  else { profileConds.splice(profileConds.indexOf(tag), 1); renderProfileInputTags('profile-cond-tags', profileConds, 'cond'); }
-  updatePreviewCard();
-}
-
-function savePatientNode() {
-  const name = document.getElementById('inp-name').value;
-  if(!name) { showToast('Patient Name Required', 'danger'); return; }
-  const newPatient = {
-    id: document.getElementById('inp-abha').value || "91-" + Date.now().toString().slice(-12),
-    name: name, age: document.getElementById('inp-age').value, gender: document.getElementById('inp-gender').value,
-    ward: document.getElementById('inp-village').value, bp: document.getElementById('inp-bp').value, spo2: document.getElementById('inp-spo2').value,
-    risk: profileSyms.length > 2 ? 'Critical' : 'Stable', symptoms: [...profileSyms], conditions: [...profileConds]
-  };
-  appState.patients.unshift(newPatient); saveStore(); showToast(`Patient ${name} saved successfully!`);
-  document.querySelectorAll('.bind-input').forEach(i => i.value='');
-  profileSyms.length = 0; profileConds.length = 0;
-  renderProfileInputTags('profile-symptoms-tags', profileSyms, 'sym'); renderProfileInputTags('profile-cond-tags', profileConds, 'cond');
-  updatePreviewCard();
-  if(appState.currentUser && appState.currentUser.roleLabel.includes('ASHA')) setTimeout(() => switchTab('view-directory'), 1000);
-}
-
-// -------------------------------------------------------------------------
-// 9. DIRECTORY & SOS TELEMETRY
-// -------------------------------------------------------------------------
-document.getElementById('dir-search').addEventListener('input', renderDirectory);
-document.getElementById('dir-filter').addEventListener('change', renderDirectory);
-document.getElementById('risk-filter').addEventListener('change', renderDirectory);
-
-function renderDirectory() {
-  const search = document.getElementById('dir-search').value.toLowerCase();
-  const wardF = document.getElementById('dir-filter').value;
-  const riskF = document.getElementById('risk-filter').value;
-  const container = document.getElementById('cohort-grid-container');
-  container.innerHTML = '';
-  
-  const filtered = appState.patients.filter(p => {
-    let matchS = p.name.toLowerCase().includes(search) || p.id.includes(search) || p.symptoms.join(' ').toLowerCase().includes(search);
-    let matchW = (wardF === 'All' || p.ward === wardF);
-    let matchR = (riskF === 'All' || p.risk === riskF);
-    return matchS && matchW && matchR;
-  });
-  
-  filtered.forEach(p => {
-    let statusPill = '';
-    if(p.risk === 'Critical') statusPill = `<div class="status-pill status-critical"><div class="dot"></div>CRITICAL RISK</div>`;
-    else if(p.risk === 'Attention') statusPill = `<div class="status-pill status-attention"><div class="dot"></div>ATTENTION REQUIRED</div>`;
-    else statusPill = `<div class="status-pill status-stable"><div class="dot"></div>STABLE</div>`;
-    
-    let vitalsStr = `
-      <div class="v-block"><span class="v-lbl">BP (mmHg)</span><span class="v-val">${p.bp || '--'}</span></div>
-      <div class="v-block"><span class="v-lbl">SpO2 (%)</span><span class="v-val">${p.spo2 || '--'}</span></div>
-    `;
-
-    let tagsStr = p.symptoms.map(s => `<span class="tag-pill tag-red">${s}</span>`).join('');
-    tagsStr += p.conditions.map(c => `<span class="tag-pill tag-sky">${c}</span>`).join('');
-    
-    const div = document.createElement('div');
-    div.className = 'patient-card';
-    div.innerHTML = `
-      <div class="pc-top">
-        <div class="d-flex">
-          <div class="pc-avatar">${getInitials(p.name)}</div>
-          <div class="pc-identity">
-            <div class="name">${p.name}</div>
-            <div class="meta">${p.id} • ${p.age} yrs • ${p.ward}</div>
-          </div>
-        </div>
-        <div class="aq-actions">
-          <button class="btn-aq-call" type="button" data-action="call-patient" data-id="${escapeHTML(p.id)}">
-            <svg class="icon" aria-hidden="true"><use href="#icon-phone"></use></svg> Call
-          </button>
-          <button class="btn-aq-refer" type="button" data-action="refer-phc" data-id="${escapeHTML(p.id)}">
-            <svg class="icon" aria-hidden="true"><use href="#icon-truck"></use></svg> Refer to PHC
-          </button>
-        </div>
-      `;
-      frag.appendChild(item);
-    });
-
-    container.innerHTML = '';
-    container.appendChild(frag);
-  }
 
   // 3.3 Villager Directory Renderer
   function renderDirectory() {
@@ -2424,6 +2059,18 @@ function renderDirectory() {
         case 'role-primary-action':
           handleRolePrimaryAction();
           break;
+        case 'esc-accept':
+          Escalation.respond(target.dataset.case, 'accept', target);
+          break;
+        case 'esc-reassign':
+          Escalation.respond(target.dataset.case, 'decline', target);
+          break;
+        case 'esc-resolve':
+          Escalation.resolve(target.dataset.case, target);
+          break;
+        case 'esc-retry':
+          Escalation.pollNow();
+          break;
         case 'open-more-sheet':
           openMoreSheet();
           break;
@@ -2446,6 +2093,8 @@ function renderDirectory() {
         toggleDemoOffline(e.target.checked);
       } else if (id === 'sel-cat' || id === 'sel-state') {
         calcSchemes();
+      } else if (id === 'responder-identity-select') {
+        Escalation.setResponderIdentity(e.target.value);
       }
     });
 
@@ -3060,7 +2709,12 @@ function renderDirectory() {
     updatePrimaryActionDock(state.currentUser);
 
     // View Lifecycle Hooks
-    if (targetViewId === 'view-dashboard') renderDashboardQueue();
+    if (targetViewId === 'view-dashboard') {
+      renderDashboardQueue();
+      Escalation.onDashboardEnter();
+    } else {
+      Escalation.onDashboardLeave();
+    }
     if (targetViewId === 'view-schemes') calcSchemes();
     if (targetViewId === 'view-directory') renderDirectory();
     if (targetViewId === 'view-centers') renderCenters();
@@ -3103,6 +2757,7 @@ function renderDirectory() {
     updatePrimaryActionDock(role);
     renderMobileBottomNav(role);
     renderMoreSheet(role);
+    Escalation.onRoleChange(roleKey);
 
     const authView = document.getElementById('view-auth');
     const appShell = document.getElementById('app-shell');
@@ -3378,6 +3033,332 @@ function renderDirectory() {
     }
   }
 
+  /* =======================================================================
+     11. LIVE ESCALATION INTEGRATION
+     Bridges the Critical Action Queue + Field Responders panel to the
+     Arogya Sahayak n8n escalation system via the server/ backend.
+     Only this dashboard section talks to the backend — everything else
+     in the app stays on its existing mock data.
+     ======================================================================= */
+  const Escalation = (function () {
+    const API_BASE = String(
+      window.ESCALATION_API_BASE != null ? window.ESCALATION_API_BASE : 'http://localhost:3000'
+    ).replace(/\/+$/, '');
+    const POLL_MS = 8000;
+
+    let pollTimer = null;
+    let onDashboard = false;
+    let hadSuccess = false;
+    let lastCases = null;
+    let lastAdmins = null;
+    const inFlight = new Set(); // case_ids with an Accept/Reassign/Resolve request pending
+
+    function apiFetch(pathname, opts) {
+      const options = Object.assign({ headers: {} }, opts || {});
+      options.headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers);
+      return fetch(API_BASE + pathname, options).then(async (res) => {
+        let data = null;
+        try { data = await res.json(); } catch (e) { /* non-JSON */ }
+        if (!res.ok) {
+          const msg = (data && (data.error || data.message)) || `Request failed (${res.status})`;
+          throw new Error(msg);
+        }
+        return data || {};
+      });
+    }
+
+    function severityMeta(label) {
+      const l = String(label || '').toLowerCase();
+      if (l === 'emergency') return { cls: 'sev-emergency', pill: 'status-critical', text: 'EMERGENCY' };
+      if (l === 'urgent') return { cls: 'sev-urgent', pill: 'status-critical', text: 'URGENT' };
+      if (l === 'moderate') return { cls: 'sev-moderate', pill: 'status-attention', text: 'MODERATE' };
+      if (l === 'mild') return { cls: 'sev-mild', pill: 'status-stable', text: 'MILD' };
+      return { cls: 'sev-mild', pill: 'status-stable', text: 'NOT ASSESSED' };
+    }
+
+    function elapsedSince(iso) {
+      const t = Date.parse(iso);
+      if (isNaN(t)) return 'recently';
+      const mins = Math.max(0, Math.round((Date.now() - t) / 60000));
+      if (mins < 1) return 'just now';
+      if (mins < 60) return `${mins} min ago`;
+      const hrs = Math.round(mins / 60);
+      if (hrs < 24) return `${hrs} hr ago`;
+      return `${Math.round(hrs / 24)} d ago`;
+    }
+
+    function locationText(loc) {
+      loc = loc || {};
+      return loc.landmark || loc.decoded_location || loc.pin_code || 'Location pending';
+    }
+
+    function assignedText(c) {
+      const snap = c.current_admin_snapshot;
+      if (snap && snap.name) {
+        return snap.designation ? `${snap.name} · ${snap.designation}` : snap.name;
+      }
+      return c.current_admin_id || null;
+    }
+
+    function caseCardHTML(c) {
+      const sev = severityMeta(c.severity_label);
+      const p = c.patient || {};
+      const name = p.name || 'Unknown patient';
+      const nameLine = p.age != null ? `${name}, ${p.age}` : name;
+      const phone = p.contact_number || (c.location && c.location.contact_number) || null;
+      const busy = inFlight.has(c.case_id);
+      const assigned = assignedText(c);
+      const symptoms = c.symptoms
+        ? (c.duration ? `${c.symptoms} · ${c.duration}` : String(c.symptoms))
+        : '';
+
+      const actions = busy
+        ? `<button class="btn-aq-refer" type="button" disabled><span class="esc-spinner"></span>Working…</button>`
+        : `<button class="btn-aq-refer" type="button" data-action="esc-accept" data-case="${escapeHTML(c.case_id)}">Accept</button>
+           <button class="btn-aq-call" type="button" data-action="esc-reassign" data-case="${escapeHTML(c.case_id)}">Reassign</button>
+           <button class="esc-btn-resolve" type="button" data-action="esc-resolve" data-case="${escapeHTML(c.case_id)}">Resolve</button>`;
+
+      return `
+        <div class="esc-case-card ${sev.cls}">
+          <div class="esc-case-main">
+            <div class="esc-case-row1">
+              <span class="status-pill ${sev.pill}"><span class="dot"></span>${escapeHTML(sev.text)}</span>
+              <span class="aq-patient-name">${escapeHTML(nameLine)}</span>
+              ${phone ? `<span class="badge-mono-pill">☎ ${escapeHTML(phone)}</span>` : ''}
+              <span class="aq-meta">Attempt ${escapeHTML(c.attempt_number != null ? c.attempt_number : 1)} · updated ${escapeHTML(elapsedSince(c.updated_at))}</span>
+            </div>
+            ${symptoms ? `<div class="esc-case-symptoms">${escapeHTML(symptoms)}</div>` : ''}
+            <div class="esc-case-meta-row">
+              <span class="esc-meta-chip">📍 ${escapeHTML(locationText(c.location))}</span>
+              ${assigned
+                ? `<span class="esc-meta-chip">🩺 ${escapeHTML(assigned)}</span>`
+                : `<span class="esc-meta-chip esc-unassigned">🩺 Unassigned</span>`}
+            </div>
+          </div>
+          <div class="aq-actions esc-case-actions">${actions}</div>
+        </div>`;
+    }
+
+    function renderQueue(cases, opts) {
+      opts = opts || {};
+      const container = document.getElementById('action-queue-list');
+      const countBadge = document.getElementById('aq-open-count');
+      if (!container) return;
+
+      if (!Array.isArray(cases)) {
+        renderSkeleton(container, 'row', 2);
+        if (countBadge) countBadge.textContent = 'Syncing…';
+        return;
+      }
+
+      const n = cases.length;
+      if (countBadge) countBadge.textContent = `${n} Open Alert${n === 1 ? '' : 's'}`;
+
+      if (n === 0) {
+        container.innerHTML = `
+          <div class="empty-state">
+            <svg class="icon" aria-hidden="true"><use href="#icon-shield-check"></use></svg>
+            <div class="empty-state-title">No active escalations</div>
+            <div class="empty-state-msg">Every triaged patient currently has a responder. New cases from the Telegram bot appear here automatically.</div>
+          </div>`;
+        return;
+      }
+
+      const note = opts.stale
+        ? `<div class="esc-reconnect-note">⚠ Backend unreachable — showing last known state. <button type="button" class="btn-link p-0 border-0 bg-transparent" data-action="esc-retry" style="font:inherit;color:var(--c-sky-text);cursor:pointer;text-decoration:underline">Retry now</button></div>`
+        : '';
+      container.innerHTML = note + cases.map(caseCardHTML).join('');
+    }
+
+    function renderQueueError() {
+      const container = document.getElementById('action-queue-list');
+      const countBadge = document.getElementById('aq-open-count');
+      if (countBadge) countBadge.textContent = 'Offline';
+      if (!container) return;
+      renderErrorState(
+        container,
+        `Cannot reach the escalation backend at ${API_BASE || 'this site'}. Start the server/ service, then retry.`,
+        pollNow
+      );
+    }
+
+    function responderStatusMeta(status) {
+      const s = String(status || '').toLowerCase();
+      if (s === 'available') return { pill: 'status-stable', text: 'AVAILABLE' };
+      if (s === 'busy') return { pill: 'status-attention', text: 'BUSY' };
+      if (s === 'not_working') return { pill: 'status-critical', text: 'NOT WORKING' };
+      return { pill: 'status-attention', text: (status || 'UNKNOWN').toUpperCase() };
+    }
+
+    function renderResponders(admins) {
+      const container = document.getElementById('field-responders-list');
+      const countBadge = document.getElementById('fr-count');
+      if (!container) return;
+
+      if (!Array.isArray(admins)) {
+        renderSkeleton(container, 'card', 3);
+        return;
+      }
+
+      if (countBadge) countBadge.textContent = `${admins.length} On Roster`;
+
+      container.innerHTML = admins.length
+        ? admins.map((a) => {
+            const meta = responderStatusMeta(a.status);
+            return `
+              <div class="responder-card">
+                <div class="responder-card-head">
+                  <span class="responder-name">${escapeHTML(a.name || a.admin_id)}</span>
+                  <span class="status-pill ${meta.pill}"><span class="dot"></span>${escapeHTML(meta.text)}</span>
+                </div>
+                <div class="responder-desig">${escapeHTML(a.designation || '—')}</div>
+                ${a.phone ? `<a class="responder-phone" href="tel:${escapeHTML(a.phone)}">☎ ${escapeHTML(a.phone)}</a>` : ''}
+              </div>`;
+          }).join('')
+        : `<div class="empty-state"><div class="empty-state-msg">No responders on the roster yet. Seed the <code>admins</code> collection.</div></div>`;
+
+      populateIdentitySelect(admins);
+    }
+
+    function populateIdentitySelect(admins) {
+      const sel = document.getElementById('responder-identity-select');
+      if (!sel) return;
+      const current = state.responderAdminId || '';
+      let opts = '<option value="">— select responder —</option>';
+      let found = false;
+      admins.forEach((a) => {
+        if (a.admin_id === current) found = true;
+        const label = a.designation ? `${a.name || a.admin_id} · ${a.designation}` : (a.name || a.admin_id);
+        opts += `<option value="${escapeHTML(a.admin_id)}">${escapeHTML(label)}</option>`;
+      });
+      if (current && !found) {
+        opts += `<option value="${escapeHTML(current)}">${escapeHTML(current)} (offline)</option>`;
+      }
+      sel.innerHTML = opts;
+      sel.value = current;
+    }
+
+    function setResponderIdentity(val) {
+      state.responderAdminId = val || null;
+      try {
+        if (val) localStorage.setItem('asi.v1.responderAdminId', val);
+        else localStorage.removeItem('asi.v1.responderAdminId');
+      } catch (e) { /* storage disabled */ }
+      if (val) {
+        const sel = document.getElementById('responder-identity-select');
+        const label = sel && sel.selectedOptions[0] ? sel.selectedOptions[0].textContent : val;
+        showToast(`Acting as ${label}`, 'info');
+      }
+    }
+
+    function respond(caseId, action, btnEl) {
+      if (!caseId || inFlight.has(caseId)) return;
+      if (!state.responderAdminId) {
+        showToast('Select which responder you are first — the "Acting as" dropdown in Field Responders.', 'warning');
+        const sel = document.getElementById('responder-identity-select');
+        if (sel) sel.focus();
+        return;
+      }
+      inFlight.add(caseId);
+      renderQueue(lastCases);
+
+      apiFetch(`/api/escalations/${encodeURIComponent(caseId)}/respond`, {
+        method: 'POST',
+        body: JSON.stringify({ admin_id: state.responderAdminId, action }),
+      })
+        .then((data) => {
+          showToast(data.message || (action === 'accept' ? 'Case accepted.' : 'Reassignment requested.'),
+            data.ok === false ? 'warning' : 'success');
+        })
+        .catch((err) => {
+          showToast(err.message || 'Could not reach the escalation manager.', 'danger');
+        })
+        .finally(() => {
+          inFlight.delete(caseId);
+          pollNow();
+        });
+    }
+
+    function resolve(caseId, btnEl) {
+      if (!caseId || inFlight.has(caseId)) return;
+      inFlight.add(caseId);
+      renderQueue(lastCases);
+
+      apiFetch(`/api/escalations/${encodeURIComponent(caseId)}/resolve`, { method: 'PATCH', body: '{}' })
+        .then(() => showToast('Case archived from the active queue.', 'success'))
+        .catch((err) => showToast(err.message || 'Could not resolve case.', 'danger'))
+        .finally(() => {
+          inFlight.delete(caseId);
+          pollNow();
+        });
+    }
+
+    function pollOnce() {
+      return Promise.all([
+        apiFetch('/api/escalations?status=active'),
+        apiFetch('/api/admins'),
+      ])
+        .then(([q, r]) => {
+          lastCases = Array.isArray(q.escalations) ? q.escalations : [];
+          lastAdmins = Array.isArray(r.admins) ? r.admins : [];
+          hadSuccess = true;
+          renderQueue(lastCases);
+          renderResponders(lastAdmins);
+        })
+        .catch((err) => {
+          console.warn('[ASI] Escalation poll failed:', err.message);
+          if (!hadSuccess) {
+            renderQueueError();
+            renderResponders(lastAdmins);
+          } else {
+            renderQueue(lastCases, { stale: true });
+          }
+        });
+    }
+
+    function pollNow() { return pollOnce(); }
+
+    function startPolling() {
+      if (pollTimer) return;
+      pollOnce();
+      pollTimer = setInterval(() => {
+        if (!document.hidden && onDashboard) pollOnce();
+      }, POLL_MS);
+    }
+
+    function stopPolling() {
+      if (pollTimer) clearInterval(pollTimer);
+      pollTimer = null;
+    }
+
+    function syncDashboardVisibility() {
+      const section = document.getElementById('field-responders-section');
+      if (section) section.classList.toggle('d-none', state.activeRoleKey !== 'doctor');
+    }
+
+    function renderFromCache() {
+      renderQueue(lastCases);
+      renderResponders(lastAdmins);
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopPolling();
+      else if (onDashboard) startPolling();
+    });
+
+    return {
+      onDashboardEnter() { onDashboard = true; if (!document.hidden) startPolling(); },
+      onDashboardLeave() { onDashboard = false; stopPolling(); },
+      onRoleChange() { syncDashboardVisibility(); renderFromCache(); },
+      syncDashboardVisibility,
+      renderFromCache,
+      setResponderIdentity,
+      respond,
+      resolve,
+      pollNow,
+    };
+  })();
+
   // Auto-boot
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', init);
@@ -3393,7 +3374,8 @@ function renderDirectory() {
     setLanguage: setLanguage,
     setTheme: setTheme,
     showToast: showToast,
-    toggleDemoOffline: toggleDemoOffline
+    toggleDemoOffline: toggleDemoOffline,
+    Escalation: Escalation
   };
 
 })(window, document);

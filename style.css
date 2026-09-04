@@ -1952,7 +1952,6 @@ button {
 }
 .phc-dist-val { font-size: 1.5rem; font-weight: 700; font-family: var(--font-head); }
 
-<<<<<<< HEAD
 .bed-stacked-bar {
   height: 6px;
   background: var(--c-border);
@@ -2521,7 +2520,6 @@ a:focus:not(:focus-visible),
 [data-theme="dark"] {
   --c-text-muted: #A0AEC0;
 }
-=======
 /* Modals */
 .modal-content { background: var(--c-surface); border-radius: var(--radius-card); border: 1px solid var(--c-border); box-shadow: var(--shadow-strong); color: var(--c-text-main); }
 .modal-header { border-bottom: 1px solid var(--c-border); }
@@ -2844,4 +2842,148 @@ a:focus:not(:focus-visible),
   }
 }
 
->>>>>>> origin/sindhuja-app-ui
+
+/* =========================================================================
+   LIVE ESCALATION INTEGRATION — Critical Action Queue (real data) +
+   Field Responders panel. Bridges the Arogya Sahayak n8n escalation system
+   via the server/ backend. Reuses existing tokens & card idioms.
+   ========================================================================= */
+
+.bento-grid.grid-3 { grid-template-columns: repeat(3, 1fr); }
+
+/* --- Critical Action Queue: live case cards --------------------------------- */
+.esc-case-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  background: var(--c-canvas);
+  border: 1px solid var(--c-border);
+  border-left: 4px solid var(--c-border-strong);
+  border-radius: var(--radius-md);
+  padding: 0.95rem 1.15rem;
+  flex-wrap: wrap;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.esc-case-card:hover { background: var(--c-surface); }
+.esc-case-card.sev-emergency,
+.esc-case-card.sev-urgent { border-left-color: var(--c-red); }
+.esc-case-card.sev-moderate { border-left-color: var(--c-amb); }
+.esc-case-card.sev-mild { border-left-color: var(--c-mint); }
+
+.esc-case-main { flex: 1 1 320px; min-width: 0; }
+.esc-case-row1 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.35rem;
+}
+.esc-case-symptoms {
+  font-size: 0.9rem;
+  color: var(--c-text-main);
+  font-weight: 600;
+  margin-bottom: 0.4rem;
+}
+.esc-case-meta-row {
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+.esc-meta-chip {
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--c-text-muted);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  padding: 2px 7px;
+}
+.esc-meta-chip.esc-unassigned { color: var(--c-amb-text); border-color: var(--c-amb-border); background: var(--c-amb-bg); }
+
+.esc-case-actions { flex: 0 0 auto; align-items: center; flex-wrap: wrap; }
+.esc-case-actions .btn-aq-call,
+.esc-case-actions .btn-aq-refer { position: relative; }
+.esc-case-actions button[disabled] { opacity: 0.55; cursor: progress; }
+.esc-btn-resolve {
+  background: transparent;
+  border: 1px solid var(--c-border-strong);
+  color: var(--c-text-muted);
+  padding: 0.4rem 0.7rem;
+  border-radius: 6px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.esc-btn-resolve:hover { color: var(--c-text-main); border-color: var(--c-text-muted); }
+
+.esc-spinner {
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: escSpin 0.6s linear infinite;
+  vertical-align: -2px;
+  margin-right: 4px;
+}
+@keyframes escSpin { to { transform: rotate(360deg); } }
+
+.esc-reconnect-note {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--c-amb-text);
+  padding: 0.35rem 0.25rem 0;
+}
+
+/* --- Field Responders panel ---------------------------------------------- */
+.responders-panel {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-left: 5px solid var(--c-mint);
+  border-radius: var(--radius-card);
+  padding: 1.5rem;
+  box-shadow: var(--shadow-soft);
+}
+.responder-identity { display: flex; align-items: center; gap: 0.5rem; }
+.responder-identity-select {
+  background: var(--c-canvas);
+  border: 1px solid var(--c-border-strong);
+  color: var(--c-text-main);
+  border-radius: 6px;
+  padding: 0.35rem 0.6rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  font-family: var(--font-mono);
+  max-width: 230px;
+}
+.responder-card {
+  background: var(--c-canvas);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+.responder-card-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+.responder-name { font-family: var(--font-head); font-weight: 700; font-size: 0.98rem; color: var(--c-text-main); }
+.responder-desig { font-size: 0.8rem; color: var(--c-text-muted); }
+.responder-phone {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--c-sky-text);
+  text-decoration: none;
+}
+.responder-phone:hover { text-decoration: underline; }
+
+@media (max-width: 900px) {
+  .bento-grid.grid-3 { grid-template-columns: 1fr; }
+  .responder-identity-select { max-width: 160px; }
+}
