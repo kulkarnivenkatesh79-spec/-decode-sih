@@ -16,6 +16,18 @@
   const STORAGE_KEY_ROLE = 'asi.v1.role';
   const STORAGE_SCHEMA_VERSION = 1;
 
+  // --- Arogya dashboard backend (server/) ---------------------------------
+  // Base URL + shared auth header for the live escalation queue / responder
+  // roster. The header value is a static string shipped in this file, so it
+  // only deters casual scraping of the read endpoints — it is not real auth.
+  // Fill these in after deploying server/ to Render.
+  const DASHBOARD_API_BASE =
+    (typeof window !== 'undefined' && window.ESCALATION_API_BASE != null)
+      ? window.ESCALATION_API_BASE
+      : 'PASTE_RENDER_URL_HERE'; // e.g. https://arogya-dashboard-api.onrender.com
+  const DASHBOARD_API_AUTH_HEADER_NAME = 'PASTE_HEADER_NAME_HERE';
+  const DASHBOARD_API_AUTH_HEADER_VALUE = 'PASTE_HEADER_VALUE_HERE';
+
   const ROUTE_MAP = {
     '#/auth': 'view-auth',
     '#/dashboard': 'view-dashboard',
@@ -3041,9 +3053,11 @@ function playAudioAdvice(customTxt) {
      in the app stays on its existing mock data.
      ======================================================================= */
   const Escalation = (function () {
-    const API_BASE = String(
-      window.ESCALATION_API_BASE != null ? window.ESCALATION_API_BASE : 'http://localhost:3000'
-    ).replace(/\/+$/, '');
+    const API_BASE = String(DASHBOARD_API_BASE || '').replace(/\/+$/, '');
+    // Send the shared dashboard header only once it's been filled in.
+    const AUTH_HEADER = (DASHBOARD_API_AUTH_HEADER_NAME && DASHBOARD_API_AUTH_HEADER_NAME !== 'PASTE_HEADER_NAME_HERE')
+      ? { [DASHBOARD_API_AUTH_HEADER_NAME]: DASHBOARD_API_AUTH_HEADER_VALUE }
+      : {};
     const POLL_MS = 8000;
 
     let pollTimer = null;
@@ -3055,7 +3069,7 @@ function playAudioAdvice(customTxt) {
 
     function apiFetch(pathname, opts) {
       const options = Object.assign({ headers: {} }, opts || {});
-      options.headers = Object.assign({ 'Content-Type': 'application/json' }, options.headers);
+      options.headers = Object.assign({ 'Content-Type': 'application/json' }, AUTH_HEADER, options.headers);
       return fetch(API_BASE + pathname, options).then(async (res) => {
         let data = null;
         try { data = await res.json(); } catch (e) { /* non-JSON */ }

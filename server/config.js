@@ -9,13 +9,15 @@
 
 require('dotenv').config();
 
+// Vars with no sensible default. `MONGO_DB_NAME` is intentionally absent — it
+// defaults to "sih" (the existing Atlas cluster) below.
 const REQUIRED = [
-  'MONGODB_URI',
-  'MONGODB_DB_NAME',
+  'MONGO_URI',
   'DASHBOARD_API_AUTH_HEADER_NAME',
   'DASHBOARD_API_AUTH_HEADER_VALUE',
   'N8N_INTERNAL_AUTH_HEADER_NAME',
   'N8N_INTERNAL_AUTH_HEADER_VALUE',
+  'ALLOWED_ORIGIN',
   'N8N_ESCALATION_MANAGER_BASE_URL',
 ];
 
@@ -30,17 +32,26 @@ if (missing.length) {
 
 const config = {
   port: parseInt(process.env.PORT, 10) || 3000,
-  mongoUri: process.env.MONGODB_URI.trim(),
-  mongoDbName: process.env.MONGODB_DB_NAME.trim(),
+  mongoUri: process.env.MONGO_URI.trim(),
+  mongoDbName: (process.env.MONGO_DB_NAME || 'sih').trim(),
 
-  // Header the dashboard-API expects on inbound calls FROM n8n.
+  // Shared secret n8n attaches on its HTTP Request nodes (Header Auth
+  // credential). Guards the inbound POST /upsert routes. Express lower-cases
+  // incoming header names, so we lower-case the expected name to match.
+  n8nInternalAuthHeaderName: process.env.N8N_INTERNAL_AUTH_HEADER_NAME.trim().toLowerCase(),
+  n8nInternalAuthHeaderValue: process.env.N8N_INTERNAL_AUTH_HEADER_VALUE,
+
+  // Shared secret the dashboard frontend sends on GET reads. NOTE: this is a
+  // static string baked into frontend JS — it only deters casual scraping of
+  // the read endpoints, it is not real authentication against a determined
+  // attacker. Same lower-casing note as above.
   dashboardAuthHeaderName: process.env.DASHBOARD_API_AUTH_HEADER_NAME.trim().toLowerCase(),
   dashboardAuthHeaderValue: process.env.DASHBOARD_API_AUTH_HEADER_VALUE,
 
-  // Header this backend attaches on OUTBOUND calls TO n8n's ack webhook.
-  n8nInternalAuthHeaderName: process.env.N8N_INTERNAL_AUTH_HEADER_NAME.trim(),
-  n8nInternalAuthHeaderValue: process.env.N8N_INTERNAL_AUTH_HEADER_VALUE,
+  // Origin(s) allowed via CORS. Comma-separated list supported.
+  allowedOrigins: process.env.ALLOWED_ORIGIN.split(',').map((o) => o.trim()).filter(Boolean),
 
+  // This backend attaches n8nInternalAuth* on OUTBOUND calls to n8n's ack webhook.
   n8nEscalationManagerBaseUrl: process.env.N8N_ESCALATION_MANAGER_BASE_URL.trim().replace(/\/+$/, ''),
 };
 

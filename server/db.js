@@ -19,7 +19,8 @@ async function connect() {
   });
   await client.connect();
   db = client.db(config.mongoDbName);
-  // Touch the server so a bad URI fails at startup, not on first request.
+  // Touch the server so a bad URI fails at startup, not on first request
+  // (the bootstrap in index.js turns this into a loud process.exit(1)).
   await db.command({ ping: 1 });
   return db;
 }

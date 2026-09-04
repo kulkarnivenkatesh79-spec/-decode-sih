@@ -22,7 +22,21 @@ const config = require('./config');
 const dbClient = require('./db');
 
 const app = express();
-app.use(cors());
+
+// CORS: only the dashboard origin(s) in ALLOWED_ORIGIN may call this API.
+// GET/POST only, and the custom auth header names must be allowed through.
+app.use(cors({
+  origin(origin, cb) {
+    // Non-browser callers (curl, n8n, health checks) send no Origin — allow them;
+    // the per-route auth guards are what actually gate those requests.
+    if (!origin || config.allowedOrigins.includes(origin)) return cb(null, true);
+    return cb(new Error(`origin ${origin} not allowed by CORS`));
+  },
+  // GET/POST per the API contract; PATCH is only for the dashboard-only
+  // /api/escalations/:id/resolve bookkeeping route.
+  methods: ['GET', 'POST', 'PATCH'],
+  allowedHeaders: ['Content-Type', config.n8nInternalAuthHeaderName, config.dashboardAuthHeaderName],
+}));
 app.use(express.json({ limit: '256kb' }));
 
 /* ------------------------------------------------------------------ logging */
@@ -36,14 +50,28 @@ function log(scope, msg, extra) {
   }
 }
 
-/* -------------------------------------------------- inbound n8n auth guard */
+/* --------------------------------------------------------- auth guards */
 
-// Validates the shared header on calls coming FROM n8n. Express lower-cases
-// header names, and config.dashboardAuthHeaderName is already lower-cased.
+// Guards the INBOUND POST /upsert routes — the shared secret n8n attaches on
+// its HTTP Request nodes (Header Auth credential). Express lower-cases incoming
+// header names; config.n8nInternalAuthHeaderName is already lower-cased.
+function requireN8nAuth(req, res, next) {
+  const got = req.headers[config.n8nInternalAuthHeaderName];
+  if (!got || got !== config.n8nInternalAuthHeaderValue) {
+    log('auth', `401 rejected ${req.method} ${req.path} (n8n header "${config.n8nInternalAuthHeaderName}" missing/mismatch)`);
+    return res.status(401).json({ ok: false, error: 'unauthorized' });
+  }
+  return next();
+}
+
+// Guards the dashboard GET reads. IMPORTANT: this header/value pair is a static
+// string baked into the frontend JS that every browser visitor downloads. It
+// keeps casual scrapers off the read endpoints; it is NOT authentication and
+// will not stop anyone who opens devtools. Treat these endpoints as public.
 function requireDashboardAuth(req, res, next) {
   const got = req.headers[config.dashboardAuthHeaderName];
   if (!got || got !== config.dashboardAuthHeaderValue) {
-    log('auth', `401 rejected ${req.method} ${req.path} (header "${config.dashboardAuthHeaderName}" missing/mismatch)`);
+    log('auth', `401 rejected ${req.method} ${req.path} (dashboard header "${config.dashboardAuthHeaderName}" missing/mismatch)`);
     return res.status(401).json({ ok: false, error: 'unauthorized' });
   }
   return next();
@@ -51,41 +79,41 @@ function requireDashboardAuth(req, res, next) {
 
 /* ============================================================= INBOUND (n8n) */
 
-// n8n upserts a single escalation, keyed by case_id.
-app.post('/api/escalations/upsert', requireDashboardAuth, async (req, res) => {
+// n8n upserts a single escalation, keyed by case_id. Any node in the workflow
+// (intake, admin-assignment, timeout, ack) may fire with a variable subset of
+// fields — case_id is the only guaranteed one.
+app.post('/api/escalations/upsert', requireN8nAuth, async (req, res) => {
   try {
     const body = req.body || {};
-    if (!body.case_id || !body.chat_id) {
-      log('upsert', `400 escalation missing case_id/chat_id`, { case_id: body.case_id, chat_id: body.chat_id });
-      return res.status(400).json({ ok: false, error: 'case_id and chat_id are required' });
+    if (!body.case_id) {
+      log('upsert', `400 escalation missing case_id`);
+      return res.status(400).json({ ok: false, error: 'case_id is required' });
     }
 
     const now = new Date().toISOString();
-    const doc = { ...body };
-    delete doc._id; // never let a caller overwrite Mongo's _id
-    doc.updated_at = doc.updated_at || now;
-
-    // `created_at` is fixed at first insert — pull it out of $set so it can't
+    const { case_id, _id, created_at, ...rest } = body; // never let a caller set _id
+    // `created_at` is fixed at first insert — keep it out of $set so it can't
     // collide with $setOnInsert (Mongo rejects the same path in both).
-    const createdAt = doc.created_at || now;
-    delete doc.created_at;
+    const doc = { ...rest, updated_at: now }; // always server-set; don't trust a stale client value
 
     await dbClient.escalations().updateOne(
-      { case_id: body.case_id },
-      { $set: doc, $setOnInsert: { created_at: createdAt } },
+      { case_id },
+      { $set: doc, $setOnInsert: { case_id, created_at: created_at || now } },
       { upsert: true },
     );
 
-    log('upsert', `escalation ${body.case_id} status=${body.status || '?'} severity=${body.severity_label || '?'} admin=${body.current_admin_id || 'unassigned'}`);
-    return res.json({ ok: true });
+    log('upsert', `escalation ${case_id} status=${body.status || '?'} severity=${body.severity_label || '?'} admin=${body.current_admin_id || 'unassigned'}`);
+    return res.json({ ok: true, case_id });
   } catch (err) {
-    log('upsert', `500 escalation upsert failed: ${err.message}`);
+    log('upsert', `500 escalation upsert failed (case_id=${req.body && req.body.case_id}): ${err.message}`);
     return res.status(500).json({ ok: false, error: 'internal error' });
   }
 });
 
-// n8n upserts an admin (on timeout it marks them not_working); otherwise seeded by hand.
-app.post('/api/admins/upsert', requireDashboardAuth, async (req, res) => {
+// n8n upserts an admin — only on the "not working" path, so partial updates
+// ({ admin_id, status, marked_unavailable_at, marked_unavailable_reason,
+// last_case_id }) are expected. Otherwise the roster is seeded by hand.
+app.post('/api/admins/upsert', requireN8nAuth, async (req, res) => {
   try {
     const body = req.body || {};
     if (!body.admin_id) {
@@ -93,19 +121,20 @@ app.post('/api/admins/upsert', requireDashboardAuth, async (req, res) => {
       return res.status(400).json({ ok: false, error: 'admin_id is required' });
     }
 
-    const doc = { ...body };
-    delete doc._id;
+    const now = new Date().toISOString();
+    const { admin_id, _id, created_at, ...rest } = body;
+    const doc = { ...rest, updated_at: now };
 
     await dbClient.admins().updateOne(
-      { admin_id: body.admin_id },
-      { $set: doc },
+      { admin_id },
+      { $set: doc, $setOnInsert: { admin_id, created_at: created_at || now } },
       { upsert: true },
     );
 
-    log('upsert', `admin ${body.admin_id} status=${body.status || '?'}`);
-    return res.json({ ok: true });
+    log('upsert', `admin ${admin_id} status=${body.status || '?'}`);
+    return res.json({ ok: true, admin_id });
   } catch (err) {
-    log('upsert', `500 admin upsert failed: ${err.message}`);
+    log('upsert', `500 admin upsert failed (admin_id=${req.body && req.body.admin_id}): ${err.message}`);
     return res.status(500).json({ ok: false, error: 'internal error' });
   }
 });
@@ -114,7 +143,9 @@ app.post('/api/admins/upsert', requireDashboardAuth, async (req, res) => {
 
 const ACTIVE_STATUSES = ['pending', 'in_progress'];
 
-app.get('/api/escalations', async (req, res) => {
+// `status`: exact match, or the convenience values "active" (default — pending +
+// in_progress) / "all". `limit`: default 50, capped at 200.
+app.get('/api/escalations', requireDashboardAuth, async (req, res) => {
   try {
     const status = (req.query.status || 'active').toLowerCase();
     let filter = {};
@@ -124,42 +155,51 @@ app.get('/api/escalations', async (req, res) => {
       filter = { status };
     }
 
+    let limit = parseInt(req.query.limit, 10);
+    if (!Number.isFinite(limit) || limit <= 0) limit = 50;
+    limit = Math.min(limit, 200);
+
     const cases = await dbClient.escalations()
       .find(filter, { projection: { _id: 0 } })
-      // most severe, longest-waiting first
-      .sort({ severity_score: -1, created_at: 1 })
+      // most severe, longest-waiting first; updated_at breaks ties
+      .sort({ severity_score: -1, created_at: 1, updated_at: -1 })
+      .limit(limit)
       .toArray();
 
     return res.json({ ok: true, count: cases.length, escalations: cases });
   } catch (err) {
-    log('read', `500 GET /api/escalations failed: ${err.message}`);
+    log('read', `500 GET /api/escalations failed (status=${req.query.status}): ${err.message}`);
     return res.status(500).json({ ok: false, error: 'internal error' });
   }
 });
 
-app.get('/api/escalations/:case_id', async (req, res) => {
+app.get('/api/escalations/:case_id', requireDashboardAuth, async (req, res) => {
   try {
     const doc = await dbClient.escalations().findOne(
       { case_id: req.params.case_id },
       { projection: { _id: 0 } },
     );
-    if (!doc) return res.status(404).json({ ok: false, error: 'not found' });
+    if (!doc) {
+      log('read', `404 GET /api/escalations/${req.params.case_id} — not found`);
+      return res.status(404).json({ ok: false, error: 'not found' });
+    }
     return res.json({ ok: true, escalation: doc });
   } catch (err) {
-    log('read', `500 GET /api/escalations/:id failed: ${err.message}`);
+    log('read', `500 GET /api/escalations/${req.params.case_id} failed: ${err.message}`);
     return res.status(500).json({ ok: false, error: 'internal error' });
   }
 });
 
-app.get('/api/admins', async (req, res) => {
+app.get('/api/admins', requireDashboardAuth, async (req, res) => {
   try {
+    const filter = req.query.status ? { status: String(req.query.status).toLowerCase() } : {};
     const roster = await dbClient.admins()
-      .find({}, { projection: { _id: 0 } })
+      .find(filter, { projection: { _id: 0 } })
       .sort({ priority: 1, name: 1 })
       .toArray();
     return res.json({ ok: true, count: roster.length, admins: roster });
   } catch (err) {
-    log('read', `500 GET /api/admins failed: ${err.message}`);
+    log('read', `500 GET /api/admins failed (status=${req.query.status}): ${err.message}`);
     return res.status(500).json({ ok: false, error: 'internal error' });
   }
 });
@@ -167,7 +207,7 @@ app.get('/api/admins', async (req, res) => {
 /* =========================================================== ACT (dashboard) */
 
 // Proxy the dashboard's Accept / Reassign click into n8n's ack webhook.
-app.post('/api/escalations/:case_id/respond', async (req, res) => {
+app.post('/api/escalations/:case_id/respond', requireDashboardAuth, async (req, res) => {
   const caseId = req.params.case_id;
   const { admin_id: adminId, action } = req.body || {};
 
@@ -233,7 +273,7 @@ app.post('/api/escalations/:case_id/respond', async (req, res) => {
 // Dashboard-only bookkeeping. Does NOT call n8n — by the time a case is
 // acknowledged, n8n's retry/timeout loop has already stopped watching it.
 // This just lets a PHC Medical Officer archive a case out of the active queue.
-app.patch('/api/escalations/:case_id/resolve', async (req, res) => {
+app.patch('/api/escalations/:case_id/resolve', requireDashboardAuth, async (req, res) => {
   try {
     const caseId = req.params.case_id;
     const now = new Date().toISOString();
@@ -263,6 +303,8 @@ app.patch('/api/escalations/:case_id/resolve', async (req, res) => {
 
 /* ------------------------------------------------------- health + static UI */
 
+// Render's health check hits this — must stay unauthenticated and cheap.
+app.get('/health', (req, res) => res.json({ ok: true }));
 app.get('/api/health', (req, res) => res.json({ ok: true, service: 'arogya-dashboard-backend' }));
 
 // Serve the existing dashboard (repo root) so a demo can run from one origin.
