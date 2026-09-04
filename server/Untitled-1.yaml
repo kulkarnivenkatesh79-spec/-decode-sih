@@ -1,0 +1,6 @@
+
+
+curl -X POST https://mayank12345.app.n8n.cloud/webhook/arogya-escalation-intake \
+  -H "Content-Type: application/json" \
+  -H "xyzabc123: xyzabc123" \
+  -d '{"case_id":"manual-test-1","chat_id":"999","event_type":"new","severity_score":0.9,"severity_label":"emergency","patient":{"name":"Test Patient","age":45,"contact_number":"9876543210"},"symptoms":"chest pain","location":{"landmark":"near bus stand","decoded_location":"Ballia, UP"}}'
